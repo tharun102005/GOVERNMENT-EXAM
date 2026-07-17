@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Delete, RotateCcw, Calculator, Minus, Plus } from 'lucide-react';
+import { X, Calculator } from 'lucide-react';
 
 export default function ExamCalculator({ isOpen, onClose }) {
   const [display, setDisplay] = useState('0');

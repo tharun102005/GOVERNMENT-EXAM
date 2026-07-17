@@ -19,7 +19,6 @@ const REPEL_MAX_OFFSET  = 15;    // px — max displacement
 const CARD_TILT_MAX     = 12;    // deg
 const TRAIL_MAX         = 18;    // particle count in trail
 const TRAIL_TTL         = 600;   // ms — each trail particle lives for
-const ICON_ROTATE_MAX   = 15;    // deg
 
 // ─── State ────────────────────────────────────────────────────────────────────
 let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };

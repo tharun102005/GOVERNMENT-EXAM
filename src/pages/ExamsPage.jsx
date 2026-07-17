@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Search, Filter, ShieldCheck } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import ExamCard from '../components/ExamCard';
 import { exams } from '../data/mockData';
 
 export default function ExamsPage() {
-  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('All');
 

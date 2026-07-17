@@ -1,13 +1,14 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Clock, Send, CheckSquare, BookmarkPlus, ChevronLeft, Flag, ChevronRight,
+  Clock, Send, BookmarkPlus, ChevronLeft, Flag, ChevronRight,
   Sun, Moon, Maximize, Minimize, FileText, Calculator, HelpCircle, Eye,
-  RotateCcw, ShieldCheck, ArrowRight, Bookmark, AlertCircle, Sparkles, Filter, CheckCircle2, SlidersHorizontal
+  RotateCcw, ShieldCheck, ArrowRight, Bookmark, AlertCircle, Sparkles, CheckCircle2
 } from 'lucide-react';
 import { exams } from '../data/mockData';
 import { generateExamQuestions, examSections } from '../data/extendedMockQuestions';
+
 import Navbar from '../components/Navbar';
 import QuestionPalette from '../components/mock/QuestionPalette';
 import ExamCalculator from '../components/calculator/ExamCalculator';
@@ -186,11 +187,6 @@ export default function MockTestPage() {
     }
   };
 
-  // Section filtered count
-  const sectionQuestions = useMemo(() => {
-    return questions.filter(q => q.sectionId === activeSection);
-  }, [questions, activeSection]);
-
   // ═════════════════════════════════════════════════════════════
   // 1. PRE-TEST SELECTION & TCS iON INSTRUCTIONS LANDING
   // ═════════════════════════════════════════════════════════════
@@ -288,13 +284,29 @@ export default function MockTestPage() {
                   </h3>
                   <p className="text-[16px] text-slate-500">Read all operational instructions carefully before launching the test window</p>
                 </div>
-                <div className="flex items-center gap-3 text-xs shrink-0">
-                  <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 font-extrabold rounded-xl border border-blue-200/60 text-sm">
-                    {questionCountChoice} Questions
-                  </span>
-                  <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 font-extrabold rounded-xl border border-purple-200/60 text-sm">
-                    {questionCountChoice === 200 ? '180 Minutes' : '120 Minutes'}
-                  </span>
+                <div className="flex items-center gap-2 text-xs shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setQuestionCountChoice(100)}
+                    className={`px-3.5 py-2 font-extrabold rounded-xl border transition text-sm cursor-pointer ${
+                      questionCountChoice === 100
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                        : 'bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 border-blue-200/60 hover:bg-blue-100'
+                    }`}
+                  >
+                    100 Qs (120 min)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setQuestionCountChoice(200)}
+                    className={`px-3.5 py-2 font-extrabold rounded-xl border transition text-sm cursor-pointer ${
+                      questionCountChoice === 200
+                        ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
+                        : 'bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 border-purple-200/60 hover:bg-purple-100'
+                    }`}
+                  >
+                    200 Qs (180 min)
+                  </button>
                 </div>
               </div>
 
@@ -387,7 +399,6 @@ export default function MockTestPage() {
   // 2. LIVE TEST ENVIRONMENT (Testbook / Oliveboard / Adda247 UI)
   // ═════════════════════════════════════════════════════════════
   const totalAttempted = Object.keys(answers).length;
-  const totalMarked = Object.keys(marked).filter(k => marked[k]).length;
   const progressPercent = Math.round((totalAttempted / questions.length) * 100);
 
   return (

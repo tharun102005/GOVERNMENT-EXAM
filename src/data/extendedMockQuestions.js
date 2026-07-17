@@ -177,7 +177,7 @@ const rawTemplates = [
   }
 ];
 
-export function generateExamQuestions(totalCount = 100, examName = 'General Government Exam') {
+export function generateExamQuestions(totalCount = 100) {
   const questions = [];
   
   for (let i = 0; i < totalCount; i++) {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Search, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 
 export default function QuestionPalette({
@@ -18,7 +18,7 @@ export default function QuestionPalette({
   const totalPages = Math.ceil(totalQuestions / PAGE_SIZE);
 
   // Status computation for each question index
-  const getStatus = (index) => {
+  const getStatus = useCallback((index) => {
     const isAnswered = answers[index] !== undefined;
     const isMarked = !!marked[index];
     const isVisited = !!visited[index];
@@ -28,7 +28,7 @@ export default function QuestionPalette({
     if (isAnswered) return 'answered';
     if (isVisited) return 'not-answered';
     return 'not-visited';
-  };
+  }, [answers, marked, visited]);
 
   // Color mappings matching exact specifications
   const getButtonStyle = (index) => {
@@ -86,7 +86,7 @@ export default function QuestionPalette({
       }
     }
     return indexes;
-  }, [totalQuestions, pageRange, activeFilter, answers, marked, visited]);
+  }, [totalQuestions, pageRange, activeFilter, getStatus]);
 
   // Summaries
   const stats = useMemo(() => {
@@ -106,7 +106,8 @@ export default function QuestionPalette({
     }
 
     return { answered: answered + answeredMarked, marked: markedCount, notAnswered, notVisited };
-  }, [totalQuestions, answers, marked, visited]);
+  }, [totalQuestions, getStatus]);
+
 
   return (
     <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl p-4 sticky top-20 flex flex-col max-h-[calc(100vh-6rem)]">

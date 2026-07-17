@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import ExamsPage from './pages/ExamsPage';
 import PracticePage from './pages/PracticePage';
@@ -11,8 +12,16 @@ import LeaderboardPage from './pages/LeaderboardPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
+import { initAntiGravity } from './utils/antiGravity';
 
 function App() {
+  useEffect(() => {
+    const cleanup = initAntiGravity();
+    return () => {
+      if (typeof cleanup === 'function') cleanup();
+    };
+  }, []);
+
   return (
     <Router>
       <div style={{ position: 'relative', zIndex: 1 }}>
@@ -29,6 +38,7 @@ function App() {
           <Route path="/admin"      element={<AdminPage />} />
           <Route path="/login"      element={<LoginPage />} />
           <Route path="/settings"   element={<SettingsPage />} />
+          <Route path="*"           element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>
@@ -36,4 +46,5 @@ function App() {
 }
 
 export default App;
+
 
