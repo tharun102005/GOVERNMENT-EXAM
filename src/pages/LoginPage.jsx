@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Lock, Mail, User, Eye, EyeOff, 
   GraduationCap, BookOpen, Calculator, Trophy, Landmark, 
@@ -29,31 +28,19 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState('');
   const [toast, setToast] = useState(null);
 
-  // Floating background icons
   const floatingIcons = [
-    { Icon: BookOpen, top: '15%', left: '8%', delay: 0 },
-    { Icon: Calculator, top: '55%', left: '5%', delay: 1.5 },
-    { Icon: Trophy, top: '78%', left: '10%', delay: 3 },
-    { Icon: BrainIcon, top: '18%', left: '82%', delay: 2 },
-    { Icon: Landmark, top: '82%', left: '80%', delay: 0.5 },
-    { Icon: GraduationCap, top: '24%', left: '46%', delay: 4 }
+    { Icon: GraduationCap, top: '15%', left: '8%' },
+    { Icon: BookOpen, top: '25%', left: '85%' },
+    { Icon: Calculator, top: '70%', left: '10%' },
+    { Icon: Trophy, top: '75%', left: '88%' },
+    { Icon: Landmark, top: '45%', left: '5%' },
   ];
 
-  // Helper because Brain is not directly imported as BrainIcon
-  function BrainIcon(props) {
-    return <Trophy {...props} />; // We'll map to other icons if needed, but let's just use Landmark or Trophy to avoid missing imports. Actually, we can use lucide-react Brain directly. Let's use Landmark and Trophy.
-  }
-
-  // Email validation check
   const handleEmailChange = (val) => {
     setEmail(val);
-    if (!val) {
-      setEmailError('');
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(val)) {
-      setEmailError('Please enter a valid email address');
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (val && !regex.test(val)) {
+      setEmailError('Please enter a valid email address.');
     } else {
       setEmailError('');
     }
@@ -61,20 +48,19 @@ export default function LoginPage() {
 
   const handleAuthSubmit = (e) => {
     e.preventDefault();
-    if (emailError) {
-      setToast({ type: 'error', text: 'Please resolve input errors first!' });
-      return;
-    }
-
+    if (emailError) return;
     setIsLoading(true);
+
     setTimeout(() => {
       setIsLoading(false);
-      setToast({ type: 'success', text: isLogin ? 'Login Successful! Redirecting...' : 'Account Created Successfully!' });
-      
+      setToast({
+        type: 'success',
+        text: isLogin ? 'Login successful! Redirecting...' : 'Account created successfully!'
+      });
       setTimeout(() => {
         navigate('/');
-      }, 1500);
-    }, 1800);
+      }, 1000);
+    }, 1500);
   };
 
   const triggerSocialLogin = (platform) => {
@@ -89,59 +75,44 @@ export default function LoginPage() {
   ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 flex flex-col justify-between relative overflow-hidden ${
+    <div className={`min-h-screen flex flex-col justify-between relative overflow-hidden ${
       darkMode ? 'bg-[#0F172A] text-slate-100 dark' : 'bg-gradient-to-br from-[#EFF6FF] via-[#F8FAFC] to-[#F1F5F9] text-slate-800'
     }`} style={{ fontFamily: "'Poppins', sans-serif" }}>
       
-      {/* Animated Blurred Circles in Background */}
-      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 rounded-full bg-blue-400/10 dark:bg-blue-600/5 blur-3xl animate-pulse" style={{ animationDuration: '8s' }} />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-emerald-400/10 dark:bg-emerald-600/5 blur-3xl animate-pulse" style={{ animationDuration: '10s' }} />
+      {/* Blurred Circles in Background */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 rounded-full bg-blue-400/10 dark:bg-blue-600/5 blur-3xl" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-emerald-400/10 dark:bg-emerald-600/5 blur-3xl" />
 
       {/* Toast Notification */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: -50, scale: 0.9 }}
-            animate={{ opacity: 1, y: 16, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.9 }}
-            className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-lg border text-sm font-semibold max-w-sm w-[90%] justify-center ${
-              toast.type === 'success' 
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-[#022C22] dark:border-emerald-800 dark:text-emerald-200'
-                : 'bg-red-50 border-red-200 text-red-800 dark:bg-[#450A0A] dark:border-red-800 dark:text-red-200'
-            }`}
-          >
-            {toast.type === 'success' ? <CheckCircle className="w-5 h-5 text-emerald-500" /> : <ShieldAlert className="w-5 h-5 text-red-500" />}
-            <span>{toast.text}</span>
-            <button onClick={() => setToast(null)} className="ml-auto text-xs opacity-60 hover:opacity-100 font-bold">×</button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {toast && (
+        <div
+          className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-lg border text-sm font-semibold max-w-sm w-[90%] justify-center ${
+            toast.type === 'success' 
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-[#022C22] dark:border-emerald-800 dark:text-emerald-200'
+              : 'bg-red-50 border-red-200 text-red-800 dark:bg-[#450A0A] dark:border-red-800 dark:text-red-200'
+          }`}
+        >
+          {toast.type === 'success' ? <CheckCircle className="w-5 h-5 text-emerald-500" /> : <ShieldAlert className="w-5 h-5 text-red-500" />}
+          <span>{toast.text}</span>
+          <button onClick={() => setToast(null)} className="ml-auto text-xs opacity-60 hover:opacity-100 font-bold">×</button>
+        </div>
+      )}
 
       <Navbar />
 
       {/* Center Layout Container */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-16 relative z-10">
         
-        {/* Floating Icons Background */}
+        {/* Static Background Icons */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden select-none opacity-20">
           {floatingIcons.map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
               className="absolute text-[#2563EB] dark:text-blue-400"
               style={{ top: item.top, left: item.left }}
-              animate={{
-                y: [0, -25, 0],
-                rotate: [0, 12, -12, 0]
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                delay: item.delay,
-                ease: "easeInOut"
-              }}
             >
               <item.Icon className="w-9 h-9" />
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -156,22 +127,17 @@ export default function LoginPage() {
           </button>
         </div>
 
-        {/* Login Card - Perfect Glassmorphism */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+        {/* Login Card */}
+        <div
           className="w-full max-w-[520px] bg-white/70 dark:bg-[#1E293B]/70 backdrop-blur-lg rounded-[28px] border border-white/20 dark:border-slate-800/80 shadow-[0_20px_60px_rgba(0,0,0,0.12)] p-10 pb-[30px] text-center"
         >
-          {/* Logo with Soft Glow */}
+          {/* Logo */}
           <div className="flex justify-center mb-6 mt-2">
-            <motion.div 
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            <div 
               className="w-[72px] h-[72px] rounded-[20px] bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] text-white flex items-center justify-center shadow-[0_0_24px_rgba(37,99,235,0.45)] dark:shadow-[0_0_30px_rgba(37,99,235,0.3)]"
             >
               <GraduationCap className="w-9 h-9" />
-            </motion.div>
+            </div>
           </div>
 
           {/* Heading Section */}
@@ -272,11 +238,9 @@ export default function LoginPage() {
 
             {/* Sign In Button with Lock Icon & 20px spacing */}
             <div className="my-[20px]">
-              <motion.button
+              <button
                 type="submit"
                 disabled={isLoading}
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.2 }}
                 className="w-full h-[54px] rounded-[14px] font-extrabold text-sm text-white bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:shadow-lg hover:shadow-blue-500/20 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 {isLoading ? (
@@ -287,7 +251,7 @@ export default function LoginPage() {
                     Sign In
                   </>
                 )}
-              </motion.button>
+              </button>
             </div>
           </form>
 
@@ -299,10 +263,9 @@ export default function LoginPage() {
 
           {/* Social Logins - 54px heights and hover elevation */}
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <motion.button
+            <button
               onClick={() => triggerSocialLogin('Google')}
-              whileHover={{ scale: 1.02, y: -2 }}
-              className="flex items-center justify-center gap-2 border border-slate-200/50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-[14px] h-[54px] px-4 text-xs font-bold text-gray-600 dark:text-slate-300 shadow-sm bg-white dark:bg-slate-900/30 w-full transition-shadow duration-300"
+              className="flex items-center justify-center gap-2 border border-slate-200/50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-[14px] h-[54px] px-4 text-xs font-bold text-gray-600 dark:text-slate-300 shadow-sm bg-white dark:bg-slate-900/30 w-full transition-shadow duration-300 cursor-pointer"
             >
               <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 shrink-0">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -311,11 +274,10 @@ export default function LoginPage() {
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
               Google
-            </motion.button>
-            <motion.button
+            </button>
+            <button
               onClick={() => triggerSocialLogin('Microsoft')}
-              whileHover={{ scale: 1.02, y: -2 }}
-              className="flex items-center justify-center gap-2 border border-slate-200/50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-[14px] h-[54px] px-4 text-xs font-bold text-gray-600 dark:text-slate-300 shadow-sm bg-white dark:bg-slate-900/30 w-full transition-shadow duration-300"
+              className="flex items-center justify-center gap-2 border border-slate-200/50 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-[14px] h-[54px] px-4 text-xs font-bold text-gray-600 dark:text-slate-300 shadow-sm bg-white dark:bg-slate-900/30 w-full transition-shadow duration-300 cursor-pointer"
             >
               <svg viewBox="0 0 23 23" className="w-4 h-4 shrink-0">
                 <path d="M0 0h11v11H0z" fill="#F25022" />
@@ -324,23 +286,22 @@ export default function LoginPage() {
                 <path d="M12 12h11v11H12z" fill="#FFB900" />
               </svg>
               Microsoft
-            </motion.button>
+            </button>
           </div>
 
-          {/* Exam Outline Badges - outline pill design with scale hover */}
+          {/* Exam Outline Badges - outline pill design */}
           <div className="border-t border-slate-100 dark:border-slate-800 pt-6 mb-6">
             <div className="text-[10px] text-gray-400 dark:text-slate-500 font-bold uppercase tracking-wider mb-3">
               Supported Exam Curriculums
             </div>
             <div className="flex flex-wrap justify-center gap-2">
               {examsBadges.map((badge, bIdx) => (
-                <motion.span
+                <span
                   key={bIdx}
-                  whileHover={{ scale: 1.05 }}
                   className="text-xs font-bold px-3 py-1.5 rounded-full border border-[#2563EB] text-[#2563EB] bg-[#2563EB]/5 cursor-default transition-all"
                 >
                   {badge}
-                </motion.span>
+                </span>
               ))}
             </div>
           </div>
@@ -356,7 +317,7 @@ export default function LoginPage() {
               {isLogin ? 'Create Free Account' : 'Sign In'}
             </button>
           </div>
-        </motion.div>
+        </div>
       </main>
 
       {/* Footer */}

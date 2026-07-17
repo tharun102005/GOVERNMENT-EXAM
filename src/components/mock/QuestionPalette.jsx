@@ -114,7 +114,7 @@ export default function QuestionPalette({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
         <h3 className="font-extrabold text-slate-800 dark:text-slate-100 text-sm tracking-wide uppercase flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
+          <span className="w-2 h-2 rounded-full bg-blue-600"></span>
           Question Palette ({totalQuestions})
         </h3>
         {totalPages > 1 && (

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Star, Zap, Users, BookOpen, Target, Trophy, ArrowRight, ShieldCheck, CheckCircle2, Bell, Sparkles } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import ExamCard from '../components/ExamCard';
@@ -22,26 +21,21 @@ export default function Home() {
       <main className="max-w-[1600px] mx-auto px-6 py-8 space-y-12">
 
         {/* ── HERO BANNER (Full-width container with 24px radius) ───────────── */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        <section
           className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-700 to-slate-900 text-white rounded-[24px] p-8 md:p-14 shadow-2xl border border-blue-500/20"
         >
           {/* Ambient Glows */}
           <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
-          {/* Floating Emojis */}
+          {/* Static Emojis */}
           {['📚','🏆','📝','🎯','💡','🔥','⭐','🚀'].map((emoji, i) => (
             <span
               key={i}
-              className="absolute text-3xl opacity-20 pointer-events-none animate-bounce"
+              className="absolute text-3xl opacity-20 pointer-events-none"
               style={{
                 top: `${12 + (i * 11) % 75}%`,
-                left: `${4 + (i * 13) % 92}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${2.5 + (i % 3)}s`
+                left: `${4 + (i * 13) % 92}%`
               }}
             >
               {emoji}
@@ -113,15 +107,11 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── ALL EXAMS SECTION (4-column grid on desktop with 24px gap) ─────── */}
-        <motion.section
+        <section
           id="exams"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
           className="space-y-8 py-4"
         >
           <div className="text-center space-y-3">
@@ -142,15 +132,11 @@ export default function Home() {
               <ExamCard key={i} exam={exam} />
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── PRACTICE ARENA ───────────────────────────────────────────────── */}
-        <motion.section
+        <section
           id="practice"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
           className="bg-white border border-slate-200/80 rounded-[24px] p-8 md:p-10 shadow-sm space-y-8"
         >
           <div className="text-center space-y-3">
@@ -195,15 +181,11 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── MOCK TEST SECTION ────────────────────────────────────────────── */}
-        <motion.section
+        <section
           id="mock"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
           className="space-y-8 py-4"
         >
           <div className="text-center space-y-3">
@@ -259,15 +241,11 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── AI FEATURES BANNER ───────────────────────────────────────────── */}
-        <motion.section
+        <section
           id="ai"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
           className="bg-gradient-to-br from-indigo-900 via-blue-900 to-slate-950 text-white rounded-[24px] p-8 md:p-12 shadow-2xl space-y-8 border border-indigo-500/30"
         >
           <div className="text-center space-y-3">
@@ -307,14 +285,10 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── ANALYTICS PREVIEW ────────────────────────────────────────────── */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
+        <section
           className="bg-white border border-slate-200/80 rounded-[24px] p-8 md:p-12 shadow-sm"
         >
           <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -364,14 +338,10 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </motion.section>
+        </section>
 
         {/* ── LEADERBOARD SECTION ─────────────────────────────────────────── */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
+        <section
           className="bg-gradient-to-b from-slate-50 to-blue-50/50 border border-slate-200/70 rounded-[24px] p-8 md:p-12 text-center space-y-8"
         >
           <div className="space-y-3">
@@ -414,14 +384,10 @@ export default function Home() {
           >
             View Full Leaderboard →
           </button>
-        </motion.section>
+        </section>
 
         {/* ── LATEST NOTIFICATIONS & ALERTS ────────────────────────────────── */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
+        <section
           className="space-y-8 py-4"
         >
           <div className="text-center space-y-3">
@@ -457,14 +423,10 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── CALL TO ACTION ───────────────────────────────────────────────── */}
-        <motion.section
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+        <section
           className="bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-700 text-white rounded-[24px] p-10 md:p-14 text-center space-y-6 shadow-xl"
         >
           <h2 className="text-[34px] md:text-[42px] font-extrabold leading-tight">
@@ -487,7 +449,7 @@ export default function Home() {
               Take Free Mock Test
             </button>
           </div>
-        </motion.section>
+        </section>
 
       </main>
 

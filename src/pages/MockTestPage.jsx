@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Clock, Send, BookmarkPlus, ChevronLeft, Flag, ChevronRight,
   Sun, Moon, Maximize, Minimize, FileText, Calculator, HelpCircle, Eye,
@@ -571,17 +570,12 @@ export default function MockTestPage() {
             </div>
           </div>
 
-          {/* Question Card with Framer Motion Animation */}
+          {/* Question Card */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl p-6 md:p-8 flex-1 flex flex-col justify-between">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, x: 15 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -15 }}
-                transition={{ duration: 0.15 }}
-                className="space-y-6"
-              >
+            <div
+              key={current}
+              className="space-y-6"
+            >
                 {/* Question Header Bar */}
                 <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
                   <div className="flex items-center gap-2">
@@ -680,8 +674,7 @@ export default function MockTestPage() {
                     );
                   })}
                 </div>
-              </motion.div>
-            </AnimatePresence>
+            </div>
 
             {/* Clear Selection bar */}
             {answers[current] !== undefined && (

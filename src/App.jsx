@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import ExamsPage from './pages/ExamsPage';
@@ -12,16 +11,8 @@ import LeaderboardPage from './pages/LeaderboardPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
-import { initAntiGravity } from './utils/antiGravity';
 
 function App() {
-  useEffect(() => {
-    const cleanup = initAntiGravity();
-    return () => {
-      if (typeof cleanup === 'function') cleanup();
-    };
-  }, []);
-
   return (
     <Router>
       <div style={{ position: 'relative', zIndex: 1 }}>
