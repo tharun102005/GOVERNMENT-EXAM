@@ -6,6 +6,7 @@ const navLinks = [
   { label: 'Exams', to: '/exams' },
   { label: 'Practice', to: '/practice' },
   { label: 'Mock Tests', to: '/mock' },
+  { label: 'PYQ Papers', to: '/pyq' },
   { label: 'AI Hub', to: '/ai' },
   { label: 'Analytics', to: '/analytics' },
   { label: 'Leaderboard', to: '/leaderboard' },

@@ -6,6 +6,7 @@ import MockTestPage from './pages/MockTestPage';
 import TestResults from './pages/TestResults';
 import AnalyticsPage from './pages/AnalyticsPage';
 import AIHubPage from './pages/AIHubPage';
+import PYQPage from './pages/PYQPage';
 import ProfilePage from './pages/ProfilePage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import AdminPage from './pages/AdminPage';
@@ -21,6 +22,7 @@ function App() {
           <Route path="/exams"      element={<ExamsPage />} />
           <Route path="/practice"   element={<PracticePage />} />
           <Route path="/mock"       element={<MockTestPage />} />
+          <Route path="/pyq"        element={<PYQPage />} />
           <Route path="/results"    element={<TestResults />} />
           <Route path="/analytics"  element={<AnalyticsPage />} />
           <Route path="/ai"         element={<AIHubPage />} />
