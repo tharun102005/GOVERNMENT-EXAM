@@ -13,6 +13,7 @@ import LeaderboardPage from './pages/LeaderboardPage';
 import AdminPage from './pages/AdminPage';
 import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
+import QuantAptitudePage from './pages/QuantAptitudePage';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path="/"           element={<Home />} />
           <Route path="/exams"      element={<ExamsPage />} />
           <Route path="/practice"   element={<PracticePage />} />
+          <Route path="/quant-aptitude" element={<QuantAptitudePage />} />
+          <Route path="/practice/quant" element={<QuantAptitudePage />} />
           <Route path="/quiz"       element={<QuizPage />} />
           <Route path="/mock"       element={<MockTestPage />} />
           <Route path="/pyq"        element={<PYQPage />} />

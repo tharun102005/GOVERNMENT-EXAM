@@ -127,13 +127,25 @@ export default function PracticePage() {
                     ))}
                   </div>
 
-                  <button
-                    onClick={handleStartQuiz}
-                    disabled={!selectedSubject || selectedSubject.questions === 0}
-                    className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-40"
-                  >
-                    <Play className="w-4 h-4 fill-white" /> Start Practice Quiz
-                  </button>
+                  <div className="space-y-2">
+                    <button
+                      onClick={handleStartQuiz}
+                      disabled={!selectedSubject || selectedSubject.questions === 0}
+                      className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-40"
+                    >
+                      <Play className="w-4 h-4 fill-white" /> Start Practice Quiz
+                    </button>
+
+                    {selectedSubject.name.toLowerCase().includes('quant') && (
+                      <button
+                        onClick={() => navigate('/quant-aptitude')}
+                        className="w-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-800 dark:text-emerald-200 font-extrabold py-3 rounded-xl transition text-xs flex items-center justify-center gap-2 cursor-pointer hover:bg-emerald-100"
+                      >
+                        <Layers className="w-4 h-4 text-emerald-600" />
+                        <span>Explore Full 40-Topic Quant Syllabus →</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="py-12 text-center text-gray-500">

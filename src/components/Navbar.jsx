@@ -5,6 +5,7 @@ import { useState } from 'react';
 const navLinks = [
   { label: 'Exams', to: '/exams' },
   { label: 'Practice', to: '/practice' },
+  { label: 'Quant Syllabus', to: '/quant-aptitude' },
   { label: 'Mock Tests', to: '/mock' },
   { label: 'Previous Year Questions', to: '/previous-year-questions' },
   { label: 'AI Hub', to: '/ai' },
