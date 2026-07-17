@@ -157,7 +157,7 @@ export default function Home() {
                 key={i}
                 data-antigrav="card"
                 className="bg-slate-50/70 hover:bg-white border border-slate-200/80 rounded-[20px] shadow-xs hover:shadow-xl hover:border-blue-300 transition-all duration-300 flex flex-col cursor-pointer overflow-hidden group p-5 space-y-4"
-                onClick={() => navigate('/practice')}
+                onClick={() => navigate('/practice', { state: { subjectName: sub.name } })}
               >
                 <div
                   className="w-14 h-14 rounded-2xl flex items-center justify-center text-[28px] shrink-0 shadow-xs border border-slate-200/60 bg-white group-hover:scale-105 transition-transform"
@@ -174,6 +174,10 @@ export default function Home() {
                 </div>
                 <div className="flex-1" />
                 <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate('/quiz', { state: { subjectName: sub.name, icon: sub.icon, questionsCount: 20 } });
+                  }}
                   className="w-full py-2.5 font-bold text-[13px] text-blue-600 bg-blue-50 group-hover:bg-blue-600 group-hover:text-white rounded-xl border border-blue-200/60 transition-all duration-200 cursor-pointer"
                 >
                   Practice Now →

@@ -1,10 +1,41 @@
-import { useState } from 'react';
-import { BookOpen, Layers, Award, ArrowRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { BookOpen, Layers, ArrowRight, Play, CheckCircle2 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { subjects } from '../data/mockData';
 
 export default function PracticePage() {
-  const [selectedSubject, setSelectedSubject] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Initialize selected subject with location state if passed, or default to Quantitative Aptitude (subjects[0])
+  const [selectedSubject, setSelectedSubject] = useState(() => {
+    const passedName = location.state?.subjectName || location.state?.subject?.name;
+    if (passedName) {
+      const found = subjects.find(s => s.name.toLowerCase() === passedName.toLowerCase());
+      if (found) return found;
+    }
+    return subjects[0]; // Default: Quantitative Aptitude
+  });
+
+  useEffect(() => {
+    const passedName = location.state?.subjectName || location.state?.subject?.name;
+    if (passedName) {
+      const found = subjects.find(s => s.name.toLowerCase() === passedName.toLowerCase());
+      if (found) setSelectedSubject(found);
+    }
+  }, [location.state]);
+
+  const handleStartQuiz = () => {
+    if (!selectedSubject) return;
+    navigate('/quiz', {
+      state: {
+        subjectName: selectedSubject.name,
+        icon: selectedSubject.icon,
+        questionsCount: 20
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
@@ -33,8 +64,8 @@ export default function PracticePage() {
                   onClick={() => setSelectedSubject(sub)}
                   className={`border rounded-[20px] p-5 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
                     selectedSubject?.name === sub.name
-                      ? 'border-[#2563EB] bg-blue-50/50 shadow-md'
-                      : `${sub.color} hover:shadow-lg hover:-translate-y-0.5`
+                      ? 'border-[#2563EB] bg-blue-50/50 shadow-md ring-2 ring-blue-500/20'
+                      : `${sub.color} hover:shadow-md`
                   }`}
                 >
                   <div>
@@ -44,7 +75,13 @@ export default function PracticePage() {
                       {sub.topics} Topics • {sub.questions.toLocaleString()} Questions
                     </p>
                   </div>
-                  <button className="w-full mt-2 bg-white text-[#2563EB] text-xs font-bold py-2.5 rounded-xl hover:bg-[#2563EB] hover:text-white transition border border-[#2563EB]/20 flex items-center justify-center gap-1 shadow-sm">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedSubject(sub);
+                    }}
+                    className="w-full mt-2 bg-white text-[#2563EB] text-xs font-bold py-2.5 rounded-xl hover:bg-[#2563EB] hover:text-white transition border border-[#2563EB]/20 flex items-center justify-center gap-1 shadow-xs cursor-pointer"
+                  >
                     View Topics <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -84,14 +121,18 @@ export default function PracticePage() {
                   <div className="max-h-60 overflow-y-auto pr-1 space-y-2 mb-6">
                     {selectedSubject.topicList && selectedSubject.topicList.map((topic, ti) => (
                       <div key={ti} className="flex items-center gap-2 text-sm text-gray-600 bg-slate-50 border border-slate-100 rounded-lg px-3 py-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
-                        {topic}
+                        <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />
+                        <span>{topic}</span>
                       </div>
                     ))}
                   </div>
 
-                  <button className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-sm">
-                    <Award className="w-4 h-4" /> Start Practice Quiz
+                  <button
+                    onClick={handleStartQuiz}
+                    disabled={!selectedSubject || selectedSubject.questions === 0}
+                    className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-40"
+                  >
+                    <Play className="w-4 h-4 fill-white" /> Start Practice Quiz
                   </button>
                 </div>
               ) : (

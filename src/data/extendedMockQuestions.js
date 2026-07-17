@@ -228,3 +228,53 @@ export function generateExamQuestions(totalCount = 100) {
 
   return questions;
 }
+
+export function generateSubjectQuiz(subjectName = 'Quantitative Aptitude', totalCount = 20) {
+  const nameLower = subjectName.toLowerCase();
+  let targetSection = 'quant';
+  if (nameLower.includes('reasoning')) targetSection = 'reasoning';
+  else if (nameLower.includes('knowledge') || nameLower.includes('gk')) targetSection = 'gk';
+  else if (nameLower.includes('english')) targetSection = 'english';
+  else if (nameLower.includes('tamil')) targetSection = 'tamil';
+  else if (nameLower.includes('computer')) targetSection = 'quant'; // fallback
+
+  const filtered = rawTemplates.filter(t => t.section === targetSection);
+  const templatesToUse = filtered.length > 0 ? filtered : rawTemplates;
+
+  const questions = [];
+  for (let i = 0; i < totalCount; i++) {
+    const template = templatesToUse[i % templatesToUse.length];
+    const multiplier = Math.floor(i / templatesToUse.length) + 1;
+    let questionText = template.question;
+    let questionTa = template.questionTa;
+    let options = [...template.options];
+    let explanation = template.explanation;
+
+    if (multiplier > 1 && targetSection === 'quant') {
+      const val = 40 + (i * 15);
+      questionText = `Q${i + 1}: If 25% of a number is ${val}, what is 60% of the same number?`;
+      questionTa = `Q${i + 1}: ஒரு எண்ணின் 25% ${val} எனில், அதே எண்ணின் 60% எவ்வளவு?`;
+      const num = val * 4;
+      const ansVal = num * 0.6;
+      options = [`${ansVal - 10}`, `${ansVal}`, `${ansVal + 15}`, `${ansVal + 25}`];
+      explanation = `25% = ${val} => 100% = ${num}. 60% of ${num} = ${ansVal}.`;
+    }
+
+    questions.push({
+      id: i + 1,
+      sectionId: targetSection,
+      sectionName: subjectName,
+      question: questionText,
+      questionTa: questionTa,
+      options: options,
+      answer: template.answer,
+      explanation: explanation,
+      hasImage: template.hasImage && (i % 5 === 2),
+      imageUrl: template.imageUrl || 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=800&q=80',
+      imageCaption: template.imageCaption || `Diagram Reference for Question #${i + 1}`
+    });
+  }
+
+  return questions;
+}
+

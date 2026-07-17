@@ -7,6 +7,7 @@ import TestResults from './pages/TestResults';
 import AnalyticsPage from './pages/AnalyticsPage';
 import AIHubPage from './pages/AIHubPage';
 import PYQPage from './pages/PYQPage';
+import QuizPage from './pages/QuizPage';
 import ProfilePage from './pages/ProfilePage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import AdminPage from './pages/AdminPage';
@@ -21,6 +22,7 @@ function App() {
           <Route path="/"           element={<Home />} />
           <Route path="/exams"      element={<ExamsPage />} />
           <Route path="/practice"   element={<PracticePage />} />
+          <Route path="/quiz"       element={<QuizPage />} />
           <Route path="/mock"       element={<MockTestPage />} />
           <Route path="/pyq"        element={<PYQPage />} />
           <Route path="/previous-year-questions" element={<PYQPage />} />
