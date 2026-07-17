@@ -1,0 +1,58 @@
+[
+  {
+    "id": "ci-001",
+    "question": "Find the compound interest on ₹8,000 at 15% per annum for 2 years, compounded annually.",
+    "options": ["₹2,580", "₹2,400", "₹2,500", "₹2,800"],
+    "answer": 0,
+    "explanation": "A = P(1 + R/100)^T = 8000(1.15)² = 8000 × 1.3225 = ₹10,580. CI = 10580 - 8000 = ₹2,580.",
+    "shortcutMethod": "CI for 2 yrs = P × [(R/100)² + 2(R/100)] = 8000 × [0.0225 + 0.3] = 8000 × 0.3225 = 2580.",
+    "formulaUsed": "A = P(1 + R/100)^n; CI = A - P",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "45s"
+  },
+  {
+    "id": "ci-002",
+    "question": "The difference between compound interest and simple interest on a sum of ₹10,000 for 2 years at 10% per annum is:",
+    "options": ["₹100", "₹200", "₹150", "₹50"],
+    "answer": 0,
+    "explanation": "Difference for 2 years = P × (R/100)² = 10000 × (10/100)² = 10000 × 0.01 = ₹100.",
+    "shortcutMethod": "CI - SI for 2 years = P(R/100)² = 10000 × 0.01 = 100.",
+    "formulaUsed": "CI - SI (2 years) = P × (R/100)²",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "ci-003",
+    "question": "A sum of money placed at compound interest doubles itself in 5 years. In how many years will it become 8 times?",
+    "options": ["15 years", "20 years", "10 years", "25 years"],
+    "answer": 0,
+    "explanation": "If amount doubles in 5 years, it becomes 2¹ in 5 years. For 8 times = 2³, time = 5 × 3 = 15 years.",
+    "shortcutMethod": "8 = 2³. If doubles in T years, 2^n times in nT years. 3 × 5 = 15.",
+    "formulaUsed": "If doubles in T years → 2^n times in n × T years",
+    "difficulty": "Medium",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "ci-004",
+    "question": "Find the compound interest on ₹16,000 at 20% per annum for 9 months, compounded quarterly.",
+    "options": ["₹2,522", "₹2,400", "₹2,000", "₹3,000"],
+    "answer": 0,
+    "explanation": "Rate per quarter = 20/4 = 5%. Time = 9 months = 3 quarters. A = 16000(1 + 5/100)³ = 16000 × (1.05)³ = 16000 × 1.157625 = ₹18,522. CI = 18522 - 16000 = ₹2,522.",
+    "shortcutMethod": "Quarterly rate = 5%, n = 3. A = 16000 × 1.157625 ≈ ₹18,522. CI ≈ ₹2,522.",
+    "formulaUsed": "A = P(1 + R/400)^(4T) for quarterly compounding",
+    "difficulty": "Hard",
+    "examName": "SBI PO",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "60s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "disc-001",
+    "question": "A shopkeeper offers a discount of 20% on the marked price of an article and still makes a profit of 12%. If the cost price is ₹500, find the marked price.",
+    "options": ["₹700", "₹600", "₹750", "₹800"],
+    "answer": 0,
+    "explanation": "SP = CP × (1 + Profit%) = 500 × 1.12 = ₹560. MP × (1 - 20/100) = 560. MP × 0.8 = 560. MP = ₹700.",
+    "shortcutMethod": "SP = 500 × 1.12 = 560. MP = 560 / 0.8 = 700.",
+    "formulaUsed": "SP = MP × (1 - D/100); SP = CP × (1 + P/100)",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "disc-002",
+    "question": "Two successive discounts of 10% and 20% are equivalent to a single discount of:",
+    "options": ["28%", "30%", "25%", "32%"],
+    "answer": 0,
+    "explanation": "Equivalent discount = A + B - (A × B)/100 = 10 + 20 - (10 × 20)/100 = 30 - 2 = 28%.",
+    "shortcutMethod": "Net discount = 10 + 20 - (200/100) = 28%.",
+    "formulaUsed": "Equivalent Discount = d₁ + d₂ - (d₁ × d₂)/100",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "disc-003",
+    "question": "The marked price of a watch is ₹3,200. After successive discounts of 10% and 5%, the selling price is:",
+    "options": ["₹2,736", "₹2,720", "₹2,880", "₹2,560"],
+    "answer": 0,
+    "explanation": "After 10% discount: 3200 × 0.9 = 2880. After 5% discount: 2880 × 0.95 = ₹2,736.",
+    "shortcutMethod": "SP = 3200 × 0.9 × 0.95 = 3200 × 0.855 = ₹2,736.",
+    "formulaUsed": "SP = MP × (1 - d₁/100) × (1 - d₂/100)",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "25s"
+  }
+]

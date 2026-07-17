@@ -1,0 +1,44 @@
+[
+  {
+    "id": "pc-001",
+    "question": "Two pipes can fill a tank in 20 and 30 minutes respectively. If both pipes are opened simultaneously, how long will it take to fill the tank?",
+    "options": ["12 minutes", "15 minutes", "10 minutes", "25 minutes"],
+    "answer": 0,
+    "explanation": "Rate of pipe A = 1/20. Rate of pipe B = 1/30. Combined rate = 1/20 + 1/30 = 5/60 = 1/12. Time = 12 minutes.",
+    "shortcutMethod": "Time = (20 × 30) / (20 + 30) = 600/50 = 12 minutes.",
+    "formulaUsed": "Time = (A × B) / (A + B) for two filling pipes",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "pc-002",
+    "question": "A pipe can fill a tank in 15 hours. Due to a leak at the bottom, it is filled in 20 hours. If the tank is full, how long will the leak take to empty it?",
+    "options": ["60 hours", "45 hours", "30 hours", "75 hours"],
+    "answer": 0,
+    "explanation": "Rate of filling pipe = 1/15. Net rate with leak = 1/20. Leak rate = 1/15 - 1/20 = (4-3)/60 = 1/60. Leak empties tank in 60 hours.",
+    "shortcutMethod": "Leak time = (15 × 20) / (20 - 15) = 300/5 = 60 hours.",
+    "formulaUsed": "Leak Rate = Fill Rate - Net Rate",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "35s"
+  },
+  {
+    "id": "pc-003",
+    "question": "Pipe A fills a tank in 12 minutes and pipe B fills it in 18 minutes. Pipe C empties it in 36 minutes. If all three are opened, how long to fill the tank?",
+    "options": ["9 minutes", "12 minutes", "10 minutes", "15 minutes"],
+    "answer": 0,
+    "explanation": "Net rate = 1/12 + 1/18 - 1/36 = 3/36 + 2/36 - 1/36 = 4/36 = 1/9. Time = 9 minutes.",
+    "shortcutMethod": "LCM = 36. A = 3 units, B = 2 units, C = -1 unit. Net = 4 units/min. Time = 36/4 = 9 min.",
+    "formulaUsed": "Net Rate = Sum of fill rates - Sum of drain rates",
+    "difficulty": "Medium",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "40s"
+  }
+]

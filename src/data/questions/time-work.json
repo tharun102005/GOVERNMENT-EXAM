@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tw-001",
+    "question": "A can complete a work in 12 days and B can complete the same work in 18 days. If they work together, in how many days will the work be completed?",
+    "questionTa": "A ஒரு வேலையை 12 நாட்களிலும் B அதே வேலையை 18 நாட்களிலும் செய்து முடிப்பார்கள். இருவரும் சேர்ந்து பணிபுரிந்தால் வேலை எத்தனை நாட்களில் முடியும்?",
+    "options": ["7.2 days", "8 days", "6.5 days", "9 days"],
+    "answer": 0,
+    "explanation": "A's 1 day work = 1/12. B's 1 day work = 1/18. Combined 1 day work = 1/12 + 1/18 = 5/36. Total time = 36/5 = 7.2 days.",
+    "shortcutMethod": "Total Time = (A × B) / (A + B) = (12 × 18) / 30 = 216 / 30 = 7.2 days.",
+    "formulaUsed": "Time = (x × y) / (x + y)",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "tw-002",
+    "question": "12 men or 18 women can harvest a field in 14 days. In how many days can 8 men and 16 women harvest the same field?",
+    "questionTa": "12 ஆண்கள் அல்லது 18 பெண்கள் ஒரு வயலை 14 நாட்களில் அறுவடை செய்யலாம். 8 ஆண்கள் மற்றும் 16 பெண்கள் சேர்ந்து அதே வயலை எத்தனை நாட்களில் அறுவடை செய்வார்கள்?",
+    "options": ["9 days", "10 days", "12 days", "8 days"],
+    "answer": 0,
+    "explanation": "Efficiency: 12 Men = 18 Women => 1 Man = 1.5 Women. 8 Men + 16 Women = (8 × 1.5) + 16 = 28 Women. 18 Women finish in 14 days. 28 Women finish in (18 × 14) / 28 = 9 days.",
+    "shortcutMethod": "Days = Total Women-days / Total Women = (18 × 14) / 28 = 9 days.",
+    "formulaUsed": "M1 × D1 = M2 × D2",
+    "difficulty": "Medium",
+    "examName": "TNPSC Group 2",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "50s"
+  }
+]

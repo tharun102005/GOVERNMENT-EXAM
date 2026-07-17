@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ser-001",
+    "question": "Find the next number in the series: 2, 6, 12, 20, 30, ?",
+    "options": ["42", "40", "44", "36"],
+    "answer": 0,
+    "explanation": "Differences: 4, 6, 8, 10 (increasing by 2). Next difference = 12. So next term = 30 + 12 = 42.",
+    "shortcutMethod": "Pattern: n(n+1). 6th term = 6 × 7 = 42.",
+    "formulaUsed": "Second order difference series",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "ser-002",
+    "question": "What is the next term: 1, 1, 2, 3, 5, 8, 13, ?",
+    "options": ["21", "18", "20", "15"],
+    "answer": 0,
+    "explanation": "This is the Fibonacci series. Each term = sum of previous two. 8 + 13 = 21.",
+    "shortcutMethod": "Fibonacci: 8 + 13 = 21.",
+    "formulaUsed": "Fibonacci: aₙ = aₙ₋₁ + aₙ₋₂",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "10s"
+  },
+  {
+    "id": "ser-003",
+    "question": "Find the missing number: 3, 9, 27, 81, ?, 729.",
+    "options": ["243", "162", "216", "324"],
+    "answer": 0,
+    "explanation": "Geometric progression with ratio 3. 81 × 3 = 243.",
+    "shortcutMethod": "GP: multiply by 3. 81 × 3 = 243.",
+    "formulaUsed": "GP: aₙ = a₁ × r^(n-1)",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "10s"
+  }
+]

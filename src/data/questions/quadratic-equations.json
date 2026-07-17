@@ -1,0 +1,44 @@
+[
+  {
+    "id": "qe-001",
+    "question": "Solve: x² - 7x + 12 = 0. Find the roots.",
+    "options": ["3 and 4", "2 and 6", "4 and 5", "1 and 12"],
+    "answer": 0,
+    "explanation": "x² - 7x + 12 = 0. Find two numbers whose product is 12 and sum is 7: 3 and 4. So x = 3 or x = 4.",
+    "shortcutMethod": "Product = 12, Sum = 7 → factors are 3 and 4.",
+    "formulaUsed": "Factorization: x² - (sum)x + product = 0",
+    "difficulty": "Easy",
+    "examName": "IBPS PO",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "qe-002",
+    "question": "If the roots of x² + kx + 12 = 0 are in the ratio 1:3, find k.",
+    "options": ["8", "-8", "6", "10"],
+    "answer": 1,
+    "explanation": "Let roots = α and 3α. Product = 3α² = 12, α² = 4, α = 2. Sum = 4α = 8 = -k. So k = -8.",
+    "shortcutMethod": "Roots = 2, 6. Sum = 8 = -k → k = -8.",
+    "formulaUsed": "Sum of roots = -b/a; Product of roots = c/a",
+    "difficulty": "Medium",
+    "examName": "SBI PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "qe-003",
+    "question": "For what values of k does the equation x² - 6x + k = 0 have equal roots?",
+    "options": ["9", "6", "12", "3"],
+    "answer": 0,
+    "explanation": "For equal roots, discriminant = 0. b² - 4ac = 0 → 36 - 4k = 0 → k = 9.",
+    "shortcutMethod": "D = 0: 36 - 4k = 0 → k = 9.",
+    "formulaUsed": "Discriminant D = b² - 4ac = 0 for equal roots",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  }
+]

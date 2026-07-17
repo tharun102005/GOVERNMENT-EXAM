@@ -1,0 +1,44 @@
+[
+  {
+    "id": "bs-001",
+    "question": "A man can row 6 km/hr in still water. If the speed of the current is 2 km/hr, it takes 3 hours more in upstream than downstream. Find the distance.",
+    "options": ["24 km", "20 km", "30 km", "16 km"],
+    "answer": 0,
+    "explanation": "Downstream speed = 6+2 = 8 km/hr. Upstream speed = 6-2 = 4 km/hr. Let distance = d. d/4 - d/8 = 3. d(2-1)/8 = 3. d/8 = 3. d = 24 km.",
+    "shortcutMethod": "d = Extra time × (DS × US) / (DS - US) = 3 × (8×4)/(8-4) = 3×32/4 = 24 km.",
+    "formulaUsed": "DS = (u+v); US = (u-v); Distance = Time diff × (DS×US)/(DS-US)",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "50s"
+  },
+  {
+    "id": "bs-002",
+    "question": "A boat goes 40 km upstream in 8 hours and 36 km downstream in 6 hours. Find the speed of the stream.",
+    "options": ["0.5 km/hr", "1 km/hr", "2 km/hr", "1.5 km/hr"],
+    "answer": 0,
+    "explanation": "Upstream speed = 40/8 = 5 km/hr. Downstream speed = 36/6 = 6 km/hr. Speed of stream = (6-5)/2 = 0.5 km/hr.",
+    "shortcutMethod": "Stream speed = (DS - US) / 2 = (6-5)/2 = 0.5 km/hr.",
+    "formulaUsed": "Stream Speed = (Downstream - Upstream) / 2",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "bs-003",
+    "question": "A boat takes 2 hours to go 20 km downstream and 4 hours to return upstream. Find the speed of the boat in still water.",
+    "options": ["7.5 km/hr", "10 km/hr", "5 km/hr", "8 km/hr"],
+    "answer": 0,
+    "explanation": "DS = 20/2 = 10 km/hr. US = 20/4 = 5 km/hr. Speed in still water = (10+5)/2 = 7.5 km/hr.",
+    "shortcutMethod": "Still water speed = (DS + US) / 2 = (10+5)/2 = 7.5 km/hr.",
+    "formulaUsed": "Speed in still water = (DS + US) / 2",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "25s"
+  }
+]

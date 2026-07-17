@@ -1,0 +1,72 @@
+[
+  {
+    "id": "avg-001",
+    "question": "The average of 5 numbers is 27. If one number is excluded, the average becomes 25. Find the excluded number.",
+    "options": ["35", "30", "32", "40"],
+    "answer": 0,
+    "explanation": "Sum of 5 numbers = 5 × 27 = 135. Sum of 4 numbers = 4 × 25 = 100. Excluded number = 135 - 100 = 35.",
+    "shortcutMethod": "Excluded = Total Sum - Remaining Sum = 135 - 100 = 35.",
+    "formulaUsed": "Excluded Number = n₁ × Avg₁ - n₂ × Avg₂",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "avg-002",
+    "question": "The average age of a class of 40 students is 15 years. If the teacher's age is included, the average increases by 1 year. What is the teacher's age?",
+    "options": ["56", "50", "45", "60"],
+    "answer": 0,
+    "explanation": "Sum of 40 students = 40 × 15 = 600. New average = 16. New sum = 41 × 16 = 656. Teacher's age = 656 - 600 = 56.",
+    "shortcutMethod": "Teacher's age = New Average + n × Increase = 16 + 40 × 1 = 56.",
+    "formulaUsed": "New Member = New Avg + n × (Increase in Avg)",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "avg-003",
+    "question": "A batsman has a certain average of runs for 16 innings. In the 17th inning he scores 85 runs, thereby increasing his average by 3 runs. What is his average after the 17th inning?",
+    "options": ["37", "34", "40", "36"],
+    "answer": 0,
+    "explanation": "Let old average = x. Total runs after 16 innings = 16x. New average = x + 3. 16x + 85 = 17(x + 3) = 17x + 51. x = 34. New average = 37.",
+    "shortcutMethod": "New Avg = Score - (n-1) × Increase = 85 - 16 × 3 = 85 - 48 = 37.",
+    "formulaUsed": "New Average = (Old Sum + New Score) / (n + 1)",
+    "difficulty": "Medium",
+    "examName": "IBPS PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "45s"
+  },
+  {
+    "id": "avg-004",
+    "question": "The average weight of 8 persons increases by 2.5 kg when a new person comes in place of one of them weighing 65 kg. What might be the weight of the new person?",
+    "options": ["85 kg", "75 kg", "80 kg", "90 kg"],
+    "answer": 0,
+    "explanation": "Total increase in weight = 8 × 2.5 = 20 kg. Weight of new person = 65 + 20 = 85 kg.",
+    "shortcutMethod": "New person's weight = Old person + n × increase = 65 + 8 × 2.5 = 85 kg.",
+    "formulaUsed": "New Weight = Old Weight + n × Change in Average",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "avg-005",
+    "question": "The average of the first 50 natural numbers is:",
+    "options": ["25.5", "25", "26", "50"],
+    "answer": 0,
+    "explanation": "Average of first n natural numbers = (n + 1) / 2 = (50 + 1) / 2 = 25.5.",
+    "shortcutMethod": "Direct formula: (n + 1) / 2 = 51 / 2 = 25.5.",
+    "formulaUsed": "Average of 1 to n = (n + 1) / 2",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "10s"
+  }
+]

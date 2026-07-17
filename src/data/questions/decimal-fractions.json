@@ -1,0 +1,44 @@
+[
+  {
+    "id": "df-001",
+    "question": "Convert 0.375 into a fraction.",
+    "options": ["3/8", "3/4", "5/8", "7/16"],
+    "answer": 0,
+    "explanation": "0.375 = 375/1000 = 3/8 (dividing by 125).",
+    "shortcutMethod": "375/1000 → HCF = 125 → 3/8.",
+    "formulaUsed": "Decimal to Fraction conversion by simplification",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "df-002",
+    "question": "Arrange in ascending order: 3/5, 5/8, 7/12, 2/3.",
+    "options": ["7/12, 3/5, 5/8, 2/3", "3/5, 5/8, 7/12, 2/3", "3/5, 7/12, 5/8, 2/3", "7/12, 5/8, 3/5, 2/3"],
+    "answer": 0,
+    "explanation": "LCM of 5,8,12,3 = 120. 3/5=72/120, 5/8=75/120, 7/12=70/120, 2/3=80/120. Ascending: 70,72,75,80 → 7/12, 3/5, 5/8, 2/3.",
+    "shortcutMethod": "Convert to common denominator 120 and compare.",
+    "formulaUsed": "LCM method for comparing fractions",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "df-003",
+    "question": "What is 0.̄6̄ (0.666...) as a fraction?",
+    "options": ["2/3", "3/5", "6/10", "1/3"],
+    "answer": 0,
+    "explanation": "Let x = 0.666... 10x = 6.666... 10x - x = 6. 9x = 6. x = 6/9 = 2/3.",
+    "shortcutMethod": "Recurring decimal 0.6̄ = 6/9 = 2/3.",
+    "formulaUsed": "Recurring decimal: 0.ā = a/9",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "15s"
+  }
+]

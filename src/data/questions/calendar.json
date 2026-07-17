@@ -1,0 +1,44 @@
+[
+  {
+    "id": "cal-001",
+    "question": "What day of the week was 15th August 1947?",
+    "options": ["Friday", "Saturday", "Thursday", "Sunday"],
+    "answer": 0,
+    "explanation": "Using odd days method: From 1/1/0001 to 15/8/1947. Count odd days for 1946 years + Jan to Jul 1947 + 15 Aug days. Total odd days mod 7 = 5 → Friday.",
+    "shortcutMethod": "1947 years odd days + month days calculation = Friday.",
+    "formulaUsed": "Odd Days Method: Total days mod 7",
+    "difficulty": "Hard",
+    "examName": "UPSC CSAT",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "90s"
+  },
+  {
+    "id": "cal-002",
+    "question": "If 1st January 2023 is a Sunday, what day is 1st January 2024?",
+    "options": ["Monday", "Tuesday", "Sunday", "Wednesday"],
+    "answer": 0,
+    "explanation": "2023 is not a leap year, so it has 365 days. 365 = 52 weeks + 1 odd day. So 1 Jan 2024 is Sunday + 1 = Monday.",
+    "shortcutMethod": "Normal year = 1 odd day. Sunday + 1 = Monday.",
+    "formulaUsed": "Normal year = 1 odd day, Leap year = 2 odd days",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "cal-003",
+    "question": "How many leap years are there between 1900 and 2000 (exclusive)?",
+    "options": ["24", "25", "26", "23"],
+    "answer": 0,
+    "explanation": "1900 is not a leap year (divisible by 100 but not 400). 2000 excluded. Leap years from 1904 to 1996: (1996-1904)/4 + 1 = 24.",
+    "shortcutMethod": "1904, 1908... 1996. Count = (1996-1904)/4 + 1 = 24.",
+    "formulaUsed": "Leap Year: divisible by 4, except centuries unless divisible by 400",
+    "difficulty": "Medium",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "40s"
+  }
+]

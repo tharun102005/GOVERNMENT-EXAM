@@ -5,8 +5,7 @@ import {
   Award, Eye, LogOut 
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import { generateSubjectQuiz } from '../data/extendedMockQuestions';
-import { generateUniqueTopicQuestionBank } from '../data/topicQuestionBanks';
+import { getTopicRealQuestionBank } from '../data/questions';
 
 export default function QuizPage() {
   const { state } = useLocation();
@@ -26,6 +25,7 @@ export default function QuizPage() {
   const [timeLeft, setTimeLeft] = useState(totalCount * 60); // 1 minute per question
   const [isFinished, setIsFinished] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
+  const [noQuestions, setNoQuestions] = useState(false);
 
   // Helper shuffle array
   const shuffle = (array) => {
@@ -37,14 +37,13 @@ export default function QuizPage() {
     return arr;
   };
 
-  // Initialize unique non-overlapping question bank for topic with completed question tracking
+  // Load real questions from JSON question bank
   useEffect(() => {
-    let rawBank = [];
-    if (topicId && (topicId.includes('-') || topicId.length > 2)) {
-      rawBank = generateUniqueTopicQuestionBank(topicId, 500);
-    }
-    if (!rawBank || rawBank.length === 0) {
-      rawBank = generateSubjectQuiz(subjectName, 100);
+    const realBank = getTopicRealQuestionBank(topicId);
+
+    if (!realBank || realBank.length === 0) {
+      setNoQuestions(true);
+      return;
     }
 
     // Get completed question IDs from localStorage
@@ -56,17 +55,17 @@ export default function QuizPage() {
     }
 
     // Filter uncompleted questions
-    let uncompleted = rawBank.filter(q => !completedIds.includes(q.id));
-    if (uncompleted.length < totalCount) {
-      // Reset completed list if full bank has been completed once
-      uncompleted = rawBank;
+    let uncompleted = realBank.filter(q => !completedIds.includes(q.id));
+    if (uncompleted.length < Math.min(totalCount, realBank.length)) {
+      // Reset completed list if full bank has been completed
+      uncompleted = realBank;
       localStorage.setItem(`exammaster_completed_qs_${topicId}`, JSON.stringify([]));
     }
 
     // Shuffle and pick session questions
-    const sessionQs = shuffle(uncompleted).slice(0, totalCount);
+    const sessionQs = shuffle(uncompleted).slice(0, Math.min(totalCount, uncompleted.length));
     setQuestions(sessionQs);
-  }, [topicId, subjectName, totalCount]);
+  }, [topicId, totalCount]);
 
   const handleSubmitQuiz = useCallback(() => {
     setIsFinished(true);
@@ -195,13 +194,36 @@ export default function QuizPage() {
     }
   };
 
+  if (noQuestions || (!currentQ && questions.length === 0)) {
+    return (
+      <div className="min-h-screen bg-[#F8FAFC]">
+        <Navbar />
+        <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+          <div className="w-20 h-20 bg-amber-50 border-2 border-amber-200 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-3xl">📝</span>
+          </div>
+          <h2 className="text-2xl font-extrabold text-gray-900 mb-2">Questions Coming Soon</h2>
+          <p className="text-gray-500 text-sm max-w-md mx-auto mb-6">
+            We are adding real government exam questions for this topic. Check back soon!
+          </p>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl cursor-pointer"
+          >
+            ← Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (!currentQ) {
     return (
       <div className="min-h-screen bg-[#F8FAFC]">
         <Navbar />
         <div className="max-w-4xl mx-auto px-4 py-20 text-center text-gray-500">
-          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-bold text-sm">Generating Unique Topic Questions Bank...</p>
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4" />
+          <p className="font-bold text-sm">Loading Questions...</p>
         </div>
       </div>
     );
@@ -369,14 +391,38 @@ export default function QuizPage() {
                       📐 Formula: {currentQ.formulaUsed}
                     </div>
                   )}
-                  {currentQ.shortcutTrick && (
+                  {(currentQ.shortcutMethod || currentQ.shortcutTrick) && (
                     <div className="font-medium text-amber-800 bg-amber-50 p-2 rounded-lg border border-amber-200">
-                      ⚡ Shortcut Trick: {currentQ.shortcutTrick}
+                      ⚡ Shortcut: {currentQ.shortcutMethod || currentQ.shortcutTrick}
                     </div>
                   )}
                   <div className="leading-relaxed">
-                    <strong>Step-by-Step AI Solution:</strong> {currentQ.explanation}
+                    <strong>Step-by-Step Solution:</strong> {currentQ.explanation}
                   </div>
+                  {(currentQ.examName || currentQ.examYear) && (
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {currentQ.examName && (
+                        <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
+                          📋 {currentQ.examName}
+                        </span>
+                      )}
+                      {currentQ.examYear && (
+                        <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                          📅 {currentQ.examYear}
+                        </span>
+                      )}
+                      {currentQ.marks && (
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                          🏅 {currentQ.marks} marks
+                        </span>
+                      )}
+                      {currentQ.timeToSolve && (
+                        <span className="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                          ⏱ {currentQ.timeToSolve}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

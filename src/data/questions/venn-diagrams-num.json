@@ -1,0 +1,44 @@
+[
+  {
+    "id": "vn-001",
+    "question": "In a class of 60 students, 35 play cricket and 25 play football. If 10 play both, how many play neither?",
+    "options": ["10", "15", "5", "20"],
+    "answer": 0,
+    "explanation": "n(C ∪ F) = n(C) + n(F) - n(C ∩ F) = 35 + 25 - 10 = 50. Neither = 60 - 50 = 10.",
+    "shortcutMethod": "Union = 35+25-10 = 50. Neither = 60-50 = 10.",
+    "formulaUsed": "n(A ∪ B) = n(A) + n(B) - n(A ∩ B)",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "vn-002",
+    "question": "In a survey of 100 people: 60 like tea, 40 like coffee, 25 like both. How many like only tea?",
+    "options": ["35", "60", "40", "25"],
+    "answer": 0,
+    "explanation": "Only tea = Tea - Both = 60 - 25 = 35.",
+    "shortcutMethod": "Only A = n(A) - n(A ∩ B) = 60 - 25 = 35.",
+    "formulaUsed": "Only A = n(A) - n(A ∩ B)",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "vn-003",
+    "question": "In a group of 200 students: 100 study Hindi, 80 study English, 60 study Tamil, 30 study Hindi & English, 20 study English & Tamil, 25 study Hindi & Tamil, 10 study all three. How many study at least one language?",
+    "options": ["175", "180", "170", "195"],
+    "answer": 0,
+    "explanation": "n(H∪E∪T) = 100+80+60-30-20-25+10 = 175.",
+    "shortcutMethod": "Inclusion-exclusion: 100+80+60-30-20-25+10 = 175.",
+    "formulaUsed": "n(A∪B∪C) = n(A)+n(B)+n(C)-n(A∩B)-n(B∩C)-n(A∩C)+n(A∩B∩C)",
+    "difficulty": "Hard",
+    "examName": "IBPS PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "60s"
+  }
+]

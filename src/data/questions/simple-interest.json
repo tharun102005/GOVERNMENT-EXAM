@@ -1,0 +1,58 @@
+[
+  {
+    "id": "si-001",
+    "question": "A sum of ₹5,000 is lent at simple interest for 3 years at 8% per annum. Find the simple interest.",
+    "options": ["₹1,200", "₹1,000", "₹1,500", "₹800"],
+    "answer": 0,
+    "explanation": "SI = (P × R × T) / 100 = (5000 × 8 × 3) / 100 = ₹1,200.",
+    "shortcutMethod": "SI = PRT/100 = 5000 × 8 × 3 / 100 = 1200.",
+    "formulaUsed": "SI = (P × R × T) / 100",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "si-002",
+    "question": "At what rate percent per annum will ₹3,200 amount to ₹4,000 in 5 years at simple interest?",
+    "options": ["5%", "8%", "4%", "6%"],
+    "answer": 0,
+    "explanation": "SI = 4000 - 3200 = 800. R = (SI × 100) / (P × T) = (800 × 100) / (3200 × 5) = 5%.",
+    "shortcutMethod": "R = (800 × 100) / (3200 × 5) = 5%.",
+    "formulaUsed": "R = (SI × 100) / (P × T)",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "si-003",
+    "question": "A sum of money doubles itself in 8 years at simple interest. What is the rate of interest?",
+    "options": ["12.5%", "10%", "15%", "8%"],
+    "answer": 0,
+    "explanation": "If sum doubles, SI = P. So P = (P × R × 8) / 100. R = 100 / 8 = 12.5%.",
+    "shortcutMethod": "Rate = 100 / Time to double = 100/8 = 12.5%.",
+    "formulaUsed": "When amount doubles: R = 100 / T",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "si-004",
+    "question": "The simple interest on a certain sum for 2.5 years at 12% per annum is ₹40 less than the simple interest on the same sum for 3.5 years at 10% per annum. Find the sum.",
+    "options": ["₹800", "₹1,000", "₹600", "₹1,200"],
+    "answer": 0,
+    "explanation": "SI₁ = P × 12 × 2.5 / 100 = 0.3P. SI₂ = P × 10 × 3.5 / 100 = 0.35P. Given 0.35P - 0.3P = 40. 0.05P = 40. P = ₹800.",
+    "shortcutMethod": "0.35P - 0.3P = 40 → 0.05P = 40 → P = 800.",
+    "formulaUsed": "SI = PRT/100; Difference method",
+    "difficulty": "Medium",
+    "examName": "IBPS PO",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "45s"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ds-001",
+    "question": "Is the two-digit number ab divisible by 6? Statement I: a + b = 12. Statement II: b is an even number.",
+    "options": ["Both statements together are sufficient", "Statement I alone is sufficient", "Statement II alone is sufficient", "Neither statement is sufficient"],
+    "answer": 0,
+    "explanation": "For divisibility by 6, number must be divisible by both 2 and 3. Statement I: a+b=12 (divisible by 3). Statement II: b is even (divisible by 2). Both together confirm divisibility by 6.",
+    "shortcutMethod": "Divisible by 6 = divisible by 2 AND 3. Stmt I → div by 3. Stmt II → div by 2. Both needed.",
+    "formulaUsed": "Divisibility by 6 = Divisible by 2 and 3",
+    "difficulty": "Hard",
+    "examName": "IBPS PO",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "60s"
+  },
+  {
+    "id": "ds-002",
+    "question": "What is the value of x? Statement I: 2x + 3y = 18. Statement II: x - y = 1.",
+    "options": ["Both statements together are sufficient", "Statement I alone is sufficient", "Statement II alone is sufficient", "Neither statement is sufficient"],
+    "answer": 0,
+    "explanation": "Two equations with two unknowns can be solved. From II: x = y+1. Substituting in I: 2(y+1)+3y = 18 → 5y = 16 → y = 3.2 → x = 4.2.",
+    "shortcutMethod": "Two linear equations in two variables → unique solution. Both statements needed.",
+    "formulaUsed": "System of simultaneous equations",
+    "difficulty": "Medium",
+    "examName": "SBI PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "45s"
+  }
+]

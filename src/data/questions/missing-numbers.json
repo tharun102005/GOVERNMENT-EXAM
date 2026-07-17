@@ -1,0 +1,30 @@
+[
+  {
+    "id": "mn-001",
+    "question": "Find the missing number: 5, 10, ?, 26, 37, 50.",
+    "options": ["17", "15", "20", "18"],
+    "answer": 0,
+    "explanation": "Differences: 5, 7, 9, 11, 13 (odd numbers). So missing = 10 + 7 = 17.",
+    "shortcutMethod": "Differences form an AP of odd numbers: +5, +7, +9, +11, +13. Missing = 10+7 = 17.",
+    "formulaUsed": "Second order difference pattern",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "mn-002",
+    "question": "Find the missing number in the matrix: Row1: 2, 3, 5 | Row2: 4, 9, 25 | Row3: 8, 27, ?",
+    "options": ["125", "100", "75", "150"],
+    "answer": 0,
+    "explanation": "Column pattern: 2, 4, 8 (powers of 2); 3, 9, 27 (powers of 3); 5, 25, ? (powers of 5). 5³ = 125.",
+    "shortcutMethod": "Each column: base^1, base^2, base^3. 5³ = 125.",
+    "formulaUsed": "Power pattern in matrix",
+    "difficulty": "Medium",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "40s"
+  }
+]

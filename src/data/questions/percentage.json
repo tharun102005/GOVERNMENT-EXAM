@@ -1,0 +1,62 @@
+[
+  {
+    "id": "pct-001",
+    "question": "If A's income is 25% more than B's income, by how much percentage is B's income less than A's income?",
+    "questionTa": "A-வின் வருமானம் B-யின் வருமானத்தை விட 25% அதிகம் எனில், B-யின் வருமானம் A-வின் வருமானத்தை விட எத்தனை சதவீதம் குறைவு?",
+    "options": ["20%", "25%", "15%", "16.66%"],
+    "answer": 0,
+    "explanation": "Let B's income = 100. Then A's income = 125. Difference = 25. Percentage less = (25 / 125) × 100 = 20%.",
+    "shortcutMethod": "[ R / (100 + R) ] × 100 = [ 25 / 125 ] × 100 = 20%.",
+    "formulaUsed": "% Less = [ R / (100 + R) ] × 100",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "pct-002",
+    "question": "In an election between two candidates, the winner got 62% of the valid votes and won by a margin of 2880 votes. Find the total number of valid votes polled.",
+    "questionTa": "இரண்டு வேட்பாளர்களுக்கு இடையேயான தேர்தலில், வெற்றி பெற்றவர் செல்லுபடியாகும் வாக்குகளில் 62% பெற்று 2880 வாக்குகள் வித்தியாசத்தில் வெற்றி பெற்றார். மொத்த வாக்குகளைக் காண்க.",
+    "options": ["12000", "15000", "18000", "20000"],
+    "answer": 0,
+    "explanation": "Winner got 62%, so Loser got (100 - 62)% = 38%. Margin = (62 - 38)% = 24%. Given 24% = 2880 votes. Total votes = (2880 / 24) × 100 = 12000 votes.",
+    "shortcutMethod": "Margin % = 62 - 38 = 24%. 100% = (2880 / 24) × 100 = 12,000.",
+    "formulaUsed": "Total Votes = (Vote Margin / Margin %) × 100",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "45s"
+  },
+  {
+    "id": "pct-003",
+    "question": "The population of a town increases by 10% in the first year and decreases by 10% in the second year. If the current population is 99,000, what was the population 2 years ago?",
+    "questionTa": "ஒரு நகரத்தின் மக்கள் தொகை முதல் ஆண்டில் 10% அதிகரித்து இரண்டாம் ஆண்டில் 10% குறைகிறது. தற்போதைய மக்கள் தொகை 99,000 எனில், 2 ஆண்டுகளுக்கு முன்பு மக்கள் தொகை என்னவாக இருந்தது?",
+    "options": ["1,00,000", "95,000", "1,10,000", "98,000"],
+    "answer": 0,
+    "explanation": "Net percentage change for +10% and -10% = 10 - 10 - (10×10)/100 = -1%. So current population is 99% of original. Original = (99000 / 99) × 100 = 1,00,000.",
+    "shortcutMethod": "+10% & -10% net change = -1%. 99% = 99,000 => 100% = 100,000.",
+    "formulaUsed": "Net Change = A + B + (AB / 100)",
+    "difficulty": "Medium",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "pct-004",
+    "question": "A student has to secure 40% marks to pass an examination. If he gets 178 marks and fails by 22 marks, what are the maximum marks?",
+    "questionTa": "ஒரு மாணவர் தேர்வில் தேர்ச்சி பெற 40% மதிப்பெண்கள் பெற வேண்டும். அவர் 178 மதிப்பெண்கள் பெற்று 22 மதிப்பெண்களில் தோல்வியடைந்தால், அதிகபட்ச மதிப்பெண்கள் என்ன?",
+    "options": ["500", "600", "450", "550"],
+    "answer": 0,
+    "explanation": "Passing marks required = 178 + 22 = 200. 40% of Maximum Marks = 200. Maximum Marks = (200 / 40) × 100 = 500.",
+    "shortcutMethod": "Pass Marks = 178 + 22 = 200 = 40%. Total = 200 × 2.5 = 500.",
+    "formulaUsed": "Max Marks = (Pass Marks / Pass %) × 100",
+    "difficulty": "Easy",
+    "examName": "SBI Clerk",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "30s"
+  }
+]

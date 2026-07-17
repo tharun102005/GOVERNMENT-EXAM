@@ -1,0 +1,44 @@
+[
+  {
+    "id": "m2d-001",
+    "question": "Find the area of a triangle with sides 13 cm, 14 cm and 15 cm.",
+    "options": ["84 cm²", "90 cm²", "78 cm²", "96 cm²"],
+    "answer": 0,
+    "explanation": "s = (13+14+15)/2 = 21. Area = √(21 × 8 × 7 × 6) = √(7056) = 84 cm².",
+    "shortcutMethod": "Heron's formula: s=21. Area = √(21×8×7×6) = 84 cm².",
+    "formulaUsed": "Heron's Formula: A = √[s(s-a)(s-b)(s-c)]",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "45s"
+  },
+  {
+    "id": "m2d-002",
+    "question": "The circumference of a circle is 44 cm. Find its area.",
+    "options": ["154 cm²", "144 cm²", "132 cm²", "176 cm²"],
+    "answer": 0,
+    "explanation": "2πr = 44. r = 44/(2 × 22/7) = 7 cm. Area = πr² = (22/7) × 49 = 154 cm².",
+    "shortcutMethod": "r = 44/2π = 7. Area = πr² = 22/7 × 49 = 154 cm².",
+    "formulaUsed": "C = 2πr; A = πr²",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "m2d-003",
+    "question": "A rectangular park 60m × 40m has a 2m wide path inside it along all four sides. Find the area of the path.",
+    "options": ["384 m²", "400 m²", "360 m²", "416 m²"],
+    "answer": 0,
+    "explanation": "Outer area = 60 × 40 = 2400 m². Inner dimensions = (60-4) × (40-4) = 56 × 36 = 2016 m². Path area = 2400 - 2016 = 384 m².",
+    "shortcutMethod": "Path area = Outer area - Inner area = 2400 - 2016 = 384 m².",
+    "formulaUsed": "Path Area = L×B - (L-2w)(B-2w)",
+    "difficulty": "Medium",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "40s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "geo-001",
+    "question": "In a triangle, if two angles are 65° and 75°, find the third angle.",
+    "options": ["40°", "50°", "45°", "35°"],
+    "answer": 0,
+    "explanation": "Sum of angles in a triangle = 180°. Third angle = 180° - 65° - 75° = 40°.",
+    "shortcutMethod": "180 - 65 - 75 = 40°.",
+    "formulaUsed": "Sum of angles of triangle = 180°",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "10s"
+  },
+  {
+    "id": "geo-002",
+    "question": "The diagonal of a rectangle is 13 cm and one side is 5 cm. Find the other side.",
+    "options": ["12 cm", "10 cm", "8 cm", "11 cm"],
+    "answer": 0,
+    "explanation": "By Pythagoras: other side = √(13² - 5²) = √(169 - 25) = √144 = 12 cm.",
+    "shortcutMethod": "5-12-13 is a Pythagorean triplet. Other side = 12 cm.",
+    "formulaUsed": "Pythagorean Theorem: a² + b² = c²",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "geo-003",
+    "question": "An angle inscribed in a semicircle is:",
+    "options": ["90°", "180°", "60°", "120°"],
+    "answer": 0,
+    "explanation": "By Thales' theorem, any angle inscribed in a semicircle (subtended by the diameter) is always 90°.",
+    "shortcutMethod": "Thales' theorem: angle in semicircle = 90°.",
+    "formulaUsed": "Thales' Theorem",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 1,
+    "timeToSolve": "10s"
+  }
+]

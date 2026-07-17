@@ -1,0 +1,47 @@
+[
+  {
+    "id": "pl-001",
+    "question": "A shopkeeper marks his goods 30% above the cost price and allows a discount of 15% for cash payment. Find his profit percentage.",
+    "questionTa": "ஒரு கடைக்காரர் தனது பொருட்களை அடக்க விலையை விட 30% அதிகமாக குறிக்கிறார் மற்றும் 15% தள்ளுபடி தருகிறார். அவரின் லாப சதவீதத்தைக் காண்க.",
+    "options": ["10.5%", "15%", "12.5%", "18%"],
+    "answer": 0,
+    "explanation": "Let CP = 100. Marked Price MP = 130. Discount = 15% of 130 = 19.5. Selling Price SP = 130 - 19.5 = 110.5. Profit = 110.5 - 100 = 10.5%.",
+    "shortcutMethod": "Net Profit % = Markup % - Discount % - (Markup × Discount)/100 = 30 - 15 - (450/100) = 10.5%.",
+    "formulaUsed": "Profit % = M - D - (M × D)/100",
+    "difficulty": "Medium",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "pl-002",
+    "question": "The cost price of 15 articles is equal to the selling price of 12 articles. Find the gain percentage.",
+    "questionTa": "15 பொருட்களின் அடக்க விலை 12 பொருட்களின் விற்பனை விலைக்கு சமம் எனில், லாப சதவீதத்தைக் காண்க.",
+    "options": ["25%", "20%", "30%", "15%"],
+    "answer": 0,
+    "explanation": "15 CP = 12 SP => SP / CP = 15 / 12 = 5 / 4. Profit per 4 units = 1 unit. Profit % = (1 / 4) × 100 = 25%.",
+    "shortcutMethod": "Gain % = [ (Articles CP - Articles SP) / Articles SP ] × 100 = [ (15 - 12)/12 ] × 100 = 25%.",
+    "formulaUsed": "Gain % = (Difference / Selling Quantity) × 100",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "pl-003",
+    "question": "A dishonest dealer professes to sell his goods at cost price but uses a weight of 900 grams for a 1 kg weight. Find his gain percentage.",
+    "questionTa": "ஒரு நேர்மையற்ற வியாபாரி தனது பொருட்களை அடக்க விலையிலேயே விற்பதாக கூறுகிறார், ஆனால் 1 கிலா கிராமிற்கு 900 கிராம் எடையைப் பயன்படுத்துகிறார். அவரின் லாப சதவீதத்தைக் காண்க.",
+    "options": ["11.11%", "10%", "12.5%", "9.09%"],
+    "answer": 0,
+    "explanation": "Error = 1000g - 900g = 100g. False Weight = 900g. Gain % = (Error / False Weight) × 100 = (100 / 900) × 100 = 11.11%.",
+    "shortcutMethod": "Gain % = [ 100 / 900 ] × 100 = 11.11%.",
+    "formulaUsed": "Gain % = [ Error / (True Weight - Error) ] × 100",
+    "difficulty": "Hard",
+    "examName": "UPSC CSAT",
+    "examYear": 2022,
+    "marks": 2.5,
+    "timeToSolve": "45s"
+  }
+]

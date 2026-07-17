@@ -1,0 +1,44 @@
+[
+  {
+    "id": "clk-001",
+    "question": "At what time between 3 and 4 o'clock will the minute and hour hands be at right angles?",
+    "options": ["3:32 8/11 min", "3:30 min", "3:35 min", "3:25 min"],
+    "answer": 0,
+    "explanation": "At 3 o'clock, hands are 15 min spaces apart. For right angle (15 min spaces), minute hand must gain (15+15) = 30 min spaces or (15-15) = 0. Minute hand gains 55 min spaces in 60 min. Time = (30 × 60)/55 = 360/11 = 32 8/11 min past 3.",
+    "shortcutMethod": "θ = |30H - 11M/2|. For 90°: 90 = |90 - 5.5M|. M = 360/11 = 32 8/11.",
+    "formulaUsed": "θ = |30H - 11M/2|",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "50s"
+  },
+  {
+    "id": "clk-002",
+    "question": "What is the angle between the hands of a clock at 8:30?",
+    "options": ["75°", "80°", "70°", "90°"],
+    "answer": 0,
+    "explanation": "θ = |30H - 11M/2| = |30×8 - 11×30/2| = |240 - 165| = 75°.",
+    "shortcutMethod": "|30(8) - 5.5(30)| = |240 - 165| = 75°.",
+    "formulaUsed": "θ = |30H - 11M/2|",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "clk-003",
+    "question": "How many times do the hands of a clock coincide in 12 hours?",
+    "options": ["11", "12", "10", "24"],
+    "answer": 0,
+    "explanation": "The hands coincide 11 times in 12 hours (not 12, because between 11-12 and 12-1, only one coincidence at 12 o'clock).",
+    "shortcutMethod": "In 12 hours, hands overlap 11 times.",
+    "formulaUsed": "Overlaps in 12 hours = 11",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 1,
+    "timeToSolve": "10s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "log-001",
+    "question": "Find the value of log₂ 64.",
+    "options": ["6", "4", "8", "5"],
+    "answer": 0,
+    "explanation": "2⁶ = 64. So log₂ 64 = 6.",
+    "shortcutMethod": "64 = 2⁶ → log₂ 64 = 6.",
+    "formulaUsed": "If aˣ = N, then logₐ N = x",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "10s"
+  },
+  {
+    "id": "log-002",
+    "question": "If log₁₀ 2 = 0.3010, find the number of digits in 2⁶⁴.",
+    "options": ["20", "19", "21", "18"],
+    "answer": 0,
+    "explanation": "Number of digits = ⌊log₁₀(2⁶⁴)⌋ + 1 = ⌊64 × 0.3010⌋ + 1 = ⌊19.264⌋ + 1 = 19 + 1 = 20.",
+    "shortcutMethod": "Digits = ⌊64 × 0.3010⌋ + 1 = 19 + 1 = 20.",
+    "formulaUsed": "Number of digits = ⌊n × log₁₀ a⌋ + 1",
+    "difficulty": "Hard",
+    "examName": "IBPS PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "log-003",
+    "question": "Simplify: log 15 + log 20 - log 12.",
+    "options": ["log 25", "log 30", "log 15", "log 20"],
+    "answer": 0,
+    "explanation": "log 15 + log 20 - log 12 = log(15 × 20 / 12) = log(300/12) = log 25.",
+    "shortcutMethod": "log(15×20/12) = log(25).",
+    "formulaUsed": "log a + log b = log(ab); log a - log b = log(a/b)",
+    "difficulty": "Medium",
+    "examName": "SBI PO",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ma-001",
+    "question": "A mixture of milk and water in the ratio 5 : 1. If 5 litres of water is added, the ratio becomes 5 : 2. Find the quantity of milk in the mixture.",
+    "options": ["25 litres", "20 litres", "30 litres", "15 litres"],
+    "answer": 0,
+    "explanation": "Let milk = 5x, water = x. After adding 5L water: 5x/(x+5) = 5/2. 10x = 5x+25. 5x = 25. x = 5. Milk = 5×5 = 25 litres.",
+    "shortcutMethod": "From ratio equation: x = 5. Milk = 5x = 25 litres.",
+    "formulaUsed": "Mixture ratio equation: a/(b + added) = new ratio",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "40s"
+  },
+  {
+    "id": "ma-002",
+    "question": "In what ratio must water be mixed with milk costing ₹12 per litre to get a mixture worth ₹8 per litre?",
+    "options": ["1 : 2", "2 : 3", "1 : 3", "3 : 4"],
+    "answer": 0,
+    "explanation": "Using alligation: Water (₹0) and Milk (₹12), Mean = ₹8. Ratio = (12-8) : (8-0) = 4 : 8 = 1 : 2.",
+    "shortcutMethod": "Alligation: (12-8) : (8-0) = 4:8 = 1:2. Water : Milk = 1 : 2.",
+    "formulaUsed": "Alligation Rule: (d₂ - mean) : (mean - d₁)",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "ma-003",
+    "question": "A jar has 60 litres of milk. 15 litres are taken out and replaced with water. This is done twice. How much milk is left?",
+    "options": ["33.75 litres", "30 litres", "36 litres", "40 litres"],
+    "answer": 0,
+    "explanation": "After each replacement, milk fraction = (1 - 15/60) = 3/4. After 2 replacements: 60 × (3/4)² = 60 × 9/16 = 33.75 litres.",
+    "shortcutMethod": "Milk left = 60 × (3/4)² = 60 × 9/16 = 33.75 litres.",
+    "formulaUsed": "Milk left = Initial × (1 - removed/total)^n",
+    "difficulty": "Hard",
+    "examName": "IBPS PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "45s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "trn-001",
+    "question": "A train 250m long running at 72 km/hr crosses a platform in 26 seconds. What is the length of the platform?",
+    "options": ["270m", "250m", "300m", "200m"],
+    "answer": 0,
+    "explanation": "Speed = 72 × 5/18 = 20 m/s. Total distance = Speed × Time = 20 × 26 = 520m. Platform length = 520 - 250 = 270m.",
+    "shortcutMethod": "Platform = (Speed × Time) - Train length = (20 × 26) - 250 = 270m.",
+    "formulaUsed": "Time = (Train Length + Platform Length) / Speed",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "trn-002",
+    "question": "Two trains running in the same direction at 40 km/hr and 22 km/hr. The faster train passes a man in the slower train in 36 seconds. Find the length of the faster train.",
+    "options": ["180m", "200m", "150m", "216m"],
+    "answer": 0,
+    "explanation": "Relative speed = 40 - 22 = 18 km/hr = 18 × 5/18 = 5 m/s. Length = Speed × Time = 5 × 36 = 180m.",
+    "shortcutMethod": "Same direction → subtract speeds. Length = 5 × 36 = 180m.",
+    "formulaUsed": "Relative Speed (same direction) = S₁ - S₂",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "35s"
+  },
+  {
+    "id": "trn-003",
+    "question": "A train passes a telegraph pole in 10 seconds and a 300m long bridge in 25 seconds. Find the speed of the train.",
+    "options": ["72 km/hr", "60 km/hr", "80 km/hr", "54 km/hr"],
+    "answer": 0,
+    "explanation": "Let train length = L. L/10 = (L+300)/25. 25L = 10L + 3000. 15L = 3000. L = 200m. Speed = 200/10 = 20 m/s = 72 km/hr.",
+    "shortcutMethod": "Bridge covered in extra 15s. Bridge = 300m. Speed = 300/15 = 20 m/s = 72 km/hr.",
+    "formulaUsed": "Speed = (Bridge Length) / (Time for bridge - Time for pole)",
+    "difficulty": "Medium",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "45s"
+  }
+]

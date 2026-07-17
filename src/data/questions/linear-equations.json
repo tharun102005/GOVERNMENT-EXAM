@@ -1,0 +1,44 @@
+[
+  {
+    "id": "le-001",
+    "question": "Solve: 3x + 4y = 24 and x + 2y = 10. Find x.",
+    "options": ["4", "6", "2", "8"],
+    "answer": 0,
+    "explanation": "From eq2: x = 10 - 2y. Substituting in eq1: 3(10-2y) + 4y = 24 → 30-6y+4y = 24 → -2y = -6 → y = 3. x = 10-6 = 4.",
+    "shortcutMethod": "Multiply eq2 by 2: 2x+4y=20. Subtract from eq1: x=4.",
+    "formulaUsed": "Substitution / Elimination method for simultaneous equations",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "le-002",
+    "question": "The sum of two numbers is 45 and their difference is 11. Find the larger number.",
+    "options": ["28", "17", "22", "34"],
+    "answer": 0,
+    "explanation": "Let numbers be x and y. x+y = 45, x-y = 11. Adding: 2x = 56 → x = 28.",
+    "shortcutMethod": "Larger = (Sum + Difference) / 2 = (45+11)/2 = 28.",
+    "formulaUsed": "Larger = (S + D)/2; Smaller = (S - D)/2",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "le-003",
+    "question": "A number is 56 greater than the average of the numbers 90, 102, 42 and 68. What is the number?",
+    "options": ["131.5", "130", "125", "140"],
+    "answer": 0,
+    "explanation": "Average = (90+102+42+68)/4 = 302/4 = 75.5. Number = 75.5 + 56 = 131.5.",
+    "shortcutMethod": "Avg = 302/4 = 75.5. Number = 75.5 + 56 = 131.5.",
+    "formulaUsed": "Average = Sum / Count",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "25s"
+  }
+]

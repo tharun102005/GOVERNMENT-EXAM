@@ -1,0 +1,44 @@
+[
+  {
+    "id": "di-001",
+    "question": "The following table shows the production of cars (in thousands) by a company over the years. If the production in 2019 was 45,000 and in 2020 was 54,000, what is the percentage increase in production?",
+    "options": ["20%", "15%", "25%", "18%"],
+    "answer": 0,
+    "explanation": "Increase = 54000 - 45000 = 9000. % increase = (9000/45000) × 100 = 20%.",
+    "shortcutMethod": "% increase = (difference/base) × 100 = (9/45) × 100 = 20%.",
+    "formulaUsed": "% Change = [(New - Old) / Old] × 100",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "di-002",
+    "question": "A pie chart shows the percentage distribution of employees: IT=30%, HR=20%, Finance=15%, Marketing=25%, Admin=10%. If total employees are 800, how many are in Marketing?",
+    "options": ["200", "150", "250", "160"],
+    "answer": 0,
+    "explanation": "Marketing = 25% of 800 = 0.25 × 800 = 200.",
+    "shortcutMethod": "25% of 800 = 200.",
+    "formulaUsed": "Value = (Percentage / 100) × Total",
+    "difficulty": "Easy",
+    "examName": "IBPS PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "di-003",
+    "question": "If the ratio of exports to imports in 2021 was 3:4 and total trade was ₹84 crore, find the value of exports.",
+    "options": ["₹36 crore", "₹48 crore", "₹42 crore", "₹28 crore"],
+    "answer": 0,
+    "explanation": "Total parts = 3 + 4 = 7. Exports = (3/7) × 84 = ₹36 crore.",
+    "shortcutMethod": "Exports = (3/7) × 84 = 36 crore.",
+    "formulaUsed": "Part = (Ratio / Total Ratio) × Total",
+    "difficulty": "Easy",
+    "examName": "SBI Clerk",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "20s"
+  }
+]

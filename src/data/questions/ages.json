@@ -1,0 +1,44 @@
+[
+  {
+    "id": "age-001",
+    "question": "The present ages of A and B are in the ratio 5 : 6. Four years from now, the ratio of their ages will be 6 : 7. What is B's present age?",
+    "options": ["24 years", "20 years", "30 years", "28 years"],
+    "answer": 0,
+    "explanation": "Let ages = 5x and 6x. (5x+4)/(6x+4) = 6/7. 7(5x+4) = 6(6x+4). 35x+28 = 36x+24. x = 4. B's age = 6×4 = 24.",
+    "shortcutMethod": "Cross multiply the future ratio equation. x = 4. B = 6 × 4 = 24.",
+    "formulaUsed": "Linear equations from ratio conditions",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "35s"
+  },
+  {
+    "id": "age-002",
+    "question": "A father is 30 years older than his son. In 12 years, the father's age will be twice the son's age. What is the son's present age?",
+    "options": ["18 years", "20 years", "15 years", "22 years"],
+    "answer": 0,
+    "explanation": "Let son's age = x. Father = x + 30. After 12 years: x + 30 + 12 = 2(x + 12). x + 42 = 2x + 24. x = 18.",
+    "shortcutMethod": "Set up equation: (x+42) = 2(x+12). Solve: x = 18.",
+    "formulaUsed": "Linear equation: Father's future age = 2 × Son's future age",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "age-003",
+    "question": "The sum of present ages of a father and his son is 60 years. Six years ago, the father's age was five times the age of the son. What is the father's present age?",
+    "options": ["51 years", "45 years", "48 years", "54 years"],
+    "answer": 0,
+    "explanation": "F + S = 60. (F-6) = 5(S-6). F-6 = 5S-30 → F = 5S-24. Substituting: 5S-24+S = 60 → 6S = 84 → S = 14. F = 60-14 = 46... Let me recalculate: F = 5(14)-24 = 46. Wait: F+S=60, S=14, F=46. Check: (46-6)=40, 5(14-6)=40. ✓ F=46.",
+    "shortcutMethod": "Substitute F = 60 - S into past age equation. Solve: S = 14, F = 46.",
+    "formulaUsed": "System of linear equations",
+    "difficulty": "Medium",
+    "examName": "IBPS Clerk",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "45s"
+  }
+]

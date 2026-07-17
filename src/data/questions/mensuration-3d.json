@@ -1,0 +1,44 @@
+[
+  {
+    "id": "m3d-001",
+    "question": "Find the volume of a cylinder with radius 7 cm and height 10 cm.",
+    "options": ["1540 cm³", "1400 cm³", "1580 cm³", "1320 cm³"],
+    "answer": 0,
+    "explanation": "Volume = πr²h = (22/7) × 7² × 10 = (22/7) × 49 × 10 = 1540 cm³.",
+    "shortcutMethod": "V = 22/7 × 49 × 10 = 1540 cm³.",
+    "formulaUsed": "V = πr²h",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "m3d-002",
+    "question": "A cube has edge 5 cm. Find its total surface area.",
+    "options": ["150 cm²", "125 cm²", "100 cm²", "175 cm²"],
+    "answer": 0,
+    "explanation": "TSA of cube = 6a² = 6 × 25 = 150 cm².",
+    "shortcutMethod": "6 × 5² = 150 cm².",
+    "formulaUsed": "TSA = 6a²",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "10s"
+  },
+  {
+    "id": "m3d-003",
+    "question": "A cone has radius 6 cm and slant height 10 cm. Find the curved surface area.",
+    "options": ["188.57 cm²", "180 cm²", "200 cm²", "160 cm²"],
+    "answer": 0,
+    "explanation": "CSA = πrl = (22/7) × 6 × 10 = 1320/7 ≈ 188.57 cm².",
+    "shortcutMethod": "CSA = 22/7 × 6 × 10 ≈ 188.57 cm².",
+    "formulaUsed": "CSA of Cone = πrl",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "20s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "si-001b",
+    "question": "Simplify: √48 + √75.",
+    "options": ["9√3", "7√3", "8√3", "10√3"],
+    "answer": 0,
+    "explanation": "√48 = √(16×3) = 4√3. √75 = √(25×3) = 5√3. Sum = 4√3 + 5√3 = 9√3.",
+    "shortcutMethod": "Simplify each surd: 4√3 + 5√3 = 9√3.",
+    "formulaUsed": "√(a²×b) = a√b",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "si-002b",
+    "question": "Find the value of 2⁵ × 2³ ÷ 2⁴.",
+    "options": ["16", "32", "8", "64"],
+    "answer": 0,
+    "explanation": "2⁵ × 2³ = 2⁸. 2⁸ ÷ 2⁴ = 2⁴ = 16.",
+    "shortcutMethod": "aᵐ × aⁿ = aᵐ⁺ⁿ. aᵐ ÷ aⁿ = aᵐ⁻ⁿ. 2^(5+3-4) = 2⁴ = 16.",
+    "formulaUsed": "aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "10s"
+  },
+  {
+    "id": "si-003b",
+    "question": "If 3ˣ = 81, find x.",
+    "options": ["4", "3", "5", "6"],
+    "answer": 0,
+    "explanation": "81 = 3⁴. So 3ˣ = 3⁴. x = 4.",
+    "shortcutMethod": "Express 81 as power of 3: 3⁴ = 81. So x = 4.",
+    "formulaUsed": "If aˣ = aⁿ, then x = n",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 1,
+    "timeToSolve": "10s"
+  }
+]

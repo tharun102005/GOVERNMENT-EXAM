@@ -1,0 +1,58 @@
+[
+  {
+    "id": "tsd-001",
+    "question": "A train 150 metres long passes a pole in 15 seconds. Find the speed of the train in km/hr.",
+    "options": ["36 km/hr", "40 km/hr", "30 km/hr", "45 km/hr"],
+    "answer": 0,
+    "explanation": "Speed = Distance / Time = 150 / 15 = 10 m/s = 10 × 18/5 = 36 km/hr.",
+    "shortcutMethod": "10 m/s × 18/5 = 36 km/hr.",
+    "formulaUsed": "Speed = Distance / Time; 1 m/s = 18/5 km/hr",
+    "difficulty": "Easy",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "tsd-002",
+    "question": "A car covers a distance in 40 minutes at a speed of 60 km/hr. What speed is needed to cover the same distance in 30 minutes?",
+    "options": ["80 km/hr", "70 km/hr", "90 km/hr", "75 km/hr"],
+    "answer": 0,
+    "explanation": "Distance = 60 × (40/60) = 40 km. Required speed = 40 / (30/60) = 40 / 0.5 = 80 km/hr.",
+    "shortcutMethod": "Speed × Time = constant. S₂ = S₁ × T₁/T₂ = 60 × 40/30 = 80 km/hr.",
+    "formulaUsed": "S₁ × T₁ = S₂ × T₂",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "tsd-003",
+    "question": "A person covers half the distance at 40 km/hr and the remaining half at 60 km/hr. Find the average speed for the entire journey.",
+    "options": ["48 km/hr", "50 km/hr", "45 km/hr", "52 km/hr"],
+    "answer": 0,
+    "explanation": "Average speed when equal distances = 2ab / (a + b) = 2 × 40 × 60 / (40 + 60) = 4800 / 100 = 48 km/hr.",
+    "shortcutMethod": "2ab/(a+b) = 2(40)(60)/100 = 48 km/hr.",
+    "formulaUsed": "Average Speed (equal distance) = 2S₁S₂ / (S₁ + S₂)",
+    "difficulty": "Medium",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "tsd-004",
+    "question": "Two trains 140m and 160m long run at 60 km/hr and 40 km/hr respectively in opposite directions. The time they take to cross each other is:",
+    "options": ["10.8 seconds", "12 seconds", "9 seconds", "15 seconds"],
+    "answer": 0,
+    "explanation": "Total distance = 140 + 160 = 300m. Relative speed = 60 + 40 = 100 km/hr = 100 × 5/18 = 250/9 m/s. Time = 300 / (250/9) = 2700/250 = 10.8 seconds.",
+    "shortcutMethod": "Opposite direction → add speeds. Time = 300 / (250/9) = 10.8s.",
+    "formulaUsed": "Relative Speed (opposite) = S₁ + S₂; Time = Total Length / Relative Speed",
+    "difficulty": "Medium",
+    "examName": "IBPS PO",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "45s"
+  }
+]

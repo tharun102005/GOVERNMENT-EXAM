@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sim-001",
+    "question": "Simplify: 3/4 + 5/6 - 7/12",
+    "options": ["1", "11/12", "5/6", "13/12"],
+    "answer": 0,
+    "explanation": "LCM of 4, 6, 12 = 12. 3/4 = 9/12, 5/6 = 10/12, 7/12 = 7/12. Result = (9 + 10 - 7)/12 = 12/12 = 1.",
+    "shortcutMethod": "Convert all fractions to denominator 12 and simplify.",
+    "formulaUsed": "LCM method for fraction addition/subtraction",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "sim-002",
+    "question": "What is the value of (999)² ?",
+    "options": ["998001", "999001", "997001", "996001"],
+    "answer": 0,
+    "explanation": "(999)² = (1000 - 1)² = 1000² - 2 × 1000 × 1 + 1² = 1000000 - 2000 + 1 = 998001.",
+    "shortcutMethod": "Use (a - b)² = a² - 2ab + b² with a = 1000, b = 1.",
+    "formulaUsed": "(a - b)² = a² - 2ab + b²",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "sim-003",
+    "question": "Simplify: 5005 - 5000 ÷ 10.00",
+    "options": ["4505", "0.__(5005)", "5765", "4655"],
+    "answer": 0,
+    "explanation": "BODMAS: Division first. 5000 ÷ 10 = 500. Then 5005 - 500 = 4505.",
+    "shortcutMethod": "Apply BODMAS: Division before subtraction.",
+    "formulaUsed": "BODMAS Rule",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "sim-004",
+    "question": "What is the value of √(0.0016)?",
+    "options": ["0.04", "0.4", "0.004", "4"],
+    "answer": 0,
+    "explanation": "0.0016 = 16 × 10⁻⁴. √(16 × 10⁻⁴) = 4 × 10⁻² = 0.04.",
+    "shortcutMethod": "Count decimal places (4), halve them (2). √16 = 4. Answer = 0.04.",
+    "formulaUsed": "√(a × 10⁻ⁿ) = √a × 10⁻ⁿ/²",
+    "difficulty": "Easy",
+    "examName": "IBPS Clerk",
+    "examYear": 2023,
+    "marks": 1,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "sim-005",
+    "question": "Simplify: 1.5 × 1.5 + 2 × 1.5 × 3.5 + 3.5 × 3.5",
+    "options": ["25", "20", "30", "15"],
+    "answer": 0,
+    "explanation": "This is of the form a² + 2ab + b² = (a + b)² where a = 1.5 and b = 3.5. (1.5 + 3.5)² = 5² = 25.",
+    "shortcutMethod": "Recognize (a + b)² pattern: (1.5 + 3.5)² = 25.",
+    "formulaUsed": "a² + 2ab + b² = (a + b)²",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "30s"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "stat-001",
+    "question": "Find the median of: 3, 7, 2, 9, 5, 11, 8.",
+    "options": ["7", "5", "8", "9"],
+    "answer": 0,
+    "explanation": "Arrange in order: 2, 3, 5, 7, 8, 9, 11. Median (middle value) = 7.",
+    "shortcutMethod": "n=7 (odd). Median = (n+1)/2 th term = 4th term = 7.",
+    "formulaUsed": "Median (odd n) = [(n+1)/2]th term",
+    "difficulty": "Easy",
+    "examName": "SSC CHSL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "25s"
+  },
+  {
+    "id": "stat-002",
+    "question": "Find the mode of the data: 4, 5, 7, 5, 3, 5, 8, 5, 2.",
+    "options": ["5", "4", "7", "3"],
+    "answer": 0,
+    "explanation": "5 appears 4 times (maximum frequency). Mode = 5.",
+    "shortcutMethod": "Most frequent value = 5 (appears 4 times).",
+    "formulaUsed": "Mode = value with highest frequency",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 4",
+    "examYear": 2024,
+    "marks": 1,
+    "timeToSolve": "15s"
+  },
+  {
+    "id": "stat-003",
+    "question": "The mean of 10 observations is 15. If one observation 15 is deleted, what is the mean of remaining observations?",
+    "options": ["15", "14", "16", "13.5"],
+    "answer": 0,
+    "explanation": "Total sum = 10 × 15 = 150. After removing 15: sum = 135. New mean = 135/9 = 15.",
+    "shortcutMethod": "Removed value equals the mean, so mean remains unchanged at 15.",
+    "formulaUsed": "Mean = Sum / n",
+    "difficulty": "Easy",
+    "examName": "RRB NTPC",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "20s"
+  }
+]

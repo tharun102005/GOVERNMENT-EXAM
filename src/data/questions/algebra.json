@@ -1,0 +1,44 @@
+[
+  {
+    "id": "alg-001",
+    "question": "If x + 1/x = 5, find the value of x² + 1/x².",
+    "options": ["23", "25", "20", "27"],
+    "answer": 0,
+    "explanation": "x² + 1/x² = (x + 1/x)² - 2 = 5² - 2 = 25 - 2 = 23.",
+    "shortcutMethod": "Square both sides: (x + 1/x)² = x² + 2 + 1/x². So x² + 1/x² = 25 - 2 = 23.",
+    "formulaUsed": "x² + 1/x² = (x + 1/x)² - 2",
+    "difficulty": "Medium",
+    "examName": "SSC CGL",
+    "examYear": 2023,
+    "marks": 2,
+    "timeToSolve": "30s"
+  },
+  {
+    "id": "alg-002",
+    "question": "If a + b = 10 and ab = 21, find a² + b².",
+    "options": ["58", "60", "52", "64"],
+    "answer": 0,
+    "explanation": "a² + b² = (a+b)² - 2ab = 100 - 42 = 58.",
+    "shortcutMethod": "(a+b)² - 2ab = 100 - 42 = 58.",
+    "formulaUsed": "a² + b² = (a + b)² - 2ab",
+    "difficulty": "Easy",
+    "examName": "TNPSC Group 2",
+    "examYear": 2024,
+    "marks": 2,
+    "timeToSolve": "20s"
+  },
+  {
+    "id": "alg-003",
+    "question": "If a - b = 4 and a² + b² = 40, find ab.",
+    "options": ["12", "8", "16", "10"],
+    "answer": 0,
+    "explanation": "(a-b)² = a² - 2ab + b² = 40 - 2ab. 16 = 40 - 2ab. 2ab = 24. ab = 12.",
+    "shortcutMethod": "ab = (a² + b² - (a-b)²) / 2 = (40 - 16) / 2 = 12.",
+    "formulaUsed": "(a - b)² = a² + b² - 2ab",
+    "difficulty": "Medium",
+    "examName": "IBPS PO",
+    "examYear": 2022,
+    "marks": 2,
+    "timeToSolve": "30s"
+  }
+]
