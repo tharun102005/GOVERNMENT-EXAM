@@ -40,6 +40,7 @@ export default function QuantAptitudePage() {
   const handleStartPractice = (topic) => {
     navigate('/quiz', {
       state: {
+        topicId: topic.id,
         subjectName: `Quant: ${topic.name}`,
         icon: '🧮',
         questionsCount: 20
@@ -48,9 +49,12 @@ export default function QuantAptitudePage() {
   };
 
   const handleStartMock = (topic) => {
-    navigate('/mock', {
+    navigate('/quiz', {
       state: {
-        selectedExamName: `Quant Mock - ${topic.name}`
+        topicId: topic.id,
+        subjectName: `Quant Mock: ${topic.name}`,
+        icon: '🏆',
+        questionsCount: 30
       }
     });
   };

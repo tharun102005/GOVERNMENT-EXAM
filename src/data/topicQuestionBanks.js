@@ -78,10 +78,9 @@ export function generateUniqueTopicQuestionBank(topicId = 'number-system', targe
   return questions;
 }
 
-function buildTopicSpecificQuestion(topicId, subtopic, seed, difficulty) {
+function buildTopicSpecificQuestion(topicId, subtopic, seed, _difficulty) {
   const n1 = (seed * 7) % 89 + 11;
   const n2 = (seed * 13) % 47 + 5;
-  const n3 = (seed * 19) % 23 + 2;
 
   switch (topicId) {
     case 'number-system':

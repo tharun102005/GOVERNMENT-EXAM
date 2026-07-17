@@ -6,11 +6,13 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { generateSubjectQuiz } from '../data/extendedMockQuestions';
+import { generateUniqueTopicQuestionBank } from '../data/topicQuestionBanks';
 
 export default function QuizPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  const topicId = state?.topicId || state?.subjectName?.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'number-system';
   const subjectName = state?.subjectName || 'Quantitative Aptitude';
   const subjectIcon = state?.icon || '🧮';
   const totalCount = state?.questionsCount || 20;
@@ -25,11 +27,46 @@ export default function QuizPage() {
   const [isFinished, setIsFinished] = useState(false);
   const [showExplanation, setShowExplanation] = useState(false);
 
-  // Initialize questions
+  // Helper shuffle array
+  const shuffle = (array) => {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  };
+
+  // Initialize unique non-overlapping question bank for topic with completed question tracking
   useEffect(() => {
-    const qList = generateSubjectQuiz(subjectName, totalCount);
-    setQuestions(qList);
-  }, [subjectName, totalCount]);
+    let rawBank = [];
+    if (topicId && (topicId.includes('-') || topicId.length > 2)) {
+      rawBank = generateUniqueTopicQuestionBank(topicId, 500);
+    }
+    if (!rawBank || rawBank.length === 0) {
+      rawBank = generateSubjectQuiz(subjectName, 100);
+    }
+
+    // Get completed question IDs from localStorage
+    let completedIds = [];
+    try {
+      completedIds = JSON.parse(localStorage.getItem(`exammaster_completed_qs_${topicId}`) || '[]');
+    } catch {
+      completedIds = [];
+    }
+
+    // Filter uncompleted questions
+    let uncompleted = rawBank.filter(q => !completedIds.includes(q.id));
+    if (uncompleted.length < totalCount) {
+      // Reset completed list if full bank has been completed once
+      uncompleted = rawBank;
+      localStorage.setItem(`exammaster_completed_qs_${topicId}`, JSON.stringify([]));
+    }
+
+    // Shuffle and pick session questions
+    const sessionQs = shuffle(uncompleted).slice(0, totalCount);
+    setQuestions(sessionQs);
+  }, [topicId, subjectName, totalCount]);
 
   const handleSubmitQuiz = useCallback(() => {
     setIsFinished(true);
@@ -37,8 +74,12 @@ export default function QuizPage() {
     let wrongCount = 0;
     let skippedCount = 0;
 
+    const attemptedIds = [];
+
     questions.forEach((q, idx) => {
       const selected = userAnswers[idx];
+      attemptedIds.push(q.id);
+
       if (selected === undefined) {
         skippedCount++;
       } else if (selected === q.answer) {
@@ -48,7 +89,16 @@ export default function QuizPage() {
       }
     });
 
-    const score = (correctCount * 2) - (wrongCount * 0.5); // 2 marks per correct, 0.5 negative
+    // Update completed questions tracking in localStorage
+    try {
+      const currentCompleted = JSON.parse(localStorage.getItem(`exammaster_completed_qs_${topicId}`) || '[]');
+      const updatedSet = Array.from(new Set([...currentCompleted, ...attemptedIds]));
+      localStorage.setItem(`exammaster_completed_qs_${topicId}`, JSON.stringify(updatedSet));
+    } catch {
+      // ignore
+    }
+
+    const score = (correctCount * 2) - (wrongCount * 0.5);
     const maxScore = questions.length * 2;
     const totalAttempted = Object.keys(userAnswers).length;
     const accuracy = totalAttempted > 0 ? Math.round((correctCount / totalAttempted) * 100) : 0;
@@ -64,12 +114,12 @@ export default function QuizPage() {
       percentile: Math.min(99, Math.max(60, Math.round(accuracy * 1.1))),
       total: questions.length,
       timeTaken,
-      examName: `${subjectName} Quiz`,
+      examName: `${subjectName} Practice Test`,
       answers: userAnswers,
       questions
     };
 
-    // Save to localStorage
+    // Save history
     try {
       const history = JSON.parse(localStorage.getItem('exammaster_quiz_history') || '[]');
       history.unshift({
@@ -83,7 +133,7 @@ export default function QuizPage() {
 
     // Navigate to Results page
     navigate('/results', { state: resultPayload });
-  }, [questions, userAnswers, totalCount, timeLeft, subjectName, navigate]);
+  }, [questions, userAnswers, totalCount, timeLeft, subjectName, topicId, navigate]);
 
   // Countdown timer
   useEffect(() => {
@@ -114,7 +164,6 @@ export default function QuizPage() {
       ...prev,
       [currentIndex]: optionIndex
     }));
-    // Remove from skipped if previously skipped
     if (skippedQuestions[currentIndex]) {
       setSkippedQuestions(prev => {
         const copy = { ...prev };
@@ -152,7 +201,7 @@ export default function QuizPage() {
         <Navbar />
         <div className="max-w-4xl mx-auto px-4 py-20 text-center text-gray-500">
           <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-bold text-sm">Loading Quiz Questions...</p>
+          <p className="font-bold text-sm">Generating Unique Topic Questions Bank...</p>
         </div>
       </div>
     );
@@ -177,8 +226,13 @@ export default function QuizPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200/60">
-                    Subject Practice Quiz
+                    Topic: {currentQ.subtopic || 'Concept Practice'}
                   </span>
+                  {currentQ.isPYQ && (
+                    <span className="text-[11px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200">
+                      PYQ {currentQ.pyqYear}
+                    </span>
+                  )}
                   <button
                     onClick={() => setLanguage(l => l === 'English' ? 'Tamil' : 'English')}
                     className="text-[11px] font-bold text-slate-500 hover:text-blue-600 underline cursor-pointer"
@@ -213,7 +267,7 @@ export default function QuizPage() {
           </div>
 
           {/* Progress bar */}
-          <div className="space-y-1.5 pt-1">
+          <div className="space-y-1 pt-1">
             <div className="flex justify-between text-xs text-gray-500 font-semibold">
               <span>Question {currentIndex + 1} of {questions.length}</span>
               <span>{attemptedCount} Attempted • {progressPercent}% Progress</span>
@@ -236,8 +290,10 @@ export default function QuizPage() {
               <span className="bg-blue-600 text-white text-xs font-extrabold px-3 py-1 rounded-xl shadow-xs">
                 Q {currentIndex + 1}
               </span>
-              <span className="text-xs text-gray-400 font-medium">
-                {skippedQuestions[currentIndex] ? 'Skipped Question' : 'Multiple Choice Question'}
+              <span className={`text-xs font-bold px-2.5 py-0.5 rounded-md ${
+                currentQ.difficulty === 'Hard' ? 'bg-red-50 text-red-600' : currentQ.difficulty === 'Medium' ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-600'
+              }`}>
+                Difficulty: {currentQ.difficulty}
               </span>
             </div>
 
@@ -298,17 +354,29 @@ export default function QuizPage() {
             </div>
 
             {/* Instant Solution Toggle */}
-            <div className="pt-2 border-t border-gray-100">
+            <div className="pt-2 border-t border-gray-100 space-y-2">
               <button
                 onClick={() => setShowExplanation(!showExplanation)}
                 className="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Eye className="w-3.5 h-3.5" />
-                {showExplanation ? 'Hide Explanation' : 'View Explanation'}
+                {showExplanation ? 'Hide AI Solution & Formula' : 'View AI Solution & Formula'}
               </button>
               {showExplanation && (
-                <div className="mt-2 p-3 bg-blue-50/60 border border-blue-200/80 rounded-xl text-xs text-blue-900 leading-relaxed">
-                  <strong>Explanation:</strong> {currentQ.explanation}
+                <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs space-y-2 text-slate-800">
+                  {currentQ.formulaUsed && (
+                    <div className="font-mono text-blue-700 font-bold bg-blue-50 p-2 rounded-lg border border-blue-200">
+                      📐 Formula: {currentQ.formulaUsed}
+                    </div>
+                  )}
+                  {currentQ.shortcutTrick && (
+                    <div className="font-medium text-amber-800 bg-amber-50 p-2 rounded-lg border border-amber-200">
+                      ⚡ Shortcut Trick: {currentQ.shortcutTrick}
+                    </div>
+                  )}
+                  <div className="leading-relaxed">
+                    <strong>Step-by-Step AI Solution:</strong> {currentQ.explanation}
+                  </div>
                 </div>
               )}
             </div>
