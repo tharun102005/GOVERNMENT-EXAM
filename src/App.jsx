@@ -23,6 +23,7 @@ function App() {
           <Route path="/practice"   element={<PracticePage />} />
           <Route path="/mock"       element={<MockTestPage />} />
           <Route path="/pyq"        element={<PYQPage />} />
+          <Route path="/previous-year-questions" element={<PYQPage />} />
           <Route path="/results"    element={<TestResults />} />
           <Route path="/analytics"  element={<AnalyticsPage />} />
           <Route path="/ai"         element={<AIHubPage />} />

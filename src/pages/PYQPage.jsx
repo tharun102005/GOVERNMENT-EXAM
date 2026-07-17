@@ -11,6 +11,7 @@ import PYQViewModal from '../components/pyq/PYQViewModal';
 import PYQAIGeneratorModal from '../components/pyq/PYQAIGeneratorModal';
 import { 
   pyqPapers, 
+  pyqCategories,
   pyqSubjects, 
   pyqYears, 
   pyqLanguages, 
@@ -287,7 +288,7 @@ export default function PYQPage() {
             {/* Category Pill Tabs */}
             <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none text-xs">
               <span className="text-slate-400 font-bold shrink-0">Category:</span>
-              {['All', 'UPSC', 'TNPSC', 'SSC CGL', 'Banking', 'Railway', 'Defence', 'NEET'].map(cat => (
+              {pyqCategories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => {

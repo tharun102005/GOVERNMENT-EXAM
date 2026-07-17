@@ -72,33 +72,42 @@ export default function PYQCard({ paper, onView, onPractice, onDownload }) {
         </div>
       </div>
 
-      {/* Action Buttons Grid */}
-      <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-        <button
-          onClick={() => onDownload(paper)}
-          className="py-2.5 px-2 bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-300 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1 transition cursor-pointer"
-          title="Download PDF Paper"
-        >
-          <Download className="w-3.5 h-3.5" />
-          <span>PDF</span>
-        </button>
-
+      {/* Action Buttons Grid (4 explicit buttons) */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
         <button
           onClick={() => onView(paper)}
-          className="py-2.5 px-2 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-indigo-950 dark:hover:text-indigo-300 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1 transition cursor-pointer"
-          title="View Online Details & Solutions"
+          className="py-2.5 px-2 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-indigo-950 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1 transition cursor-pointer"
+          title="View Questions"
         >
           <Eye className="w-3.5 h-3.5" />
-          <span>View</span>
+          <span>View Questions</span>
         </button>
 
         <button
           onClick={() => onPractice(paper)}
           className="py-2.5 px-2 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl flex items-center justify-center gap-1 shadow-xs transition cursor-pointer"
-          title="Start Practice Test"
+          title="Start Practice"
         >
           <Play className="w-3.5 h-3.5 fill-white" />
-          <span>Practice</span>
+          <span>Start Practice</span>
+        </button>
+
+        <button
+          onClick={() => onDownload(paper)}
+          className="py-2.5 px-2 bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1 transition cursor-pointer"
+          title="Download PDF"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>Download PDF</span>
+        </button>
+
+        <button
+          onClick={() => onView(paper)}
+          className="py-2.5 px-2 bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 text-emerald-700 dark:text-emerald-300 font-bold text-xs rounded-xl flex items-center justify-center gap-1 transition cursor-pointer border border-emerald-200/50"
+          title="Answer Key"
+        >
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+          <span>Answer Key</span>
         </button>
       </div>
     </div>

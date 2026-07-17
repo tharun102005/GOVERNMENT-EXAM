@@ -3,24 +3,18 @@
 
 export const pyqCategories = [
   'All',
-  'UPSC',
   'TNPSC',
-  'SSC CGL',
-  'SSC CHSL',
-  'RRB NTPC',
-  'RRB Group D',
+  'UPSC',
+  'SSC',
+  'RRB',
   'Banking',
   'Police',
-  'TET & CTET',
-  'Railway',
+  'TET',
+  'CTET',
   'Defence',
-  'State PSC',
-  'Insurance',
-  'Post Office',
-  'CUET',
   'NEET',
   'JEE',
-  'Other Exams'
+  'CUET'
 ];
 
 export const pyqSubjects = [
