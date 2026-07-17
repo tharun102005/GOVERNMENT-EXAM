@@ -1,0 +1,197 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563EB;
+  --color-secondary: #10B981;
+  --color-accent: #F59E0B;
+  --color-background: #F8FAFC;
+  --font-sans: 'Inter', 'Outfit', system-ui, sans-serif;
+  --radius-lg: 20px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', 'Outfit', system-ui, sans-serif;
+  background-color: #F8FAFC;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1d4ed8; }
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Animated gradient */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #2563EB, #1d4ed8, #0f2a7a, #10B981);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Bounce delay helpers */
+.delay-200 { animation-delay: 0.2s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* ═══════════════════════════════════════════════════════
+   ANTI-GRAVITY MOUSE INTERACTION SYSTEM
+   ═══════════════════════════════════════════════════════ */
+
+/* ── CSS Variables ─────────────────────────────────────── */
+:root {
+  --ag-primary:   #2563EB;
+  --ag-secondary: #3B82F6;
+  --ag-accent:    #60A5FA;
+  --ag-glow:      rgba(37,99,235,0.15);
+  --ag-glow-strong: rgba(37,99,235,0.30);
+  --ag-tilt-x: 0deg;
+  --ag-tilt-y: 0deg;
+}
+
+/* ── Ripple keyframe ───────────────────────────────────── */
+@keyframes ag-ripple {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ── Icon float animation ──────────────────────────────── */
+@keyframes ag-float {
+  0%, 100% { transform: translateY(0px) rotate(var(--icon-rotate, 0deg)) scale(1); }
+  50%       { transform: translateY(-6px) rotate(var(--icon-rotate, 0deg)) scale(1); }
+}
+
+/* ── Particle pulse ────────────────────────────────────── */
+@keyframes ag-pulse-dot {
+  0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+  50%       { opacity: 1;   transform: translate(-50%,-50%) scale(1.3); }
+}
+
+/* ── Navbar underline gradient ─────────────────────────── */
+@keyframes ag-underline-expand {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── ANTIGRAV CARDS ─────────────────────────────────────── */
+[data-antigrav="card"] {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.35s ease;
+}
+
+[data-antigrav="card"]:hover {
+  box-shadow:
+    0 8px 32px rgba(37,99,235,0.18),
+    0 0 0 1.5px rgba(37,99,235,0.35),
+    0 20px 40px rgba(0,0,0,0.10) !important;
+}
+
+/* Combined tilt + repel. Tilt is applied via inline style from JS using CSS vars.
+   We use a wrapper approach: JS sets translateX/Y directly on the element's style,
+   and we overlay the tilt using a CSS transform on :hover that JS can override. */
+[data-antigrav="card"].ag-tilt {
+  transform:
+    perspective(900px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg))
+    translateY(-8px);
+}
+
+/* ── ANTIGRAV BUTTONS ───────────────────────────────────── */
+[data-antigrav="button"],
+button[data-antigrav="button"] {
+  will-change: transform;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+[data-antigrav="button"]:hover {
+  box-shadow: 0 0 18px rgba(37,99,235,0.45), 0 4px 16px rgba(37,99,235,0.25);
+  filter: brightness(1.08);
+}
+
+/* ── ANTIGRAV ICONS ─────────────────────────────────────── */
+[data-antigrav="icon"] {
+  display: inline-flex;
+  animation: ag-float 6s ease-in-out infinite;
+  will-change: transform;
+  transition: filter 0.3s ease, transform 0.3s ease;
+  --icon-rotate: 0deg;
+}
+
+[data-antigrav="icon"]:hover {
+  filter: drop-shadow(0 0 10px var(--ag-primary)) brightness(1.2);
+  transform: rotate(var(--icon-rotate)) scale(1.1) !important;
+}
+
+/* ── ANTIGRAV NAV ITEMS ─────────────────────────────────── */
+.ag-nav-item {
+  position: relative;
+  transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease !important;
+}
+
+.ag-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--ag-primary), var(--ag-accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+.ag-nav-item:hover {
+  transform: translateY(-2px) !important;
+  text-shadow: 0 0 12px rgba(37,99,235,0.5);
+}
+
+.ag-nav-item:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── REDUCED MOTION overrides ───────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-antigrav="icon"]  { animation: none; }
+  [data-antigrav="card"]  { transition: none; }
+  [data-antigrav="button"]{ transition: none; }
+  .ag-nav-item            { transition: none !important; }
+  .ag-nav-item::after     { transition: none; }
+}
+
+/* ── Mobile: hide custom cursor ─────────────────────────── */
+@media (hover: none) {
+  body { cursor: auto !important; }
+}
