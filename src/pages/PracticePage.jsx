@@ -1,162 +1,90 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { BookOpen, Layers, ArrowRight, Play, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { subjects } from '../data/mockData';
+import Footer from '../components/Footer';
+import AiWidget from '../components/AiWidget';
+import { Brain, Calculator, Globe, BookOpen, Laptop, Code2, ArrowRight, CheckCircle2, Play } from 'lucide-react';
+
+const subjects = [
+  { id: 'quant', name: 'Quantitative Aptitude', questions: '4,500+ Questions', difficulty: 'Moderate - High', completion: 65, icon: Calculator, color: 'from-blue-600 to-indigo-600', link: '/quant-aptitude' },
+  { id: 'reasoning', name: 'Reasoning Ability', questions: '3,800+ Questions', difficulty: 'Moderate', completion: 48, icon: Brain, color: 'from-purple-600 to-indigo-600', link: '/quiz' },
+  { id: 'ga', name: 'General Awareness & GK', questions: '6,200+ Questions', difficulty: 'Easy - Moderate', completion: 82, icon: Globe, color: 'from-emerald-600 to-teal-600', link: '/quiz' },
+  { id: 'english', name: 'English Comprehension', questions: '3,100+ Questions', difficulty: 'Moderate', completion: 30, icon: BookOpen, color: 'from-amber-600 to-orange-600', link: '/quiz' },
+  { id: 'computer', name: 'Computer Knowledge', questions: '1,900+ Questions', difficulty: 'Easy', completion: 90, icon: Laptop, color: 'from-cyan-600 to-blue-600', link: '/quiz' },
+  { id: 'programming', name: 'Programming & CS', questions: '2,400+ Questions', difficulty: 'High', completion: 25, icon: Code2, color: 'from-rose-600 to-purple-600', link: '/quiz' },
+];
 
 export default function PracticePage() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Initialize selected subject with location state if passed, or default to Quantitative Aptitude (subjects[0])
-  const [selectedSubject, setSelectedSubject] = useState(() => {
-    const passedName = location.state?.subjectName || location.state?.subject?.name;
-    if (passedName) {
-      const found = subjects.find(s => s.name.toLowerCase() === passedName.toLowerCase());
-      if (found) return found;
-    }
-    return subjects[0]; // Default: Quantitative Aptitude
-  });
-
-  useEffect(() => {
-    const passedName = location.state?.subjectName || location.state?.subject?.name;
-    if (passedName) {
-      const found = subjects.find(s => s.name.toLowerCase() === passedName.toLowerCase());
-      if (found) setSelectedSubject(found);
-    }
-  }, [location.state]);
-
-  const handleStartQuiz = () => {
-    if (!selectedSubject) return;
-    navigate('/quiz', {
-      state: {
-        subjectName: selectedSubject.name,
-        icon: selectedSubject.icon,
-        questionsCount: 20
-      }
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
       <Navbar />
-      <div className="max-w-7xl mx-auto px-4 py-12">
+
+      <main className="flex-1 max-w-[1440px] mx-auto px-6 lg:px-12 py-10 w-full">
         {/* Header */}
-        <div className="text-center mb-10">
-          <span className="inline-block bg-emerald-100 text-[#10B981] text-xs font-semibold px-4 py-1 rounded-full mb-3">
-            Practice Arena
+        <div className="mb-10">
+          <span className="px-3.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-xs font-bold">
+            🎯 Interactive Practice Arena
           </span>
-          <h1 className="text-4xl font-bold text-gray-900">Subject-wise Practice</h1>
-          <p className="text-gray-500 mt-2 max-w-2xl mx-auto">
-            Choose a subject to sharpen your concepts. Complete targeted quizzes to strengthen your weaker areas.
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+            Master Subjects Topic by Topic
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Choose a subject to practice questions tailored to TNPSC, UPSC, SSC, and Banking exams.
           </p>
         </div>
 
-        {/* Practice Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Subjects List */}
-          <div className="lg:col-span-2 space-y-4">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">Available Subjects</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {subjects.map((sub, i) => (
-                <div
-                  key={i}
-                  onClick={() => setSelectedSubject(sub)}
-                  className={`border rounded-[20px] p-5 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                    selectedSubject?.name === sub.name
-                      ? 'border-[#2563EB] bg-blue-50/50 shadow-md ring-2 ring-blue-500/20'
-                      : `${sub.color} hover:shadow-md`
-                  }`}
-                >
-                  <div>
-                    <div className="text-4xl mb-3">{sub.icon}</div>
-                    <h3 className="font-bold text-gray-900 text-base mb-1">{sub.name}</h3>
-                    <p className="text-xs text-gray-500 mb-4">
-                      {sub.topics} Topics • {sub.questions.toLocaleString()} Questions
-                    </p>
-                  </div>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedSubject(sub);
-                    }}
-                    className="w-full mt-2 bg-white text-[#2563EB] text-xs font-bold py-2.5 rounded-xl hover:bg-[#2563EB] hover:text-white transition border border-[#2563EB]/20 flex items-center justify-center gap-1 shadow-xs cursor-pointer"
-                  >
-                    View Topics <ArrowRight className="w-3 h-3" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Details / Topics Panel */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-6 sticky top-24">
-              {selectedSubject ? (
+        {/* Subjects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subjects.map((s) => {
+            const Icon = s.icon;
+            return (
+              <div
+                key={s.id}
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              >
                 <div>
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="text-4xl">{selectedSubject.icon}</span>
-                    <div>
-                      <h3 className="font-bold text-gray-900 text-lg leading-tight">{selectedSubject.name}</h3>
-                      <p className="text-xs text-gray-500 mt-0.5">Syllabus Breakdown</p>
+                  <div className="flex items-center justify-between">
+                    <div className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${s.color} text-white flex items-center justify-center shadow-lg shadow-blue-500/20`}>
+                      <Icon className="w-6 h-6" />
                     </div>
+                    <span className="text-xs font-bold text-slate-400">{s.difficulty}</span>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="bg-blue-50 rounded-xl p-3.5 flex justify-between items-center text-sm">
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <Layers className="w-4 h-4 text-[#2563EB]" /> Total Topics
-                      </div>
-                      <span className="font-bold text-[#2563EB]">{selectedSubject.topics}</span>
+                  <h3 className="font-extrabold text-xl text-slate-900 dark:text-white mt-4 group-hover:text-blue-600 transition">
+                    {s.name}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">{s.questions}</p>
+
+                  {/* Progress bar */}
+                  <div className="mt-6 space-y-1.5">
+                    <div className="flex justify-between text-xs font-bold">
+                      <span className="text-slate-600 dark:text-slate-400">Syllabus Completion</span>
+                      <span className="text-blue-600 dark:text-blue-400">{s.completion}%</span>
                     </div>
-                    <div className="bg-emerald-50 rounded-xl p-3.5 flex justify-between items-center text-sm">
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <BookOpen className="w-4 h-4 text-[#10B981]" /> Total Questions
-                      </div>
-                      <span className="font-bold text-[#10B981]">{selectedSubject.questions.toLocaleString()}</span>
+                    <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"
+                        style={{ width: `${s.completion}%` }}
+                      />
                     </div>
-                  </div>
-
-                  <h4 className="font-bold text-gray-900 text-xs tracking-wider uppercase mt-6 mb-3">Topic List</h4>
-                  <div className="max-h-60 overflow-y-auto pr-1 space-y-2 mb-6">
-                    {selectedSubject.topicList && selectedSubject.topicList.map((topic, ti) => (
-                      <div key={ti} className="flex items-center gap-2 text-sm text-gray-600 bg-slate-50 border border-slate-100 rounded-lg px-3 py-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0" />
-                        <span>{topic}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="space-y-2">
-                    <button
-                      onClick={handleStartQuiz}
-                      disabled={!selectedSubject || selectedSubject.questions === 0}
-                      className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-40"
-                    >
-                      <Play className="w-4 h-4 fill-white" /> Start Practice Quiz
-                    </button>
-
-                    {selectedSubject.name.toLowerCase().includes('quant') && (
-                      <button
-                        onClick={() => navigate('/quant-aptitude')}
-                        className="w-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 text-emerald-800 dark:text-emerald-200 font-extrabold py-3 rounded-xl transition text-xs flex items-center justify-center gap-2 cursor-pointer hover:bg-emerald-100"
-                      >
-                        <Layers className="w-4 h-4 text-emerald-600" />
-                        <span>Explore Full 40-Topic Quant Syllabus →</span>
-                      </button>
-                    )}
                   </div>
                 </div>
-              ) : (
-                <div className="py-12 text-center text-gray-500">
-                  <div className="text-5xl mb-4">🎯</div>
-                  <p className="font-medium text-sm">Select a subject on the left to see available topics and start practicing.</p>
-                </div>
-              )}
-            </div>
-          </div>
+
+                <Link
+                  to={s.link}
+                  className="mt-8 w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2 transition"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Continue Practice</span>
+                </Link>
+              </div>
+            );
+          })}
         </div>
-      </div>
+      </main>
+
+      <Footer />
+      <AiWidget />
     </div>
   );
 }

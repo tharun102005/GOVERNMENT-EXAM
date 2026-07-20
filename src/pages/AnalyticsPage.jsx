@@ -1,129 +1,179 @@
-import { TrendingUp, Target, Flame, Award, Calendar, Activity, Zap, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
 import Navbar from '../components/Navbar';
-import { weeklyProgress } from '../data/mockData';
+import Footer from '../components/Footer';
+import AiWidget from '../components/AiWidget';
+import { BarChart3, TrendingUp, Flame, Clock, Award, Target, Calendar, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 export default function AnalyticsPage() {
-  const cards = [
-    { label: 'Study Streak', value: '42 Days', sub: 'Top 5% active users', icon: <Flame className="w-6 h-6" />, color: 'from-orange-500 to-amber-500', bg: 'bg-orange-50/50' },
-    { label: 'Questions Solved', value: '3,421', sub: '92% completed of weekly goal', icon: <CheckCircle className="w-6 h-6" />, color: 'from-emerald-500 to-teal-500', bg: 'bg-emerald-50/50' },
-    { label: 'Avg. Accuracy', value: '78.5%', sub: '+2.4% since last week', icon: <Target className="w-6 h-6" />, color: 'from-blue-500 to-indigo-500', bg: 'bg-blue-50/50' },
-    { label: 'Current Rank', value: '#1,204', sub: 'Percentile: 96.2%', icon: <Award className="w-6 h-6" />, color: 'from-purple-500 to-fuchsia-500', bg: 'bg-purple-50/50' },
-  ];
+  const [reportRange, setReportRange] = useState('Weekly');
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
       <Navbar />
-      <div className="max-w-7xl mx-auto px-4 py-12">
+
+      <main className="flex-1 max-w-[1440px] mx-auto px-6 lg:px-12 py-10 w-full">
         {/* Header */}
-        <div className="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
           <div>
-            <span className="inline-block bg-purple-100 text-purple-600 text-xs font-semibold px-4 py-1 rounded-full mb-3">
-              Performance Insights
+            <span className="px-3.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-xs font-bold">
+              📊 Diagnostic Analytics Dashboard
             </span>
-            <h1 className="text-4xl font-bold text-gray-900">Your Growth Dashboard</h1>
-            <p className="text-gray-500 mt-2">
-              Track your preparation path, daily schedule, and predicted score metrics.
-            </p>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+              Performance & Accuracy Insights
+            </h1>
           </div>
-          <div className="bg-white rounded-xl border border-gray-100 px-4 py-2 flex items-center gap-2 text-sm text-gray-500 shadow-sm">
-            <Calendar className="w-4 h-4 text-[#2563EB]" /> Last updated: Just now
+
+          <div className="flex gap-2 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+            {['Weekly', 'Monthly', 'All Time'].map((r) => (
+              <button
+                key={r}
+                onClick={() => setReportRange(r)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  reportRange === r
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-blue-600'
+                }`}
+              >
+                {r} Report
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {cards.map((c, i) => (
-            <div key={i} className="bg-white rounded-[20px] border border-gray-100 p-6 shadow-sm hover:shadow-md transition">
-              <div className="flex justify-between items-start mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${c.color} text-white flex items-center justify-center`}>
-                  {c.icon}
-                </div>
-                <span className="text-xs text-gray-400 font-medium">Metric</span>
-              </div>
-              <div className="text-3xl font-bold text-gray-900">{c.value}</div>
-              <div className="font-semibold text-sm text-gray-900 mt-1">{c.label}</div>
-              <div className="text-xs text-gray-500 mt-0.5">{c.sub}</div>
+        {/* Top Metric Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950 text-blue-600 flex items-center justify-center font-bold text-xl shrink-0">
+              🎯
             </div>
-          ))}
-        </div>
-
-        {/* Analytics charts/bars section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Weekly Progress Visualizer */}
-          <div className="lg:col-span-2 bg-white rounded-[20px] border border-gray-100 p-6 shadow-sm">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <Activity className="w-5 h-5 text-[#2563EB]" /> Weekly Study Volume
-              </h2>
-              <span className="text-xs font-semibold text-[#2563EB] bg-blue-50 px-2.5 py-1 rounded-full">
-                Active Streak
-              </span>
-            </div>
-            
-            <div className="h-64 flex items-end justify-between gap-2.5 pt-4">
-              {weeklyProgress.map((wp, i) => {
-                const maxQuestions = Math.max(...weeklyProgress.map(x => x.questions));
-                const heightPercentage = (wp.questions / maxQuestions) * 100;
-                return (
-                  <div key={i} className="flex-1 flex flex-col items-center h-full justify-end">
-                    <div className="w-full bg-slate-50 border border-slate-100 rounded-t-xl relative flex justify-center group" style={{ height: `${heightPercentage}%` }}>
-                      {/* Inner animated bar */}
-                      <div className="absolute bottom-0 w-full bg-gradient-to-t from-blue-500 to-indigo-500 rounded-t-xl transition-all duration-500 group-hover:opacity-90" style={{ height: '100%' }} />
-                      
-                      {/* Tooltip on hover */}
-                      <div className="absolute -top-10 scale-0 group-hover:scale-100 transition-all bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow-md z-10 whitespace-nowrap">
-                        {wp.questions} questions ({wp.score}% avg)
-                      </div>
-                    </div>
-                    <span className="text-xs text-gray-500 mt-2 font-semibold">{wp.day}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Detailed Performance predicted score */}
-          <div className="bg-white rounded-[20px] border border-gray-100 p-6 shadow-sm flex flex-col justify-between">
             <div>
-              <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
-                <TrendingUp className="w-5 h-5 text-[#10B981]" /> AI Target Score
-              </h2>
-              <p className="text-gray-500 text-xs leading-relaxed mb-6">
-                Based on your accuracy stats, test speed, and revision patterns, the AI forecasts your chance of clearing the next test.
-              </p>
+              <span className="text-xs text-slate-400 font-semibold block">Overall Accuracy</span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">84.2%</div>
+            </div>
+          </div>
 
-              <div className="space-y-4">
-                {[
-                  { label: 'Aptitude Speed', percent: 85, color: 'bg-blue-500' },
-                  { label: 'GK Accuracy', percent: 72, color: 'bg-emerald-500' },
-                  { label: 'English Score', percent: 90, color: 'bg-purple-500' },
-                  { label: 'Time Management', percent: 78, color: 'bg-orange-500' },
-                ].map((item, i) => (
-                  <div key={i}>
-                    <div className="flex justify-between text-xs font-semibold text-gray-700 mb-1">
-                      <span>{item.label}</span>
-                      <span>{item.percent}%</span>
-                    </div>
-                    <div className="w-full bg-gray-100 rounded-full h-1.5">
-                      <div className={`${item.color} h-1.5 rounded-full`} style={{ width: `${item.percent}%` }} />
-                    </div>
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-950 text-orange-500 flex items-center justify-center font-bold text-xl shrink-0">
+              🔥
+            </div>
+            <div>
+              <span className="text-xs text-slate-400 font-semibold block">Daily Streak</span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">14 Days</div>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950 text-purple-600 flex items-center justify-center font-bold text-xl shrink-0">
+              ⏱️
+            </div>
+            <div>
+              <span className="text-xs text-slate-400 font-semibold block">Study Time</span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">38.5 Hrs</div>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950 text-emerald-500 flex items-center justify-center font-bold text-xl shrink-0">
+              🏆
+            </div>
+            <div>
+              <span className="text-xs text-slate-400 font-semibold block">Questions Solved</span>
+              <div className="text-2xl font-black text-slate-900 dark:text-white mt-0.5">1,420</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Charts & Subject Accuracy Breakdown */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+          {/* Subject Accuracy Bar Visualizer */}
+          <div className="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-6">
+            <h3 className="font-extrabold text-lg text-slate-900 dark:text-white">Subject Accuracy Breakdown</h3>
+
+            <div className="space-y-4">
+              {[
+                { subject: 'Quantitative Aptitude', accuracy: 88, questions: 420 },
+                { subject: 'Indian Polity & Constitution', accuracy: 92, questions: 380 },
+                { subject: 'General Reasoning', accuracy: 76, questions: 310 },
+                { subject: 'English Comprehension', accuracy: 68, questions: 210 },
+                { subject: 'Indian Economy & History', accuracy: 82, questions: 100 },
+              ].map((s) => (
+                <div key={s.subject} className="space-y-1.5">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-slate-800 dark:text-slate-200">{s.subject}</span>
+                    <span className="text-blue-600 dark:text-blue-400">{s.accuracy}% ({s.questions} Solved)</span>
                   </div>
+                  <div className="w-full h-3 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${
+                        s.accuracy >= 85 ? 'bg-emerald-500' : s.accuracy >= 75 ? 'bg-blue-600' : 'bg-amber-500'
+                      }`}
+                      style={{ width: `${s.accuracy}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Strong vs Weak Topics Card */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+              <h3 className="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-500" /> Strong Topics (High Accuracy)
+              </h3>
+              <div className="flex flex-wrap gap-2 text-xs">
+                {['Time & Work', 'Percentages', 'Preamble & Articles', 'Simplification', 'Syllogism'].map((t) => (
+                  <span key={t} className="px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-900">
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-gray-50 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-yellow-50 flex items-center justify-center text-lg shadow-sm">
-                <Zap className="w-5 h-5 text-[#F59E0B]" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-gray-900">Expert Advice</div>
-                <div className="text-[11px] text-gray-500">Practice GK questions for 20 mins to reach target rank.</div>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+              <h3 className="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" /> Focus Weak Topics
+              </h3>
+              <div className="flex flex-wrap gap-2 text-xs">
+                {['Trigonometry Heights', 'Reading Comprehension', 'May 2026 Current Affairs'].map((t) => (
+                  <span key={t} className="px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-bold border border-amber-200 dark:border-amber-900">
+                    {t}
+                  </span>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </div>
+
+        {/* Learning Heatmap Simulation */}
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Daily Practice Heatmap (2026)</h3>
+            <span className="text-xs text-slate-400">Higher intensity = More questions solved</span>
+          </div>
+
+          <div className="grid grid-cols-12 sm:grid-cols-24 gap-1.5 pt-2">
+            {Array.from({ length: 48 }).map((_, idx) => (
+              <div
+                key={idx}
+                className={`h-6 rounded-md ${
+                  idx % 5 === 0
+                    ? 'bg-blue-600'
+                    : idx % 3 === 0
+                    ? 'bg-blue-400'
+                    : idx % 2 === 0
+                    ? 'bg-blue-200 dark:bg-blue-900'
+                    : 'bg-slate-100 dark:bg-slate-800'
+                }`}
+                title={`Day ${idx + 1}: ${idx * 4} questions`}
+              />
+            ))}
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+      <AiWidget />
     </div>
   );
 }

@@ -1,252 +1,167 @@
-import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, BookOpen, Sparkles, Bookmark, Layers } from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import QuantTopicCard from '../components/quant/QuantTopicCard';
-import QuantFormulaModal from '../components/quant/QuantFormulaModal';
-import { quantTopicsList as initialTopics } from '../data/quantTopicsData';
+import Footer from '../components/Footer';
+import AiWidget from '../components/AiWidget';
+import { ChevronDown, ChevronRight, Lock, CheckCircle, Clock, Play, BookOpen, Calculator } from 'lucide-react';
+
+const quantModules = [
+  {
+    category: 'Arithmetic & Commercial Math',
+    topics: [
+      { id: 'time-work', name: 'Time & Work', questions: 120, estTime: '45 mins', difficulty: 'Moderate', completed: true, locked: false },
+      { id: 'boats-streams', name: 'Boats & Streams', questions: 85, estTime: '30 mins', difficulty: 'Moderate', completed: true, locked: false },
+      { id: 'ages', name: 'Problems on Ages', questions: 95, estTime: '35 mins', difficulty: 'Easy', completed: true, locked: false },
+      { id: 'profit-loss', name: 'Profit, Loss & Discount', questions: 150, estTime: '60 mins', difficulty: 'High', completed: false, locked: false },
+    ],
+  },
+  {
+    category: 'Number Systems & Algebra',
+    topics: [
+      { id: 'num-sys', name: 'Number System & HCF/LCM', questions: 210, estTime: '50 mins', difficulty: 'Easy', completed: true, locked: false },
+      { id: 'avg', name: 'Average & Percentages', questions: 180, estTime: '40 mins', difficulty: 'Moderate', completed: false, locked: false },
+      { id: 'simp', name: 'Simplification & Approximation', questions: 140, estTime: '30 mins', difficulty: 'Easy', completed: false, locked: false },
+    ],
+  },
+  {
+    category: 'Advanced Math & Geometry',
+    topics: [
+      { id: 'stats', name: 'Statistics & Data Interpretation', questions: 190, estTime: '60 mins', difficulty: 'High', completed: false, locked: false },
+      { id: 'mensuration', name: 'Mensuration 2D & 3D', questions: 160, estTime: '75 mins', difficulty: 'High', completed: false, locked: true },
+      { id: 'trig', name: 'Trigonometry & Heights/Distances', questions: 110, estTime: '55 mins', difficulty: 'High', completed: false, locked: true },
+    ],
+  },
+];
 
 export default function QuantAptitudePage() {
-  const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(['Arithmetic & Commercial Math', 'Number Systems & Algebra']);
 
-  const [topics, setTopics] = useState(initialTopics);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [difficultyFilter, setDifficultyFilter] = useState('All'); // 'All' | 'Easy' | 'Medium' | 'Hard'
-  const [onlyBookmarks, setOnlyBookmarks] = useState(false);
-  const [selectedFormulaTopic, setSelectedFormulaTopic] = useState(null);
-  const [toastMessage, setToastMessage] = useState(null);
-
-  // Filter topics
-  const filteredTopics = useMemo(() => {
-    return topics.filter(topic => {
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch = !q || topic.name.toLowerCase().includes(q) || topic.summary.toLowerCase().includes(q);
-      const matchesDiff = difficultyFilter === 'All' || topic.difficulty === difficultyFilter;
-      const matchesBookmark = !onlyBookmarks || topic.bookmarked;
-      return matchesSearch && matchesDiff && matchesBookmark;
-    });
-  }, [topics, searchQuery, difficultyFilter, onlyBookmarks]);
-
-  // Overall stats
-  const totalQuestions = useMemo(() => topics.reduce((acc, t) => acc + t.questionsCount, 0), [topics]);
-  const totalPYQs = useMemo(() => topics.reduce((acc, t) => acc + t.pyqCount, 0), [topics]);
-  const avgProgress = useMemo(() => Math.round(topics.reduce((acc, t) => acc + t.progress, 0) / topics.length), [topics]);
-  const avgAccuracy = useMemo(() => Math.round(topics.reduce((acc, t) => acc + t.accuracy, 0) / topics.length), [topics]);
-
-  const handleToggleBookmark = (id) => {
-    setTopics(prev => prev.map(t => t.id === id ? { ...t, bookmarked: !t.bookmarked } : t));
-  };
-
-  const handleStartPractice = (topic) => {
-    navigate('/quiz', {
-      state: {
-        topicId: topic.id,
-        subjectName: `Quant: ${topic.name}`,
-        icon: '🧮',
-        questionsCount: 20
-      }
-    });
-  };
-
-  const handleStartMock = (topic) => {
-    navigate('/quiz', {
-      state: {
-        topicId: topic.id,
-        subjectName: `Quant Mock: ${topic.name}`,
-        icon: '🏆',
-        questionsCount: 30
-      }
-    });
-  };
-
-  const handleOpenAI = (topic) => {
-    setToastMessage(`AI Concept Assistant generating detailed step-by-step breakdown for ${topic.name}...`);
-    setTimeout(() => setToastMessage(null), 3000);
+  const toggleCategory = (cat) => {
+    setExpanded((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/60 font-sans text-slate-800 antialiased pb-20">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
       <Navbar />
 
-      {/* Toast alert */}
-      {toastMessage && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-bold px-5 py-3 rounded-2xl shadow-xl border border-blue-500/30 flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-amber-400 animate-spin" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
-
-      <main className="max-w-[1600px] mx-auto px-6 py-8 space-y-10">
-
-        {/* ── HERO BANNER ────────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-800 to-slate-900 text-white rounded-[24px] p-8 md:p-12 shadow-xl border border-blue-500/20">
-          <div className="max-w-4xl space-y-4">
-            <span className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-1.5 text-xs font-bold text-amber-300">
-              <BookOpen className="w-3.5 h-3.5 text-amber-400" /> Standard Government Exam Aptitude Syllabus (40 Topics)
+      <main className="flex-1 max-w-[1440px] mx-auto px-6 lg:px-12 py-10 w-full">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+          <div>
+            <span className="px-3.5 py-1 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-xs font-bold">
+              📘 Quantitative Aptitude Syllabus Tree
             </span>
-
-            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight text-white">
-              Quantitative Aptitude Master Syllabus
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2">
+              Topic-wise Interactive Roadmap
             </h1>
-
-            <p className="text-base text-blue-100 leading-relaxed max-w-2xl">
-              Complete coverage of all 40 quantitative aptitude topics for UPSC, TNPSC, SSC CGL/CHSL, RRB NTPC, Banking, Police & Defence exams. Practice 200–1000 questions per topic with formulas and shortcut tricks.
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Complete each topic in sequence to unlock advanced modules and formula cheat sheets.
             </p>
           </div>
-        </section>
 
-        {/* ── OVERALL SYLLABUS STATS ─────────────────────────────────────────── */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[20px] p-5 text-center shadow-xs space-y-1">
-            <div className="text-blue-600 dark:text-blue-400 font-extrabold text-2xl">
-              40 Topics
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-xs flex items-center gap-6">
+            <div>
+              <span className="text-[11px] font-bold text-slate-400 uppercase">Overall Progress</span>
+              <div className="text-xl font-extrabold text-blue-600">4 / 10 Topics (40%)</div>
             </div>
-            <div className="text-slate-500 dark:text-slate-400 text-xs font-bold tracking-wider uppercase">
-              Full Quant Syllabus
+            <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-600 flex items-center justify-center font-bold text-sm">
+              40%
             </div>
           </div>
+        </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[20px] p-5 text-center shadow-xs space-y-1">
-            <div className="text-emerald-600 dark:text-emerald-400 font-extrabold text-2xl">
-              {totalQuestions.toLocaleString()}+ Qs
-            </div>
-            <div className="text-slate-500 dark:text-slate-400 text-xs font-bold tracking-wider uppercase">
-              Topic Practice Bank
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[20px] p-5 text-center shadow-xs space-y-1">
-            <div className="text-purple-600 dark:text-purple-400 font-extrabold text-2xl">
-              {totalPYQs.toLocaleString()}+
-            </div>
-            <div className="text-slate-500 dark:text-slate-400 text-xs font-bold tracking-wider uppercase">
-              Solved PYQs Included
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[20px] p-5 text-center shadow-xs space-y-1">
-            <div className="text-amber-500 dark:text-amber-400 font-extrabold text-2xl">
-              {avgAccuracy}%
-            </div>
-            <div className="text-slate-500 dark:text-slate-400 text-xs font-bold tracking-wider uppercase">
-              Average Quant Accuracy
-            </div>
-          </div>
-        </section>
-
-        {/* ── SEARCH & FILTER CONTROLS ───────────────────────────────────────── */}
-        <section className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-[24px] p-6 shadow-xs space-y-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            
-            {/* Search Bar */}
-            <div className="relative w-full md:w-96">
-              <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search topic name or concept (e.g. Boats, Profit, Permutation)..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold focus:outline-none focus:border-blue-600"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 hover:text-slate-600"
-                >
-                  ×
-                </button>
-              )}
-            </div>
-
-            {/* Difficulty Pills & Bookmarks Filter */}
-            <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto text-xs">
-              <span className="text-slate-400 font-bold shrink-0">Difficulty:</span>
-              {['All', 'Easy', 'Medium', 'Hard'].map(diff => (
-                <button
-                  key={diff}
-                  onClick={() => setDifficultyFilter(diff)}
-                  className={`px-3.5 py-2 rounded-xl font-bold transition shrink-0 cursor-pointer ${
-                    difficultyFilter === diff
-                      ? 'bg-blue-600 text-white shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
-                  }`}
-                >
-                  {diff}
-                </button>
-              ))}
-
-              <button
-                onClick={() => setOnlyBookmarks(!onlyBookmarks)}
-                className={`px-3.5 py-2 rounded-xl font-bold transition shrink-0 flex items-center gap-1 cursor-pointer ${
-                  onlyBookmarks
-                    ? 'bg-amber-500 text-white shadow-xs'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
-                }`}
+        {/* Tree View Modules */}
+        <div className="space-y-6">
+          {quantModules.map((module) => {
+            const isOpen = expanded.includes(module.category);
+            return (
+              <div
+                key={module.category}
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xs"
               >
-                <Bookmark className={`w-3.5 h-3.5 ${onlyBookmarks ? 'fill-white' : ''}`} />
-                <span>Bookmarked</span>
-              </button>
-            </div>
+                {/* Module Header */}
+                <button
+                  onClick={() => toggleCategory(module.category)}
+                  className="w-full p-5 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/60 transition cursor-pointer text-left"
+                >
+                  <div className="flex items-center gap-3 font-extrabold text-base text-slate-900 dark:text-white">
+                    {isOpen ? <ChevronDown className="w-5 h-5 text-blue-600" /> : <ChevronRight className="w-5 h-5 text-slate-400" />}
+                    <span>{module.category}</span>
+                  </div>
+                  <span className="text-xs font-bold text-slate-500">{module.topics.length} Topics</span>
+                </button>
 
-          </div>
-        </section>
+                {/* Module Topics List */}
+                {isOpen && (
+                  <div className="p-4 sm:p-6 space-y-3 border-t border-slate-100 dark:border-slate-800">
+                    {module.topics.map((t) => (
+                      <div
+                        key={t.id}
+                        className={`p-4 rounded-2xl border ${
+                          t.locked
+                            ? 'bg-slate-50 dark:bg-slate-950/40 border-slate-200 dark:border-slate-800/80 opacity-60'
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-xs'
+                        } flex flex-col sm:flex-row sm:items-center justify-between gap-4`}
+                      >
+                        <div className="flex items-center gap-3">
+                          {t.completed ? (
+                            <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
+                          ) : t.locked ? (
+                            <Lock className="w-5 h-5 text-slate-400 shrink-0" />
+                          ) : (
+                            <div className="w-5 h-5 rounded-full border-2 border-blue-600 shrink-0" />
+                          )}
+                          <div>
+                            <h4 className="font-bold text-sm text-slate-900 dark:text-white">{t.name}</h4>
+                            <div className="flex items-center gap-3 text-xs text-slate-400 mt-0.5">
+                              <span>{t.questions} Questions</span>
+                              <span>•</span>
+                              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {t.estTime}</span>
+                            </div>
+                          </div>
+                        </div>
 
-        {/* ── TOPICS GRID (40 TOPICS) ────────────────────────────────────────── */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Quantitative Aptitude Topics ({filteredTopics.length} of 40)
-            </h2>
-            <span className="text-xs text-slate-500 font-semibold">
-              Syllabus Completion: {avgProgress}%
-            </span>
-          </div>
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={`px-3 py-1 rounded-full text-[11px] font-bold ${
+                              t.difficulty === 'Easy'
+                                ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400'
+                                : t.difficulty === 'Moderate'
+                                ? 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400'
+                                : 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400'
+                            }`}
+                          >
+                            {t.difficulty}
+                          </span>
 
-          {filteredTopics.length === 0 ? (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[24px] p-12 text-center space-y-4">
-              <Layers className="w-12 h-12 text-slate-300 mx-auto" />
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No matching aptitude topics found</h3>
-              <p className="text-xs text-slate-500 max-w-md mx-auto">
-                Try clearing your search query or setting difficulty filter to "All".
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setDifficultyFilter('All');
-                  setOnlyBookmarks(false);
-                }}
-                className="bg-blue-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-xs"
-              >
-                Reset Filters
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredTopics.map(topic => (
-                <QuantTopicCard
-                  key={topic.id}
-                  topic={topic}
-                  onStartPractice={handleStartPractice}
-                  onOpenMock={handleStartMock}
-                  onOpenAI={handleOpenAI}
-                  onOpenFormula={setSelectedFormulaTopic}
-                  onToggleBookmark={handleToggleBookmark}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-
+                          {!t.locked ? (
+                            <Link
+                              to="/quiz"
+                              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition"
+                            >
+                              <Play className="w-3.5 h-3.5 fill-white" />
+                              <span>Practice Topic</span>
+                            </Link>
+                          ) : (
+                            <span className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 font-bold text-xs flex items-center gap-1">
+                              <Lock className="w-3.5 h-3.5" /> Locked
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </main>
 
-      {/* Formula Sheet Modal */}
-      {selectedFormulaTopic && (
-        <QuantFormulaModal
-          topic={selectedFormulaTopic}
-          onClose={() => setSelectedFormulaTopic(null)}
-          onStartPractice={handleStartPractice}
-        />
-      )}
+      <Footer />
+      <AiWidget />
     </div>
   );
 }

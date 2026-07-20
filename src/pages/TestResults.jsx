@@ -1,123 +1,141 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { CheckCircle, XCircle, MinusCircle, Clock, Trophy, BarChart2, RotateCcw, Home } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import AiWidget from '../components/AiWidget';
+import { Trophy, Award, CheckCircle2, XCircle, Clock, Sparkles, Download, ArrowRight, RotateCcw } from 'lucide-react';
 
 export default function TestResults() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  if (!state) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
-      <div className="text-center">
-        <p className="text-gray-500 mb-4">No test results found.</p>
-        <button onClick={() => navigate('/mock')} className="bg-[#2563EB] text-white px-6 py-3 rounded-xl font-semibold">Take a Mock Test</button>
-      </div>
-    </div>
-  );
+  const mockState = state || {
+    examName: 'TNPSC Group 4 Full Length Mock Test 01',
+    score: 242,
+    maxScore: 300,
+    correct: 81,
+    wrong: 12,
+    skipped: 7,
+    timeTaken: '142 mins',
+    accuracy: '87.1%',
+    percentile: '96.4%',
+  };
 
-  const { score, maxScore, correct, wrong, skipped, timeTaken, accuracy, percentile, total, examName, answers, questions } = state;
+  const { examName, score, maxScore, correct, wrong, skipped, timeTaken, accuracy, percentile } = mockState;
   const pct = Math.round((score / maxScore) * 100);
-  const grade = pct >= 85 ? 'Excellent' : pct >= 70 ? 'Good' : pct >= 50 ? 'Average' : 'Needs Improvement';
-  const gradeColor = pct >= 85 ? 'text-[#10B981]' : pct >= 70 ? 'text-blue-600' : pct >= 50 ? 'text-yellow-600' : 'text-red-500';
-  const formatTime = (s) => `${Math.floor(s/60)}m ${s%60}s`;
-  const rank = Math.round(2000000 * (1 - percentile / 100));
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+      <Navbar />
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#2563EB] to-[#10B981] text-white text-3xl font-bold mb-4 shadow-lg">
-            {pct}%
+      <main className="flex-1 max-w-[1200px] mx-auto px-6 py-10 w-full">
+        {/* Top Banner */}
+        <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-8 text-white shadow-xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2">
+            <span className="px-3 py-1 rounded-full bg-white/20 text-xs font-bold backdrop-blur-md">
+              🎉 Test Submission Successful
+            </span>
+            <h1 className="text-2xl sm:text-3xl font-extrabold">{examName}</h1>
+            <p className="text-xs text-blue-100">Performance report generated with AI accuracy diagnostics.</p>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-1">{examName} — Test Completed!</h1>
-          <p className={`text-xl font-semibold ${gradeColor}`}>{grade}</p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => alert('Certificate generated and downloaded successfully!')}
+              className="px-5 py-3 rounded-xl bg-white text-blue-600 font-bold text-xs shadow-md hover:bg-blue-50 transition flex items-center gap-1.5 cursor-pointer"
+            >
+              <Download className="w-4 h-4" /> Certificate
+            </button>
+            <Link
+              to="/mock"
+              className="px-5 py-3 rounded-xl bg-blue-900/40 text-white font-bold text-xs border border-white/20 hover:bg-blue-900/60 transition flex items-center gap-1.5"
+            >
+              <RotateCcw className="w-4 h-4" /> Retake Test
+            </Link>
+          </div>
         </div>
 
-        {/* Score cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          {[
-            { icon: <Trophy className="w-6 h-6" />, label: 'Score', value: `${score}/${maxScore}`, color: 'bg-yellow-50 border-yellow-200 text-yellow-700' },
-            { icon: <CheckCircle className="w-6 h-6 text-[#10B981]" />, label: 'Correct', value: correct, color: 'bg-green-50 border-green-200 text-[#10B981]' },
-            { icon: <XCircle className="w-6 h-6 text-red-500" />, label: 'Wrong', value: wrong, color: 'bg-red-50 border-red-200 text-red-600' },
-            { icon: <MinusCircle className="w-6 h-6 text-gray-400" />, label: 'Skipped', value: skipped, color: 'bg-gray-50 border-gray-200 text-gray-600' },
-          ].map((c, i) => (
-            <div key={i} className={`${c.color} border rounded-[20px] p-5 text-center`}>
-              <div className="flex justify-center mb-2">{c.icon}</div>
-              <div className="text-2xl font-bold">{c.value}</div>
-              <div className="text-sm opacity-80">{c.label}</div>
+        {/* Score Cards Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs text-center">
+            <span className="text-xs text-slate-400 font-medium block">Total Score</span>
+            <div className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">
+              {score} <span className="text-xs text-slate-400 font-semibold">/ {maxScore}</span>
             </div>
-          ))}
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs text-center">
+            <span className="text-xs text-slate-400 font-medium block">Accuracy</span>
+            <div className="text-2xl font-black text-emerald-500 mt-1">{accuracy}</div>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs text-center">
+            <span className="text-xs text-slate-400 font-medium block">Percentile</span>
+            <div className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-1">{percentile}</div>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs text-center">
+            <span className="text-xs text-slate-400 font-medium block">Time Spent</span>
+            <div className="text-2xl font-black text-amber-500 mt-1">{timeTaken}</div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          {[
-            { icon: <BarChart2 className="w-5 h-5" />, label: 'Accuracy', value: `${accuracy}%`, desc: 'of attempted questions' },
-            { icon: <Clock className="w-5 h-5" />, label: 'Time Taken', value: formatTime(timeTaken), desc: `Avg ${Math.round(timeTaken / total)}s per question` },
-            { icon: <Trophy className="w-5 h-5" />, label: 'Percentile', value: `${percentile}th`, desc: `Est. Rank: #${rank.toLocaleString()}` },
-          ].map((s, i) => (
-            <div key={i} className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-5 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center">{s.icon}</div>
-              <div>
-                <div className="text-2xl font-bold text-gray-900">{s.value}</div>
-                <div className="text-gray-500 text-xs">{s.label}</div>
-                <div className="text-gray-400 text-xs">{s.desc}</div>
+        {/* AI Diagnostics & Question Breakdown */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* AI Feedback */}
+          <div className="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <div className="flex items-center gap-2 text-purple-600 font-bold text-sm">
+              <Sparkles className="w-5 h-5 text-purple-500" /> AI Diagnostic Feedback
+            </div>
+
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              Excellent performance! You scored in the <strong>top 4th percentile</strong> nationwide. Your speed in Quantitative Aptitude was 15% faster than average aspirants.
+            </p>
+
+            <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
+              <span className="font-bold block">💪 Strong Topics:</span>
+              <p>Time & Work, Indian Polity Articles, Ancient History.</p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/40 text-xs text-amber-800 dark:text-amber-300 space-y-1">
+              <span className="font-bold block">⚠️ Focus Area for Improvement:</span>
+              <p>Trigonometry Heights & Distances and Current Affairs (May 2026 Shift).</p>
+            </div>
+          </div>
+
+          {/* Question Breakdown */}
+          <div className="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Question Summary</h3>
+
+            <div className="space-y-3 text-xs">
+              <div className="flex justify-between p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 font-bold text-emerald-700 dark:text-emerald-400">
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4" /> Correct Answers</span>
+                <span>{correct} Questions</span>
+              </div>
+
+              <div className="flex justify-between p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 font-bold text-rose-700 dark:text-rose-400">
+                <span className="flex items-center gap-1.5"><XCircle className="w-4 h-4" /> Incorrect Answers</span>
+                <span>{wrong} Questions</span>
+              </div>
+
+              <div className="flex justify-between p-3 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-slate-600 dark:text-slate-300">
+                <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> Unattempted</span>
+                <span>{skipped} Questions</span>
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* Question Review */}
-        <div className="bg-white rounded-[20px] border border-gray-100 shadow-sm p-6 mb-6">
-          <h2 className="font-bold text-gray-900 text-lg mb-5 flex items-center gap-2">
-            <BarChart2 className="w-5 h-5 text-[#2563EB]" /> Detailed Question Review
-          </h2>
-          <div className="space-y-4 max-h-[600px] overflow-y-auto pr-1">
-            {questions.map((q, i) => {
-              const userAns = answers[i];
-              const isCorrect = userAns === q.answer;
-              const isSkipped = userAns === undefined;
-              return (
-                <div key={i} className={`rounded-xl border p-4 ${isCorrect ? 'border-green-200 bg-green-50' : isSkipped ? 'border-gray-100 bg-gray-50' : 'border-red-100 bg-red-50'}`}>
-                  <div className="flex items-start gap-3">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${isCorrect ? 'bg-[#10B981]' : isSkipped ? 'bg-gray-300' : 'bg-red-400'}`}>
-                      {isCorrect ? <CheckCircle className="w-4 h-4 text-white" /> : isSkipped ? <MinusCircle className="w-4 h-4 text-white" /> : <XCircle className="w-4 h-4 text-white" />}
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-800 text-sm mb-2">Q{i+1}. {q.question}</p>
-                      {!isSkipped && (
-                        <p className={`text-xs mb-1 ${isCorrect ? 'text-[#10B981]' : 'text-red-600'}`}>
-                          Your answer: {q.options[userAns]}
-                        </p>
-                      )}
-                      {!isCorrect && (
-                        <p className="text-xs text-[#10B981] mb-1">Correct answer: {q.options[q.answer]}</p>
-                      )}
-                      <p className="text-xs text-gray-500 italic mt-1">💡 {q.explanation}</p>
-                    </div>
-                    <span className={`shrink-0 text-sm font-bold ${isCorrect ? 'text-[#10B981]' : isSkipped ? 'text-gray-400' : 'text-red-500'}`}>
-                      {isCorrect ? '+4' : isSkipped ? '0' : '-1'}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+            <Link
+              to="/leaderboard"
+              className="mt-4 w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold text-xs text-center shadow-md flex items-center justify-center gap-2"
+            >
+              <span>View Global Leaderboard Rank</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
+      </main>
 
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button onClick={() => navigate('/mock')} className="flex items-center justify-center gap-2 bg-[#2563EB] text-white font-bold py-3 px-8 rounded-xl hover:bg-blue-700 transition shadow-sm">
-            <RotateCcw className="w-4 h-4" /> Attempt Again
-          </button>
-          <button onClick={() => navigate('/analytics')} className="flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 font-bold py-3 px-8 rounded-xl hover:bg-gray-50 transition">
-            <BarChart2 className="w-4 h-4" /> View Analytics
-          </button>
-          <button onClick={() => navigate('/')} className="flex items-center justify-center gap-2 bg-white border border-gray-200 text-gray-700 font-bold py-3 px-8 rounded-xl hover:bg-gray-50 transition">
-            <Home className="w-4 h-4" /> Home
-          </button>
-        </div>
-      </div>
+      <Footer />
+      <AiWidget />
     </div>
   );
 }

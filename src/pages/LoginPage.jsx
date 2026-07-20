@@ -1,4 +1,6 @@
 import studyIllustration from '../assets/study_illustration.png';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 export default function LoginPage() {
   return (
@@ -255,29 +257,7 @@ export default function LoginPage() {
   }
 `}</style>
 
-      <nav className="navbar">
-        <div className="brand">
-          <div className="brand-logo">🎓</div>
-          ExamMaster <span className="ai">AI</span>
-        </div>
-        <div className="navlinks">
-          <a href="#">Exams</a>
-          <a href="#">Practice</a>
-          <a href="#">Quant Syllabus</a>
-          <a href="#">Mock Tests</a>
-          <a href="#">Previous Year Questions</a>
-          <a href="#">AI Hub</a>
-          <a href="#">Analytics</a>
-          <a href="#" className="active">Leaderboard</a>
-        </div>
-        <div className="nav-right">
-          <div className="icon-btn">👤</div>
-          <div className="icon-btn">⚙️</div>
-          <div className="icon-btn">🌙</div>
-          <a className="btn btn-outline" href="#">Login</a>
-          <a className="btn btn-gradient" href="#">Sign Up Free</a>
-        </div>
-      </nav>
+      <Navbar />
 
       <section className="hero">
         <div>
@@ -291,9 +271,9 @@ export default function LoginPage() {
             Practice smarter, analyze performance, master every subject, and secure your dream government job.
           </p>
           <div className="hero-ctas">
-            <a href="#" className="btn-primary-lg">Start Learning Free →</a>
-            <a href="#" className="btn-secondary-lg">📋 Explore Exam Catalog</a>
-            <a href="#" className="btn-tertiary-lg">🚀 Free Mock Test ›</a>
+            <Link to="/practice" className="btn-primary-lg">Start Learning Free →</Link>
+            <Link to="/exams" className="btn-secondary-lg">📋 Explore Exam Catalog</Link>
+            <Link to="/mock" className="btn-tertiary-lg">🚀 Free Mock Test ›</Link>
           </div>
 
           <div className="stats">
