@@ -62,6 +62,20 @@ body {
   background: linear-gradient(-45deg, #2563EB, #1d4ed8, #0f2a7a, #10B981);
 }
 
+.text-gradient {
+  background: linear-gradient(135deg, #2563eb, #9333ea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-hero {
+  background: linear-gradient(135deg, rgba(240,249,255,0.7) 0%, rgba(237,233,254,0.7) 100%);
+}
+.dark .bg-gradient-hero {
+  background: linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(30,27,75,0.9) 100%);
+}
+
 /* Anti-gravity Card static reset (Commented out to enable animations)
 [data-antigrav="card"],
 [data-antigrav="button"],

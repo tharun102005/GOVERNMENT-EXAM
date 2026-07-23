@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AiWidget from '../components/AiWidget';
-import { BarChart3, TrendingUp, Flame, Clock, Award, Target, Calendar, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { BarChart3, TrendingUp, Flame, Clock, Award, Target, Calendar, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function AnalyticsPage() {
   const [reportRange, setReportRange] = useState('Weekly');
@@ -23,14 +24,14 @@ export default function AnalyticsPage() {
             </h1>
           </div>
 
-          <div className="flex gap-2 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+          <div className="flex gap-2 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
             {['Weekly', 'Monthly', 'All Time'].map((r) => (
               <button
                 key={r}
                 onClick={() => setReportRange(r)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
                   reportRange === r
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
                     : 'text-slate-600 dark:text-slate-300 hover:text-blue-600'
                 }`}
               >
@@ -83,26 +84,71 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Charts & Subject Accuracy Breakdown */}
+        {/* Visual Trend Chart + Subject Breakdown */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-          {/* Subject Accuracy Bar Visualizer */}
+          {/* Trend Chart (SaaS Style Gradient Line Chart) */}
           <div className="lg:col-span-7 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-6">
-            <h3 className="font-extrabold text-lg text-slate-900 dark:text-white">Subject Accuracy Breakdown</h3>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-extrabold text-lg text-slate-900 dark:text-white">Score & Accuracy Trend</h3>
+                <p className="text-xs text-slate-400">Weekly progress performance curve</p>
+              </div>
+              <span className="text-xs font-bold text-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full">
+                ↑ +8.4% Accuracy
+              </span>
+            </div>
 
-            <div className="space-y-4">
+            {/* SVG Area Chart */}
+            <div className="h-48 w-full pt-4">
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 500 150">
+                <defs>
+                  <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#2563EB" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#7C3AED" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {/* Area Fill */}
+                <path
+                  d="M 0,120 Q 80,40 160,70 T 320,30 T 500,10 L 500,150 L 0,150 Z"
+                  fill="url(#chartGlow)"
+                />
+                {/* Smooth Gradient Line */}
+                <path
+                  d="M 0,120 Q 80,40 160,70 T 320,30 T 500,10"
+                  fill="none"
+                  stroke="url(#chartGlowLine)"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                />
+                <linearGradient id="chartGlowLine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#2563EB" />
+                  <stop offset="50%" stopColor="#4F46E5" />
+                  <stop offset="100%" stopColor="#7C3AED" />
+                </linearGradient>
+              </svg>
+              <div className="flex justify-between text-[11px] font-bold text-slate-400 mt-2 px-1">
+                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Subject Breakdown Bars */}
+          <div className="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 className="font-extrabold text-lg text-slate-900 dark:text-white">Subject Mastery Breakdown</h3>
+
+            <div className="space-y-3.5">
               {[
                 { subject: 'Quantitative Aptitude', accuracy: 88, questions: 420 },
                 { subject: 'Indian Polity & Constitution', accuracy: 92, questions: 380 },
                 { subject: 'General Reasoning', accuracy: 76, questions: 310 },
                 { subject: 'English Comprehension', accuracy: 68, questions: 210 },
-                { subject: 'Indian Economy & History', accuracy: 82, questions: 100 },
               ].map((s) => (
-                <div key={s.subject} className="space-y-1.5">
+                <div key={s.subject} className="space-y-1">
                   <div className="flex justify-between text-xs font-bold">
                     <span className="text-slate-800 dark:text-slate-200">{s.subject}</span>
-                    <span className="text-blue-600 dark:text-blue-400">{s.accuracy}% ({s.questions} Solved)</span>
+                    <span className="text-blue-600 dark:text-blue-400">{s.accuracy}%</span>
                   </div>
-                  <div className="w-full h-3 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                  <div className="w-full h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                     <div
                       className={`h-full rounded-full ${
                         s.accuracy >= 85 ? 'bg-emerald-500' : s.accuracy >= 75 ? 'bg-blue-600' : 'bg-amber-500'
@@ -114,38 +160,38 @@ export default function AnalyticsPage() {
               ))}
             </div>
           </div>
+        </div>
 
-          {/* Strong vs Weak Topics Card */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
-              <h3 className="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" /> Strong Topics (High Accuracy)
-              </h3>
-              <div className="flex flex-wrap gap-2 text-xs">
-                {['Time & Work', 'Percentages', 'Preamble & Articles', 'Simplification', 'Syllogism'].map((t) => (
-                  <span key={t} className="px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-900">
-                    {t}
-                  </span>
-                ))}
-              </div>
+        {/* Strong vs Weak Topics & AI Recommendations */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+          <div className="lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 className="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-500" /> Strong Topics (High Mastery)
+            </h3>
+            <div className="flex flex-wrap gap-2 text-xs">
+              {['Time & Work', 'Percentages', 'Preamble & Articles', 'Simplification', 'Syllogism', 'Data Interpretation'].map((t) => (
+                <span key={t} className="px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200 dark:border-emerald-900">
+                  {t}
+                </span>
+              ))}
             </div>
+          </div>
 
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
-              <h3 className="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" /> Focus Weak Topics
-              </h3>
-              <div className="flex flex-wrap gap-2 text-xs">
-                {['Trigonometry Heights', 'Reading Comprehension', 'May 2026 Current Affairs'].map((t) => (
-                  <span key={t} className="px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-bold border border-amber-200 dark:border-amber-900">
-                    {t}
-                  </span>
-                ))}
-              </div>
+          <div className="lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
+            <h3 className="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-amber-500" /> AI Weak Topics Recommendation
+            </h3>
+            <div className="flex flex-wrap gap-2 text-xs">
+              {['Trigonometry Heights', 'Reading Comprehension', 'May 2026 Current Affairs', 'Probability'].map((t) => (
+                <span key={t} className="px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-bold border border-amber-200 dark:border-amber-900">
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Learning Heatmap Simulation */}
+        {/* Daily Practice Heatmap */}
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Daily Practice Heatmap (2026)</h3>
@@ -156,7 +202,7 @@ export default function AnalyticsPage() {
             {Array.from({ length: 48 }).map((_, idx) => (
               <div
                 key={idx}
-                className={`h-6 rounded-md ${
+                className={`h-6 rounded-md transition hover:scale-110 ${
                   idx % 5 === 0
                     ? 'bg-blue-600'
                     : idx % 3 === 0
@@ -165,7 +211,7 @@ export default function AnalyticsPage() {
                     ? 'bg-blue-200 dark:bg-blue-900'
                     : 'bg-slate-100 dark:bg-slate-800'
                 }`}
-                title={`Day ${idx + 1}: ${idx * 4} questions`}
+                title={`Day ${idx + 1}: ${idx * 4} questions solved`}
               />
             ))}
           </div>

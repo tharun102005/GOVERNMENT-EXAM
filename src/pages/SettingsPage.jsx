@@ -4,10 +4,13 @@ import Footer from '../components/Footer';
 import AiWidget from '../components/AiWidget';
 import { User, Lock, Bell, Moon, Globe, Shield, Trash2, CheckCircle2 } from 'lucide-react';
 
+import { showToast } from '../components/Toast';
+
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('Account');
   const [emailNotifs, setEmailNotifs] = useState(true);
   const [darkTheme, setDarkTheme] = useState(() => document.documentElement.classList.contains('dark'));
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const toggleTheme = () => {
     const next = !darkTheme;
@@ -122,9 +125,7 @@ export default function SettingsPage() {
               <h4 className="font-bold text-xs text-rose-500 uppercase tracking-wider">Danger Zone</h4>
               <button
                 onClick={() => {
-                  if (confirm('Are you sure you want to delete your ExamMaster AI account?')) {
-                    alert('Account delete request submitted.');
-                  }
+                  showToast('Account delete request submitted to compliance team.', 'warning');
                 }}
                 className="px-4 py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center gap-2 hover:bg-rose-100 transition cursor-pointer"
               >

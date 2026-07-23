@@ -156,7 +156,7 @@ const rawTemplates = [
     hasImage: false
   },
 
-  // Tamil
+  // Tamil & TNPSC Specific
   {
     section: 'tamil',
     question: 'திராவிட மொழிகளின் ஒப்பிலக்கணம் என்ற நூலை எழுதியவர் யார்?',
@@ -173,6 +173,24 @@ const rawTemplates = [
     options: ['2001', '2004', '2008', '2010'],
     answer: 1,
     explanation: 'தமிழ் மொழி 2004 அக்டோபரில் இந்திய அரசால் செம்மொழியாக அறிவிக்கப்பட்டது.',
+    hasImage: false
+  },
+  {
+    section: 'gk',
+    question: 'Who was the first Chief Minister of Tamil Nadu after independence?',
+    questionTa: 'சுதந்திரத்திற்குப் பிறகு தமிழ்நாட்டின் முதல் முதலமைச்சர் யார்?',
+    options: ['K. Kamaraj', 'O. P. Ramaswamy Reddiyar', 'C. N. Annadurai', 'C. Rajagopalachari'],
+    answer: 1,
+    explanation: 'O. P. Ramaswamy Reddiyar was the Premier of Madras Presidency from 1947 to 1949 after independence.',
+    hasImage: false
+  },
+  {
+    section: 'gk',
+    question: 'In which year was the Madras State renamed as Tamil Nadu?',
+    questionTa: 'மெட்ராஸ் மாநிலம் தமிழ்நாடு என பெயர் மாற்றப்பட்ட ஆண்டு எது?',
+    options: ['1956', '1967', '1969', '1972'],
+    answer: 2,
+    explanation: 'Madras State was renamed as Tamil Nadu on January 14, 1969, under the leadership of C.N. Annadurai.',
     hasImage: false
   }
 ];

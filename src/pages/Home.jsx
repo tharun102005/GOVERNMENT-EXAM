@@ -20,6 +20,8 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AiWidget from '../components/AiWidget';
+import GlassCard from '../components/ui/GlassCard';
+import GradientButton from '../components/ui/GradientButton';
 import studyIllustration from '../assets/study_illustration.png';
 
 const featuredExams = [
@@ -99,16 +101,15 @@ export default function Home() {
 
               {/* Quick Call to Action Buttons */}
               <div className="flex flex-wrap gap-3 pt-2">
-                <Link
-                  to="/practice"
-                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-500/25 flex items-center gap-2 hover:scale-[1.02] transition"
-                >
-                  <span>Start Free Practice</span>
-                  <ArrowRight className="w-4 h-4" />
+                <Link to="/practice">
+                  <GradientButton size="lg" className="flex items-center gap-2">
+                    <span>Start Free Practice</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </GradientButton>
                 </Link>
                 <Link
                   to="/mock"
-                  className="px-6 py-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 font-bold text-sm flex items-center gap-2 hover:bg-emerald-100 transition"
+                  className="px-6 py-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 font-bold text-sm flex items-center gap-2 hover:bg-emerald-100 transition shadow-sm hover:shadow-md"
                 >
                   <Trophy className="w-4 h-4 text-emerald-600" />
                   <span>Free Mock Tests</span>
@@ -151,7 +152,7 @@ export default function Home() {
         </section>
 
         {/* 2. CONTINUE LEARNING & DAILY STREAK BANNER */}
-        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 -mt-8 mb-16 relative z-10">
+        <section className="max-w-[1440px] mx-auto px-6 lg:px-12 mt-8 mb-16 relative z-10">
           <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-amber-300 text-2xl shrink-0">
@@ -185,12 +186,13 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredExams.map((exam) => (
-              <div
+            {featuredExams.map((exam, idx) => (
+              <GlassCard
                 key={exam.id}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                delay={idx * 0.1}
+                className="flex flex-col justify-between group !p-0 overflow-hidden !bg-white/50 dark:!bg-slate-900/50"
               >
-                <div>
+                <div className="p-6">
                   <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400">
                     {exam.category}
                   </span>
@@ -204,11 +206,11 @@ export default function Home() {
                 </div>
                 <Link
                   to={`/exams`}
-                  className="mt-6 w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 hover:text-white text-slate-700 dark:text-slate-200 font-bold text-xs text-center transition"
+                  className="mt-2 mx-4 mb-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-blue-600 hover:text-white text-slate-700 dark:text-slate-200 font-bold text-xs text-center transition"
                 >
                   Explore Exam →
                 </Link>
-              </div>
+              </GlassCard>
             ))}
           </div>
         </section>
@@ -254,9 +256,10 @@ export default function Home() {
 
           <div className="space-y-4">
             {faqs.map((f, idx) => (
-              <div
+              <GlassCard
                 key={idx}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-xs transition cursor-pointer"
+                className="!p-5 !bg-white/50 dark:!bg-slate-900/50"
+                hoverEffect={false}
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
               >
                 <div className="flex items-center justify-between font-bold text-sm text-slate-900 dark:text-white">
@@ -264,11 +267,11 @@ export default function Home() {
                   <span className="text-blue-600 text-lg">{openFaq === idx ? '−' : '+'}</span>
                 </div>
                 {openFaq === idx && (
-                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 leading-relaxed">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-800/50 leading-relaxed">
                     {f.a}
                   </p>
                 )}
-              </div>
+              </GlassCard>
             ))}
           </div>
         </section>

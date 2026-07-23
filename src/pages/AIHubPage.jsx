@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Sparkles, Send, Mic, Image, FileText, Plus, Languages } from 'lucide-react';
+import { showToast } from '../components/Toast';
 
 const initialChats = [
   { id: 1, title: 'TNPSC Polity Articles 14 to 32 Summary' },
@@ -142,11 +143,11 @@ export default function AIHubPage() {
             <div className="flex items-center gap-2">
               <label className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white cursor-pointer transition" title="Upload Image Question">
                 <Image className="w-4 h-4" />
-                <input type="file" accept="image/*" className="hidden" onChange={() => alert('Image uploaded for AI parsing!')} />
+                <input type="file" accept="image/*" className="hidden" onChange={() => showToast('Image uploaded for AI parsing!', 'success')} />
               </label>
               <label className="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white cursor-pointer transition" title="Upload PDF Notes">
                 <FileText className="w-4 h-4" />
-                <input type="file" accept=".pdf" className="hidden" onChange={() => alert('PDF uploaded for AI notes generation!')} />
+                <input type="file" accept=".pdf" className="hidden" onChange={() => showToast('PDF uploaded for AI notes generation!', 'info')} />
               </label>
               <button
                 type="button"

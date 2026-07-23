@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AiWidget from '../components/AiWidget';
-import { Trophy, Star, Flame, Award, Shield, Sparkles, Filter, ChevronUp } from 'lucide-react';
+import { Trophy, Flame } from 'lucide-react';
 
 const topPodium = [
   { rank: 2, name: 'Ananya S.', xp: '14,820 XP', exam: 'UPSC CSE', state: 'Tamil Nadu', avatar: '👩‍🎓', medal: '🥈' },

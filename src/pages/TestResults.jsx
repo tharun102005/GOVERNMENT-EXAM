@@ -4,6 +4,9 @@ import Footer from '../components/Footer';
 import AiWidget from '../components/AiWidget';
 import { Trophy, Award, CheckCircle2, XCircle, Clock, Sparkles, Download, ArrowRight, RotateCcw } from 'lucide-react';
 
+import { showToast } from '../components/Toast';
+import { downloadCertificatePdf } from '../utils/pdfDownloader';
+
 export default function TestResults() {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -21,7 +24,12 @@ export default function TestResults() {
   };
 
   const { examName, score, maxScore, correct, wrong, skipped, timeTaken, accuracy, percentile } = mockState;
-  const pct = Math.round((score / maxScore) * 100);
+  const _pct = Math.round((score / maxScore) * 100);
+
+  const handleDownloadCertificate = () => {
+    downloadCertificatePdf('Aspirant Candidate', examName, score);
+    showToast('Official Certificate downloaded to your device!', 'success');
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
@@ -40,7 +48,7 @@ export default function TestResults() {
 
           <div className="flex gap-3">
             <button
-              onClick={() => alert('Certificate generated and downloaded successfully!')}
+              onClick={handleDownloadCertificate}
               className="px-5 py-3 rounded-xl bg-white text-blue-600 font-bold text-xs shadow-md hover:bg-blue-50 transition flex items-center gap-1.5 cursor-pointer"
             >
               <Download className="w-4 h-4" /> Certificate
