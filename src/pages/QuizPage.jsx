@@ -8,6 +8,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import AiWidget from '../components/AiWidget';
 import { getTopicRealQuestionBank } from '../data/questions';
+import QuestionPalette from '../components/mock/QuestionPalette';
+import { Bookmark } from 'lucide-react';
 
 export default function QuizPage() {
   const { state } = useLocation();
@@ -16,13 +18,14 @@ export default function QuizPage() {
   const topicId = state?.topicId || state?.subjectName?.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'number-system';
   const subjectName = state?.subjectName || 'Quantitative Aptitude';
   const subjectIcon = state?.icon || '🧮';
-  const totalCount = state?.questionsCount || 20;
+  const totalCount = state?.questionsCount || 150;
 
   // State
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [skippedQuestions, setSkippedQuestions] = useState({});
+  const [markedQuestions, setMarkedQuestions] = useState({});
   const [language, setLanguage] = useState('English');
   const [timeLeft, setTimeLeft] = useState(totalCount * 60); // 1 minute per question
   const [isFinished, setIsFinished] = useState(false);
@@ -150,6 +153,10 @@ export default function QuizPage() {
     }
   };
 
+  const handleMarkForReview = () => {
+    setMarkedQuestions((prev) => ({ ...prev, [currentIndex]: !prev[currentIndex] }));
+  };
+
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -161,6 +168,28 @@ export default function QuizPage() {
       setCurrentIndex((prev) => prev - 1);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      
+      if (e.key === 'ArrowLeft') {
+        handlePrevious();
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
+      } else if (e.key === 'Enter') {
+        // Save & Next
+        handleNext();
+      } else if (e.key >= '1' && e.key <= '9') {
+        const num = parseInt(e.key, 10);
+        if (num <= questions.length) {
+          setCurrentIndex(num - 1);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex, questions.length]);
 
   if (noQuestions || (!currentQ && questions.length === 0)) {
     return (
@@ -398,12 +427,20 @@ export default function QuizPage() {
                   <ArrowLeft className="w-4 h-4" /> Previous
                 </button>
 
-                <button
-                  onClick={handleSkip}
-                  className="px-6 py-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 font-extrabold text-sm hover:bg-amber-100 transition flex items-center gap-2 cursor-pointer shadow-xs"
-                >
-                  <SkipForward className="w-4 h-4 text-amber-600" /> Skip
-                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleMarkForReview}
+                    className="px-6 py-3.5 rounded-2xl border border-purple-300 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/60 text-purple-900 dark:text-purple-200 font-extrabold text-sm hover:bg-purple-100 transition flex items-center gap-2 cursor-pointer shadow-xs"
+                  >
+                    <Bookmark className="w-4 h-4 text-purple-600" /> {markedQuestions[currentIndex] ? 'Unmark' : 'Mark for Review'}
+                  </button>
+                  <button
+                    onClick={handleSkip}
+                    className="px-6 py-3.5 rounded-2xl border border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 font-extrabold text-sm hover:bg-amber-100 transition flex items-center gap-2 cursor-pointer shadow-xs"
+                  >
+                    <SkipForward className="w-4 h-4 text-amber-600" /> Skip
+                  </button>
+                </div>
               </div>
 
               <button
@@ -422,63 +459,17 @@ export default function QuizPage() {
 
         {/* RIGHT COLUMN: Question Palette & Testbook/LeetCode Stats Sidebar (4 Cols on Desktop) */}
         <aside className="lg:col-span-4 space-y-6">
-          
-          {/* Question Palette Card */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xs space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Question Palette</h3>
-              <span className="text-xs text-slate-400 font-bold">{questions.length} Items</span>
-            </div>
-
-            {/* Status Legend */}
-            <div className="grid grid-cols-3 gap-2 text-[11px] font-bold text-slate-500">
-              <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500" /> Attempted</span>
-              <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-amber-500" /> Skipped</span>
-              <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700" /> Unvisited</span>
-            </div>
-
-            {/* Question Grid Buttons */}
-            <div className="grid grid-cols-5 gap-2 pt-2">
-              {questions.map((_, qIdx) => {
-                const isCurrent = qIdx === currentIndex;
-                const isAttempted = userAnswers[qIdx] !== undefined;
-                const isSkipped = skippedQuestions[qIdx];
-
-                return (
-                  <button
-                    key={qIdx}
-                    onClick={() => setCurrentIndex(qIdx)}
-                    className={`h-10 rounded-xl font-extrabold text-xs transition-all cursor-pointer flex items-center justify-center ${
-                      isCurrent
-                        ? 'ring-2 ring-blue-600 scale-105 shadow-md'
-                        : ''
-                    } ${
-                      isAttempted
-                        ? 'bg-emerald-500 text-white'
-                        : isSkipped
-                        ? 'bg-amber-500 text-white'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
-                    }`}
-                  >
-                    {qIdx + 1}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Submit Quiz Action */}
-            <button
-              onClick={() => {
-                if (confirm('Are you sure you want to submit your answers?')) {
-                  handleSubmitQuiz();
-                }
-              }}
-              className="mt-4 w-full py-3 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 text-white font-extrabold text-xs shadow-lg shadow-blue-500/25 hover:opacity-90 transition cursor-pointer"
-            >
-              Submit & View Final Results →
-            </button>
-          </div>
-
+          <QuestionPalette 
+            totalQuestions={questions.length}
+            currentIndex={currentIndex}
+            answers={userAnswers}
+            skipped={skippedQuestions}
+            marked={markedQuestions}
+            onSelectQuestion={setCurrentIndex}
+            onSubmitTest={handleSubmitQuiz}
+            timeLeft={timeLeft}
+            totalTime={totalCount * 60}
+          />
         </aside>
 
       </main>

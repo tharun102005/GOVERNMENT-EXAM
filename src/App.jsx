@@ -19,10 +19,13 @@ import BookmarksPage from './pages/BookmarksPage';
 import NotificationsPage from './pages/NotificationsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
+import FloatingActions from './components/FloatingActions';
+
 function App() {
   return (
     <Router>
       <div style={{ position: 'relative', zIndex: 1 }}>
+        <FloatingActions />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/exams" element={<ExamsPage />} />

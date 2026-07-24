@@ -2,11 +2,19 @@
 
 @theme {
   --color-primary: #2563EB;
-  --color-secondary: #10B981;
-  --color-accent: #F59E0B;
+  --color-secondary: #7C3AED;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
   --color-background: #F8FAFC;
-  --font-sans: 'Inter', 'Outfit', system-ui, sans-serif;
-  --radius-lg: 20px;
+  --color-cards: #FFFFFF;
+  --color-text: #1E293B;
+  
+  --font-sans: 'Inter', 'Poppins', system-ui, sans-serif;
+  --font-heading: 'Poppins', 'Inter', system-ui, sans-serif;
+  
+  --radius-lg: 18px;
+  --radius-xl: 24px;
 }
 
 * {
@@ -15,22 +23,14 @@
   padding: 0;
 }
 
-/* Global Animation & Transform Disable (Commented out to enable animations)
-*, *::before, *::after {
-  animation: none !important;
-  transition: none !important;
-  transform: none !important;
-}
-*/
-
 html {
-  scroll-behavior: auto !important;
+  scroll-behavior: smooth !important;
 }
 
 body {
-  font-family: 'Inter', 'Outfit', system-ui, sans-serif;
-  background-color: #F8FAFC;
-  color: #1e293b;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -41,62 +41,49 @@ body {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #1d4ed8; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #F8FAFC; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+.dark ::-webkit-scrollbar-track { background: #0F172A; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
 /* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
 }
 .dark .glass {
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.animated-gradient {
-  background: linear-gradient(-45deg, #2563EB, #1d4ed8, #0f2a7a, #10B981);
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #2563eb, #9333ea);
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.bg-gradient-hero {
-  background: linear-gradient(135deg, rgba(240,249,255,0.7) 0%, rgba(237,233,254,0.7) 100%);
+.bg-gradient-premium {
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
 }
-.dark .bg-gradient-hero {
-  background: linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(30,27,75,0.9) 100%);
-}
-
-/* Anti-gravity Card static reset (Commented out to enable animations)
-[data-antigrav="card"],
-[data-antigrav="button"],
-[data-antigrav="icon"],
-.ag-nav-item {
-  transform: none !important;
-  animation: none !important;
-  transition: none !important;
-}
-*/
 
 /* Premium Grid Pattern */
 .bg-grid-pattern {
-  background-size: 32px 32px;
+  background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
 }
 .dark .bg-grid-pattern {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 

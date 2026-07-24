@@ -27,14 +27,14 @@ import {
 } from 'lucide-react';
 
 const navLinks = [
-  { label: 'Exams', to: '/exams', icon: GraduationCap },
-  { label: 'Practice', to: '/practice', icon: Target },
-  { label: 'Quant Syllabus', to: '/quant-aptitude', icon: BookOpen },
+  { label: 'Exams', to: '/exams', icon: Target },
+  { label: 'Courses', to: '/courses', icon: BookOpen },
   { label: 'Mock Tests', to: '/mock', icon: FileEdit },
-  { label: 'Previous Year Questions', to: '/previous-year-questions', icon: FolderArchive },
-  { label: 'AI Hub', to: '/ai', icon: Sparkles, isAi: true },
-  { label: 'Analytics', to: '/analytics', icon: BarChart3 },
-  { label: 'Leaderboard', to: '/leaderboard', icon: Trophy, isLeaderboard: true },
+  { label: 'PYQs', to: '/pyq', icon: FolderArchive },
+  { label: 'Notes', to: '/notes', icon: FileEdit },
+  { label: 'Current Affairs', to: '/current-affairs', icon: TrendingUp },
+  { label: 'AI Assistant', to: '/ai', icon: Sparkles, isAi: true },
+  { label: 'Dashboard', to: '/analytics', icon: BarChart3 },
 ];
 
 export default function Navbar() {
@@ -211,6 +211,23 @@ export default function Navbar() {
           >
             {darkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
           </button>
+
+          {/* Vertical Divider */}
+          <div className="h-6 w-px bg-[#E5E7EB] dark:bg-slate-800 mx-1" />
+
+          {/* Login and Register Buttons */}
+          <NavLink
+            to="/login"
+            className="hidden lg:flex px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            className="hidden lg:flex px-5 py-2 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl hover:shadow-lg hover:shadow-blue-500/30 transition-all transform hover:-translate-y-0.5"
+          >
+            Register
+          </NavLink>
 
           {/* Vertical Divider */}
           <div className="h-6 w-px bg-[#E5E7EB] dark:bg-slate-800 mx-1" />

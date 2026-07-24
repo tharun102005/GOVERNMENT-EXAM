@@ -1,250 +1,291 @@
-import { useState, useMemo, useCallback } from 'react';
-import { Search, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { Search, ChevronRight, Filter, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function QuestionPalette({
   totalQuestions,
-  current,
+  currentIndex,
   answers,
+  skipped,
   marked,
-  visited,
   onSelectQuestion,
-  onSubmitTest
+  onSubmitTest,
+  timeLeft, // in seconds
+  totalTime // in seconds
 }) {
   const [jumpInput, setJumpInput] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
-  const [pageRange, setPageRange] = useState(0); // 0 = 1-50, 1 = 51-100, 2 = 101-150, 3 = 151-200
+  const [showConfirm, setShowConfirm] = useState(false);
+  const scrollRef = useRef(null);
+  const questionRefs = useRef({});
 
-  const PAGE_SIZE = 50;
-  const totalPages = Math.ceil(totalQuestions / PAGE_SIZE);
-
-  // Status computation for each question index
-  const getStatus = useCallback((index) => {
-    const isAnswered = answers[index] !== undefined;
-    const isMarked = !!marked[index];
-    const isVisited = !!visited[index];
-
-    if (isAnswered && isMarked) return 'answered-marked';
-    if (isMarked) return 'marked';
-    if (isAnswered) return 'answered';
-    if (isVisited) return 'not-answered';
+  // Status mapping
+  const getStatus = useCallback((idx) => {
+    if (answers[idx] !== undefined) return 'answered';
+    if (marked[idx]) return 'marked';
+    if (skipped[idx]) return 'skipped';
     return 'not-visited';
-  }, [answers, marked, visited]);
+  }, [answers, marked, skipped]);
 
-  // Color mappings matching exact specifications
-  const getButtonStyle = (index) => {
-    const status = getStatus(index);
-    const isCurrent = index === current;
-
-    if (isCurrent) {
-      return 'bg-blue-600 text-white ring-4 ring-blue-300 dark:ring-blue-800 font-black shadow-lg scale-105 z-10';
-    }
-
-    switch (status) {
-      case 'answered':
-        return 'bg-emerald-500 hover:bg-emerald-600 text-white font-bold border-emerald-600';
-      case 'marked':
-        return 'bg-purple-600 hover:bg-purple-700 text-white font-bold border-purple-700';
-      case 'answered-marked':
-        return 'bg-purple-800 hover:bg-purple-900 text-white font-bold border-2 border-emerald-400 relative';
-      case 'not-answered':
-        return 'bg-amber-500 hover:bg-amber-600 text-white font-bold border-amber-600';
-      case 'not-visited':
-      default:
-        return 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700';
-    }
-  };
-
-  const handleJump = (e) => {
-    e.preventDefault();
-    const qNum = parseInt(jumpInput, 10);
-    if (!isNaN(qNum) && qNum >= 1 && qNum <= totalQuestions) {
-      onSelectQuestion(qNum - 1);
-      // Auto switch page range to match question
-      setPageRange(Math.floor((qNum - 1) / PAGE_SIZE));
-      setJumpInput('');
-    }
-  };
-
-  // Filter logic
-  const filteredIndexes = useMemo(() => {
-    const indexes = [];
-    const start = pageRange * PAGE_SIZE;
-    const end = Math.min(start + PAGE_SIZE, totalQuestions);
-
-    for (let i = start; i < end; i++) {
-      const status = getStatus(i);
-      if (activeFilter === 'All') {
-        indexes.push(i);
-      } else if (activeFilter === 'Answered' && (status === 'answered' || status === 'answered-marked')) {
-        indexes.push(i);
-      } else if (activeFilter === 'Not Answered' && status === 'not-answered') {
-        indexes.push(i);
-      } else if (activeFilter === 'Marked' && (status === 'marked' || status === 'answered-marked')) {
-        indexes.push(i);
-      } else if (activeFilter === 'Not Visited' && status === 'not-visited') {
-        indexes.push(i);
-      }
-    }
-    return indexes;
-  }, [totalQuestions, pageRange, activeFilter, getStatus]);
-
-  // Summaries
+  // Derived stats
   const stats = useMemo(() => {
-    let answered = 0;
-    let markedCount = 0;
-    let answeredMarked = 0;
-    let notAnswered = 0;
-    let notVisited = 0;
-
+    let answered = 0, skippedCount = 0, markedCount = 0, notVisited = 0;
     for (let i = 0; i < totalQuestions; i++) {
       const s = getStatus(i);
       if (s === 'answered') answered++;
       else if (s === 'marked') markedCount++;
-      else if (s === 'answered-marked') { answeredMarked++; markedCount++; }
-      else if (s === 'not-answered') notAnswered++;
+      else if (s === 'skipped') skippedCount++;
       else notVisited++;
     }
-
-    return { answered: answered + answeredMarked, marked: markedCount, notAnswered, notVisited };
+    return {
+      total: totalQuestions,
+      answered,
+      skipped: skippedCount,
+      marked: markedCount,
+      notVisited,
+      remaining: totalQuestions - answered
+    };
   }, [totalQuestions, getStatus]);
 
+  const filteredIndexes = useMemo(() => {
+    const indexes = [];
+    for (let i = 0; i < totalQuestions; i++) {
+      const s = getStatus(i);
+      if (searchInput && !(i + 1).toString().includes(searchInput)) continue;
+
+      if (activeFilter === 'All') indexes.push(i);
+      else if (activeFilter === 'Answered' && s === 'answered') indexes.push(i);
+      else if (activeFilter === 'Skipped' && s === 'skipped') indexes.push(i);
+      else if (activeFilter === 'Marked' && s === 'marked') indexes.push(i);
+      else if (activeFilter === 'Not Visited' && s === 'not-visited') indexes.push(i);
+    }
+    return indexes;
+  }, [totalQuestions, activeFilter, getStatus, searchInput]);
+
+  // Auto scroll to current
+  useEffect(() => {
+    const el = questionRefs.current[currentIndex];
+    if (el && scrollRef.current) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [currentIndex]);
+
+  const handleJump = (e) => {
+    e.preventDefault();
+    const num = parseInt(jumpInput, 10);
+    if (!isNaN(num) && num >= 1 && num <= totalQuestions) {
+      onSelectQuestion(num - 1);
+      setJumpInput('');
+    }
+  };
+
+  const getTimerColor = () => {
+    if (timeLeft > 20 * 60) return 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
+    if (timeLeft > 5 * 60) return 'text-orange-500 bg-orange-500/10 border-orange-500/20';
+    return 'text-red-500 bg-red-500/10 border-red-500/20 animate-pulse';
+  };
+
+  const formatTime = (secs) => {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const progressPercent = Math.round((stats.answered / totalQuestions) * 100) || 0;
+  const radius = 24;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (progressPercent / 100) * circumference;
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl p-4 sticky top-20 flex flex-col max-h-[calc(100vh-6rem)]">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
-        <h3 className="font-extrabold text-slate-800 dark:text-slate-100 text-sm tracking-wide uppercase flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-          Question Palette ({totalQuestions})
-        </h3>
-        {totalPages > 1 && (
-          <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300">
-            <button
-              onClick={() => setPageRange(p => Math.max(0, p - 1))}
-              disabled={pageRange === 0}
-              className="p-1 hover:bg-white dark:hover:bg-slate-700 rounded disabled:opacity-30"
-            >
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </button>
-            <span className="px-1.5">{pageRange * PAGE_SIZE + 1}–{Math.min((pageRange + 1) * PAGE_SIZE, totalQuestions)}</span>
-            <button
-              onClick={() => setPageRange(p => Math.min(totalPages - 1, p + 1))}
-              disabled={pageRange === totalPages - 1}
-              className="p-1 hover:bg-white dark:hover:bg-slate-700 rounded disabled:opacity-30"
-            >
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
+    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl rounded-[18px] border border-white/40 dark:border-slate-700/50 shadow-[0_10px_30px_rgba(0,0,0,0.08)] p-5 sticky top-24 flex flex-col max-h-[calc(100vh-7rem)] overflow-hidden font-sans">
+      
+      {/* Header & Timer */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-[17px] font-extrabold text-slate-800 dark:text-white tracking-tight flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#4F46E5] shadow-[0_0_10px_rgba(79,70,229,0.5)]"></span>
+          Question Palette
+        </h2>
+        <div className={`px-3 py-1.5 rounded-xl border flex items-center gap-1.5 text-sm font-black ${getTimerColor()}`}>
+          <Clock className="w-4 h-4" />
+          {formatTime(timeLeft)}
+        </div>
       </div>
 
-      {/* Jump & Filter */}
-      <div className="space-y-2 mb-3">
-        <form onSubmit={handleJump} className="flex gap-2">
-          <div className="relative flex-1">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
-            <input
-              type="number"
-              min="1"
-              max={totalQuestions}
-              placeholder="Jump to Q# (e.g. 45)"
-              value={jumpInput}
-              onChange={(e) => setJumpInput(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-800 dark:text-slate-100"
+      {/* Circular Progress & Stats Overview */}
+      <div className="flex items-center gap-5 bg-slate-50/50 dark:bg-slate-800/30 p-3.5 rounded-2xl border border-slate-200/50 dark:border-slate-700/30 mb-5">
+        <div className="relative w-14 h-14 shrink-0 flex items-center justify-center">
+          <svg className="w-14 h-14 -rotate-90 transform">
+            <circle cx="28" cy="28" r="24" fill="none" className="stroke-slate-200 dark:stroke-slate-700" strokeWidth="4" />
+            <circle 
+              cx="28" cy="28" r="24" fill="none" 
+              className="stroke-[#06B6D4] transition-all duration-1000 ease-out" 
+              strokeWidth="4" 
+              strokeDasharray={circumference} 
+              strokeDashoffset={strokeDashoffset} 
+              strokeLinecap="round" 
             />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-[10px] font-extrabold text-slate-800 dark:text-white">{progressPercent}%</span>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-blue-700 transition"
-          >
+        </div>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 flex-1">
+          <div className="text-[11px] font-bold text-slate-500 flex justify-between">
+            <span>Completed</span> <span className="text-slate-800 dark:text-slate-200">{stats.answered}</span>
+          </div>
+          <div className="text-[11px] font-bold text-slate-500 flex justify-between">
+            <span>Remaining</span> <span className="text-slate-800 dark:text-slate-200">{stats.remaining}</span>
+          </div>
+          <div className="text-[11px] font-bold text-slate-500 flex justify-between">
+            <span>Skipped</span> <span className="text-orange-500">{stats.skipped}</span>
+          </div>
+          <div className="text-[11px] font-bold text-slate-500 flex justify-between">
+            <span>Marked</span> <span className="text-[#7C3AED]">{stats.marked}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Search & Jump */}
+      <div className="flex gap-2 mb-4">
+        <div className="relative flex-1">
+          <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search Q..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/50 text-slate-800 dark:text-slate-100"
+          />
+        </div>
+        <form onSubmit={handleJump} className="flex gap-2 w-[110px]">
+          <input
+            type="number"
+            min="1"
+            max={totalQuestions}
+            placeholder="Jump"
+            value={jumpInput}
+            onChange={(e) => setJumpInput(e.target.value)}
+            className="w-full px-2 py-1.5 text-xs text-center bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F46E5]/50 text-slate-800 dark:text-slate-100"
+          />
+          <button type="submit" className="bg-slate-800 dark:bg-white text-white dark:text-slate-900 text-xs font-bold px-3 py-1.5 rounded-xl hover:opacity-90 transition shadow-sm cursor-pointer">
             Go
           </button>
         </form>
-
-        {/* Filter chips */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] scrollbar-none">
-          <Filter className="w-3 h-3 text-slate-400 shrink-0 ml-1" />
-          {['All', 'Answered', 'Not Answered', 'Marked', 'Not Visited'].map((filterName) => (
-            <button
-              key={filterName}
-              onClick={() => setActiveFilter(filterName)}
-              className={`px-2.5 py-1 rounded-lg font-medium whitespace-nowrap transition ${
-                activeFilter === filterName
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-              }`}
-            >
-              {filterName}
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* Legend */}
-      <div className="grid grid-cols-2 gap-1.5 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl text-[11px] border border-slate-100 dark:border-slate-800 mb-3">
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
-          <span className="text-slate-600 dark:text-slate-300">Answered ({stats.answered})</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-amber-500 shrink-0"></span>
-          <span className="text-slate-600 dark:text-slate-300">Not Answered ({stats.notAnswered})</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-purple-600 shrink-0"></span>
-          <span className="text-slate-600 dark:text-slate-300">Marked ({stats.marked})</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-purple-800 ring-1 ring-emerald-400 shrink-0"></span>
-          <span className="text-slate-600 dark:text-slate-300">Ans & Marked</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shrink-0"></span>
-          <span className="text-slate-600 dark:text-slate-300">Not Visited ({stats.notVisited})</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-blue-600 ring-2 ring-blue-300 shrink-0"></span>
-          <span className="text-slate-600 dark:text-slate-300 font-bold">Current</span>
-        </div>
+      {/* Filters */}
+      <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-none mb-2">
+        {['All', 'Answered', 'Skipped', 'Marked', 'Not Visited'].map((f) => (
+          <button
+            key={f}
+            onClick={() => setActiveFilter(f)}
+            className={`px-3 py-1.5 rounded-xl text-[11px] font-bold whitespace-nowrap transition-all cursor-pointer ${
+              activeFilter === f 
+                ? 'bg-[#4F46E5] text-white shadow-md shadow-[#4F46E5]/30' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+          >
+            {f}
+          </button>
+        ))}
       </div>
 
-      {/* 10-column Question Button Grid */}
-      <div className="flex-1 overflow-y-auto pr-1">
-        <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5 pb-2">
+      {/* Question Grid */}
+      <div 
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto pr-2 pb-4 -mr-2 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-700"
+      >
+        <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
           {filteredIndexes.length === 0 ? (
-            <div className="col-span-10 text-center py-6 text-xs text-slate-400">
-              No questions match "{activeFilter}" filter in this range.
+            <div className="col-span-full text-center py-10 text-sm text-slate-400 font-medium">
+              No questions found.
             </div>
           ) : (
-            filteredIndexes.map((idx) => {
-              const isAnsMarked = getStatus(idx) === 'answered-marked';
-              return (
-                <button
-                  key={idx}
-                  onClick={() => onSelectQuestion(idx)}
-                  className={`h-8 rounded-lg text-xs font-bold transition-all duration-150 flex items-center justify-center relative cursor-pointer ${getButtonStyle(idx)}`}
-                  title={`Question ${idx + 1}`}
-                >
-                  {idx + 1}
-                  {isAnsMarked && (
-                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-1 ring-purple-900"></span>
-                  )}
-                </button>
-              );
-            })
+            <AnimatePresence>
+              {filteredIndexes.map((idx) => {
+                const s = getStatus(idx);
+                const isCurrent = idx === currentIndex;
+                
+                // Colors matching requirements
+                let bgClass = 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300';
+                if (s === 'answered') bgClass = 'bg-emerald-500 text-white shadow-emerald-500/30';
+                else if (s === 'skipped') bgClass = 'bg-orange-500 text-white shadow-orange-500/30';
+                else if (s === 'marked') bgClass = 'bg-[#7C3AED] text-white shadow-[#7C3AED]/30';
+
+                const borderClass = isCurrent ? 'ring-2 ring-offset-2 ring-offset-white dark:ring-offset-slate-900 ring-[#06B6D4] border-transparent' : 'border border-transparent';
+
+                return (
+                  <motion.button
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: isCurrent ? 1.05 : 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.95 }}
+                    key={idx}
+                    ref={(el) => questionRefs.current[idx] = el}
+                    onClick={() => onSelectQuestion(idx)}
+                    className={`h-11 rounded-xl text-[13px] font-black transition-all flex items-center justify-center cursor-pointer shadow-sm relative ${bgClass} ${borderClass}`}
+                  >
+                    {idx + 1}
+                    {isCurrent && (
+                      <span className="absolute -bottom-1 w-1.5 h-1.5 rounded-full bg-[#06B6D4] animate-pulse"></span>
+                    )}
+                  </motion.button>
+                );
+              })}
+            </AnimatePresence>
           )}
         </div>
       </div>
 
-      {/* Bottom Action */}
-      <div className="pt-3 border-t border-slate-100 dark:border-slate-800 mt-2">
+      {/* Floating Submit Button */}
+      <div className="pt-4 border-t border-slate-100 dark:border-slate-800/60 mt-auto">
         <button
-          onClick={onSubmitTest}
-          className="w-full py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-xl text-xs hover:from-emerald-600 hover:to-teal-700 transition shadow-md shadow-emerald-500/20 active:scale-98 flex items-center justify-center gap-1.5"
+          onClick={() => setShowConfirm(true)}
+          className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#4F46E5] to-[#7C3AED] text-white font-black text-[13px] shadow-lg shadow-[#4F46E5]/25 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95 cursor-pointer"
         >
-          Submit Test
+          Submit Final Test
         </button>
       </div>
+
+      {/* Confirmation Modal */}
+      <AnimatePresence>
+        {showConfirm && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+              className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-2xl max-w-sm w-full border border-slate-100 dark:border-slate-800"
+            >
+              <div className="w-14 h-14 rounded-full bg-[#4F46E5]/10 flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-7 h-7 text-[#4F46E5]" />
+              </div>
+              <h3 className="text-xl font-extrabold text-center text-slate-900 dark:text-white mb-2">Submit Test?</h3>
+              <p className="text-sm text-center text-slate-500 mb-6">
+                You have answered <strong className="text-emerald-500">{stats.answered}</strong> out of {totalQuestions} questions. Are you sure you want to finish now?
+              </p>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setShowConfirm(false)}
+                  className="flex-1 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={() => { setShowConfirm(false); onSubmitTest(); }}
+                  className="flex-1 py-3 rounded-xl bg-[#4F46E5] text-white font-bold hover:bg-[#4338ca] transition shadow-md shadow-[#4F46E5]/30 cursor-pointer"
+                >
+                  Yes, Submit
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
